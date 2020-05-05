@@ -669,6 +669,7 @@ export default class TransactionController extends EventEmitter {
         data: rawMetaTx,
       })
     } catch (error) {
+      console.error(error)
       if (error.message.toLowerCase().includes('known transaction')) {
 
         // txHash = ethUtil.sha3(ethUtil.addHexPrefix(rawTx)).toString('hex')
