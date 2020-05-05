@@ -21,13 +21,15 @@ export default class ViewContact extends PureComponent {
     address: PropTypes.string,
     history: PropTypes.object,
     checkSummedAddress: PropTypes.string,
+    underlyingAddress: PropTypes.string,
+    checkSummedUnderlyingAddress: PropTypes.string,
     memo: PropTypes.string,
     editRoute: PropTypes.string,
   }
 
   render () {
     const { t } = this.context
-    const { history, name, address, checkSummedAddress, memo, editRoute } = this.props
+    const { history, name, address, checkSummedAddress, underlyingAddress, checkSummedUnderlyingAddress, memo, editRoute } = this.props
 
     return (
       <div className="settings-page__content-row">
@@ -64,6 +66,26 @@ export default class ViewContact extends PureComponent {
               </button>
             </div>
           </div>
+          { underlyingAddress !== address && (
+            <div className="address-book__view-contact__group">
+              <div className="address-book__view-contact__group__label">
+                { t('ethereumUnderlyingAddress') }
+              </div>
+              <div className="address-book__view-contact__group__value">
+                <div
+                  className="address-book__view-contact__group__static-address"
+                >
+                  { quadSplit(checkSummedUnderlyingAddress) }
+                </div>
+                <button
+                  className="address-book__view-contact__group__static-address--copy-icon"
+                  onClick={() => copyToClipboard(checkSummedUnderlyingAddress)}
+                >
+                  <Copy size={20} color="#3098DC" />
+                </button>
+              </div>
+            </div>
+          )}
           <div className="address-book__view-contact__group">
             <div className="address-book__view-contact__group__label--capitalized">
               { t('memo') }
