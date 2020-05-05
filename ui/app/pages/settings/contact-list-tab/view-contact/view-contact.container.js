@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     address,
     checkSummedAddress: checksumAddress(address),
     underlyingAddress,
+    checkSummedUnderlyingAddress: checksumAddress(underlyingAddress),
     memo,
     editRoute: showingMyAccounts ? CONTACT_MY_ACCOUNTS_EDIT_ROUTE : CONTACT_EDIT_ROUTE,
   }

@@ -22,13 +22,14 @@ export default class ViewContact extends PureComponent {
     history: PropTypes.object,
     checkSummedAddress: PropTypes.string,
     underlyingAddress: PropTypes.string,
+    checkSummedUnderlyingAddress: PropTypes.string,
     memo: PropTypes.string,
     editRoute: PropTypes.string,
   }
 
   render () {
     const { t } = this.context
-    const { history, name, address, checkSummedAddress, underlyingAddress, memo, editRoute } = this.props
+    const { history, name, address, checkSummedAddress, underlyingAddress, checkSummedUnderlyingAddress, memo, editRoute } = this.props
 
     return (
       <div className="settings-page__content-row">
@@ -74,11 +75,11 @@ export default class ViewContact extends PureComponent {
                 <div
                   className="address-book__view-contact__group__static-address"
                 >
-                  { quadSplit(underlyingAddress) }
+                  { quadSplit(checkSummedUnderlyingAddress) }
                 </div>
                 <button
                   className="address-book__view-contact__group__static-address--copy-icon"
-                  onClick={() => copyToClipboard(underlyingAddress)}
+                  onClick={() => copyToClipboard(checkSummedUnderlyingAddress)}
                 >
                   <Copy size={20} color="#3098DC" />
                 </button>
