@@ -124,6 +124,21 @@ class DerivedAccountKeyringController extends KeyringController {
     return newState
   }
 
+  /**
+   * Fetch an underlying address from it's derived one
+   * @param {*} derivedAddress The derived address for which an underlying address will be returned
+   */
+  async getUnderlyingAddress (derivedAddress) {
+    const keyState = this.memStore.getState()
+
+    const derivedState = keyState.derivedState.filter((a) => a.derivedAddress === derivedAddress)[0]
+    if (derivedState && derivedState.underlyingAddress) {
+      return derivedState.underlyingAddress
+    } else {
+      return derivedAddress
+    }
+  }
+
   async getAccounts () {
     const accounts = await super.getAccounts()
     // fetch the derived account
