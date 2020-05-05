@@ -128,7 +128,7 @@ class DerivedAccountKeyringController extends KeyringController {
       }
     )
 
-    return this.memStore.updateState({ keyrings: derivedKeyRings })
+    return this.memStore.updateState({ keyrings: derivedKeyRings, derivedState })
   }
 
   /**

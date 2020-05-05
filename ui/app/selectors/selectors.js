@@ -79,6 +79,25 @@ export const getMetaMaskAccounts = createSelector(
   }, {})
 )
 
+export function selectedAccountIsDerived (state) {
+  const selectedAddress = getSelectedAddress(state)
+  const underlyingSelectedAddress = getUnderlyingAddress(state, selectedAddress)
+
+  return underlyingSelectedAddress !== selectedAddress
+}
+
+export function getUnderlyingAddress (state, address) {
+  const derivedState = state.metamask.derivedState
+
+  const derivedAddressState = derivedState.filter((a) => a.derivedAddress === address)[0]
+
+  if (derivedAddressState && derivedAddressState.underlyingAddress) {
+    return derivedAddressState.underlyingAddress
+  } else {
+    return address
+  }
+}
+
 export function getSelectedAddress (state) {
   return state.metamask.selectedAddress
 }
