@@ -2,7 +2,7 @@ import ViewContact from './view-contact.component'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { getAddressBookEntry } from '../../../../selectors'
+import { getAddressBookEntry, getUnderlyingAddress } from '../../../../selectors'
 import { checksumAddress } from '../../../../helpers/utils/util'
 import {
   CONTACT_EDIT_ROUTE,
@@ -17,6 +17,8 @@ const mapStateToProps = (state, ownProps) => {
   const pathNameTailIsAddress = pathNameTail.includes('0x')
   const address = pathNameTailIsAddress ? pathNameTail.toLowerCase() : ownProps.match.params.id
 
+  const underlyingAddress = getUnderlyingAddress(state, address)
+
   const { memo, name } = getAddressBookEntry(state, address) || state.metamask.identities[address]
 
   const showingMyAccounts = Boolean(pathname.match(CONTACT_MY_ACCOUNTS_VIEW_ROUTE))
@@ -25,6 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     name,
     address,
     checkSummedAddress: checksumAddress(address),
+    underlyingAddress,
     memo,
     editRoute: showingMyAccounts ? CONTACT_MY_ACCOUNTS_EDIT_ROUTE : CONTACT_EDIT_ROUTE,
   }
