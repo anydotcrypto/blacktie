@@ -43,6 +43,7 @@ import {
   LOCK_ROUTE,
   MOBILE_SYNC_ROUTE,
   NEW_ACCOUNT_ROUTE,
+  NEW_ANY_SENDER_ACCOUNT_ROUTE,
   RESTORE_VAULT_ROUTE,
   REVEAL_SEED_ROUTE,
   SEND_ROUTE,
@@ -125,6 +126,7 @@ export default class Routes extends Component {
         <Authenticated path={CONFIRM_ADD_TOKEN_ROUTE} component={ConfirmAddTokenPage} exact />
         <Authenticated path={CONFIRM_ADD_SUGGESTED_TOKEN_ROUTE} component={ConfirmAddSuggestedTokenPage} exact />
         <Authenticated path={NEW_ACCOUNT_ROUTE} component={CreateAccountPage} />
+        <Authenticated path={NEW_ANY_SENDER_ACCOUNT_ROUTE} component={CreateAccountPage} />
         <Authenticated path={`${CONNECT_ROUTE}/:id`} component={PermissionsConnect} />
         <Authenticated path={DEFAULT_ROUTE} component={Home} />
       </Switch>

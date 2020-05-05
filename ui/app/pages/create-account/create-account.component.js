@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route, matchPath } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import NewAnySenderAccountCreateForm from './createAnySender/new-any-sender-account.container'
 import NewAccountCreateForm from './new-account.container'
 import NewAccountImportForm from './import-account'
 import ConnectHardwareForm from './connect-hardware'
@@ -9,6 +10,7 @@ import {
   NEW_ACCOUNT_ROUTE,
   IMPORT_ACCOUNT_ROUTE,
   CONNECT_HARDWARE_ROUTE,
+  NEW_ANY_SENDER_ACCOUNT_ROUTE,
 } from '../../helpers/constants/routes'
 
 export default class CreateAccountPage extends Component {
@@ -31,6 +33,9 @@ export default class CreateAccountPage extends Component {
         </div>
         <div className={getClassNames(CONNECT_HARDWARE_ROUTE)} onClick={() => history.push(CONNECT_HARDWARE_ROUTE)}>
           {this.context.t('connect')}
+        </div>
+        <div className={getClassNames(NEW_ANY_SENDER_ACCOUNT_ROUTE)} onClick={() => history.push(NEW_ANY_SENDER_ACCOUNT_ROUTE)}>
+          {this.context.t('anyDotSender')}
         </div>
       </div>
     )
@@ -60,6 +65,11 @@ export default class CreateAccountPage extends Component {
               exact
               path={CONNECT_HARDWARE_ROUTE}
               component={ConnectHardwareForm}
+            />
+            <Route
+              exact
+              path={NEW_ANY_SENDER_ACCOUNT_ROUTE}
+              component={NewAnySenderAccountCreateForm}
             />
           </Switch>
         </div>

@@ -84,7 +84,7 @@ export function getSelectedAddress (state) {
 }
 
 export function getSelectedIdentity (state) {
-  const selectedAddress = getSelectedAddress(state)
+  const selectedAddress = state.metamask.selectedAddress
   const identities = state.metamask.identities
 
   return identities[selectedAddress]
@@ -229,7 +229,9 @@ export function getAccountsWithLabels (state) {
 }
 
 export function getCurrentAccountWithSendEtherInfo (state) {
+
   const currentAddress = getSelectedAddress(state)
+
   const accounts = accountsWithSendEtherInfoSelector(state)
 
   return getAccountByAddress(accounts, currentAddress)

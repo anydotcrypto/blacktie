@@ -53,6 +53,7 @@ import selectChainId from './lib/select-chain-id'
 import { Mutex } from 'await-semaphore'
 import { version } from '../manifest/_base.json'
 import ethUtil, { BN } from 'ethereumjs-util'
+import { ProxyAccountForwarder } from '@anydotcrypto/metatransactions'
 
 const GWEI_BN = new BN('1000000000')
 import percentile from 'percentile'
@@ -71,6 +72,75 @@ import {
 } from 'gaba'
 
 import backEndMetaMetricsEvent from './lib/backend-metametrics'
+
+class DerivedAccountKeyringController extends KeyringController {
+  async addNewAccount (selectedKeyring, shouldDerive) {
+    const oldAccounts = await super.getAccounts()
+    const keyState = await super.addNewAccount(selectedKeyring)
+    const newAccounts = await super.getAccounts()
+
+
+    const existingDerivedState = this.store.getState().derivedState || []
+    newAccounts.forEach((address) => {
+      if (!oldAccounts.includes(address)) {
+        existingDerivedState.push({
+          underlyingAddress: address,
+          derivedAddress: shouldDerive ? ProxyAccountForwarder.buildCreate2Address('0xc9d6292CA60605CB2d443a5395737a307E417E53', address, '0x645fa0a381ce70c078a0e83aae5bca546f39e1c0') : address,
+        })
+        this.store.updateState({ derivedState: existingDerivedState })
+      }
+    })
+
+    const newKeyrings = keyState.keyrings.map(
+      (k) => {
+        if (!k.accounts) {
+          return {
+            type: k.type,
+            accounts: [],
+          }
+        }
+
+        const accounts = k.accounts.map((a) => {
+          const existingAddress = existingDerivedState.filter((e) => e.underlyingAddress === a)[0]
+          if (existingAddress && existingAddress.derivedAddress) {
+            return existingAddress.derivedAddress
+          } else {
+            return a
+          }
+        })
+
+        return {
+          type: k.type,
+          accounts: accounts,
+        }
+      }
+    )
+
+    const newState = { ...keyState, keyrings: newKeyrings, derivedState: existingDerivedState }
+
+    // overwrite the state everytime
+    this.memStore.updateState(newState)
+
+    return newState
+  }
+
+  async getAccounts () {
+    const accounts = await super.getAccounts()
+    // fetch the derived account
+    const derivedState = this.store.getState().derivedState || []
+
+    const derivedAccounts = accounts.map((a) => {
+      const addressState = derivedState.filter((d) => d.underlyingAddress === a)[0]
+      if (addressState) {
+        return addressState.derivedAddress
+      } else {
+        return a
+      }
+    })
+
+    return derivedAccounts
+  }
+}
 
 export default class MetamaskController extends EventEmitter {
 
@@ -201,7 +271,7 @@ export default class MetamaskController extends EventEmitter {
     })
 
     const additionalKeyrings = [TrezorKeyring, LedgerBridgeKeyring]
-    this.keyringController = new KeyringController({
+    this.keyringController = new DerivedAccountKeyringController({
       keyringTypes: additionalKeyrings,
       initState: initState.KeyringController,
       getNetwork: this.networkController.getNetworkState.bind(this.networkController),
@@ -464,6 +534,7 @@ export default class MetamaskController extends EventEmitter {
 
       // primary HD keyring management
       addNewAccount: nodeify(this.addNewAccount, this),
+      addNewAnySenderAccount: nodeify(this.addNewAnySenderAccount, this),
       verifySeedPhrase: nodeify(this.verifySeedPhrase, this),
       resetAccount: nodeify(this.resetAccount, this),
       removeAccount: nodeify(this.removeAccount, this),
@@ -936,7 +1007,35 @@ export default class MetamaskController extends EventEmitter {
     }
     const keyringController = this.keyringController
     const oldAccounts = await keyringController.getAccounts()
-    const keyState = await keyringController.addNewAccount(primaryKeyring)
+    const keyState = await keyringController.addNewAccount(primaryKeyring, false)
+    const newAccounts = await keyringController.getAccounts()
+
+    await this.verifySeedPhrase()
+
+    this.preferencesController.setAddresses(newAccounts)
+    newAccounts.forEach((address) => {
+      if (!oldAccounts.includes(address)) {
+        this.preferencesController.setSelectedAddress(address)
+      }
+    })
+
+    const { identities } = this.preferencesController.store.getState()
+    return { ...keyState, identities }
+  }
+
+  /**
+   * Adds a new account to the default (first) HD seed phrase Keyring.
+   *
+   * @returns {} keyState
+   */
+  async addNewAnySenderAccount () {
+    const primaryKeyring = this.keyringController.getKeyringsByType('HD Key Tree')[0]
+    if (!primaryKeyring) {
+      throw new Error('MetamaskController - No HD Key Tree found')
+    }
+    const keyringController = this.keyringController
+    const oldAccounts = await keyringController.getAccounts()
+    const keyState = await keyringController.addNewAccount(primaryKeyring, true)
     const newAccounts = await keyringController.getAccounts()
 
     await this.verifySeedPhrase()

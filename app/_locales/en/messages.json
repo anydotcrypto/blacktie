@@ -384,8 +384,14 @@
   "create": {
     "message": "Create"
   },
+  "anyDotSender": {
+    "message": "any.sender"
+  },
   "createAccount": {
     "message": "Create Account"
+  },
+  "createAnySenderAccount": {
+    "message": "Create any.sender Account"
   },
   "createAWallet": {
     "message": "Create a Wallet"
@@ -868,7 +874,7 @@
     "message": "MetaMask Version"
   },
   "missingYourTokens": {
-    "message": "Don't see your tokens?"
+    "message": "Don't see your tokens"
   },
   "mobileSyncText": {
     "message": "Please enter your password to confirm it's you!"

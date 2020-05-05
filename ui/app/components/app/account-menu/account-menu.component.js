@@ -16,6 +16,7 @@ import {
   SETTINGS_ROUTE,
   ABOUT_US_ROUTE,
   NEW_ACCOUNT_ROUTE,
+  NEW_ANY_SENDER_ACCOUNT_ROUTE,
   IMPORT_ACCOUNT_ROUTE,
   CONNECT_HARDWARE_ROUTE,
   DEFAULT_ROUTE,
@@ -408,6 +409,26 @@ export default class AccountMenu extends Component {
             />
           )}
           text={t('connectHardwareWallet')}
+        />
+        <Item
+          onClick={() => {
+            toggleAccountMenu()
+            metricsEvent({
+              eventOpts: {
+                category: 'Navigation',
+                action: 'Main Menu',
+                name: 'Clicked Create New Any Sender Account',
+              },
+            })
+            history.push(NEW_ANY_SENDER_ACCOUNT_ROUTE)
+          }}
+          icon={(
+            <img
+              className="account-menu__item-icon"
+              src="images/plus-btn-white.svg"
+            />
+          )}
+          text={t('createAnySenderAccount')}
         />
         <Divider />
         <Item

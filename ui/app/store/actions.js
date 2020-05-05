@@ -328,6 +328,29 @@ export function addNewAccount () {
   }
 }
 
+export function addNewAnySenderAccount () {
+  log.debug(`background.addNewAnySenderAccount`)
+  return async (dispatch, getState) => {
+    const oldIdentities = getState().metamask.identities
+    dispatch(showLoadingIndication())
+
+    let newIdentities
+    try {
+      const { identities } = await promisifiedBackground.addNewAnySenderAccount()
+      newIdentities = identities
+    } catch (error) {
+      dispatch(displayWarning(error.message))
+      throw error
+    }
+    const newAccountAddress = Object.keys(newIdentities).find((address) => !oldIdentities[address])
+    dispatch(hideLoadingIndication())
+    await forceUpdateMetamaskState(dispatch)
+
+    // ANY. create2 this? yes, maybe, depends on setAccountLabel
+    return newAccountAddress
+  }
+}
+
 export function checkHardwareStatus (deviceName, hdPath) {
   log.debug(`background.checkHardwareStatus`, deviceName, hdPath)
   return async (dispatch) => {
