@@ -37,6 +37,9 @@ import {
 
 import { hexToBn, bnToHex, BnMultiplyByFraction } from '../../lib/util'
 import { TRANSACTION_NO_CONTRACT_ERROR_KEY } from '../../../../ui/app/helpers/constants/error-keys'
+import { Web3Provider } from 'ethers/providers'
+import { ProxyAccountForwarderFactory } from '@anydotcrypto/metatransactions/dist'
+import { withAnyDotSender } from '@any-sender/client'
 
 const SIMPLE_GAS_COST = '0x5208' // Hex for 21000, cost of a simple send.
 
@@ -80,6 +83,7 @@ export default class TransactionController extends EventEmitter {
     this.signEthTx = opts.signTransaction
     this.signMessage = opts.signMessage
     this.isDerived = opts.isDerived
+    this.getUnderlyingAddress = opts.getUnderlyingAddress
     this.getGasPrice = opts.getGasPrice
     this.inProcessOfSigning = new Set()
 
@@ -112,8 +116,10 @@ export default class TransactionController extends EventEmitter {
         const approved = this.txStateManager.getApprovedTransactions()
         return [...pending, ...approved]
       },
+      isDerived: this.isDerived,
       approveTransaction: this.approveTransaction.bind(this),
       getCompletedTransactions: this.txStateManager.getConfirmedTransactions.bind(this.txStateManager),
+      provider: this.provider,
     })
 
     this.txStateManager.store.subscribe(() => this.emit('update:badge'))
@@ -482,28 +488,36 @@ export default class TransactionController extends EventEmitter {
       // get next nonce
       const txMeta = this.txStateManager.getTx(txId)
       const fromAddress = txMeta.txParams.from
-      // wait for a nonce
-      let { customNonceValue = null } = txMeta
-      customNonceValue = Number(customNonceValue)
-      nonceLock = await this.nonceTracker.getNonceLock(fromAddress)
-      // add nonce to txParams
-      // if txMeta has lastGasPrice then it is a retry at same nonce with higher
-      // gas price transaction and their for the nonce should not be calculated
-      const nonce = txMeta.lastGasPrice ? txMeta.txParams.nonce : nonceLock.nextNonce
-      const customOrNonce = customNonceValue || nonce
+      if (this.isDerived(fromAddress)) {
+        this.txStateManager.updateTx(txMeta, 'transactions#approveTransaction')
+        // sign transaction
+        const rawTx = await this.signMetaTx(txId)
+        await this.publishMetaTransaction(txId, rawTx)
+        // must set transaction to submitted/failed before releasing lock
+      } else {
+        // wait for a nonce
+        let { customNonceValue = null } = txMeta
+        customNonceValue = Number(customNonceValue)
+        nonceLock = await this.nonceTracker.getNonceLock(fromAddress)
+        // add nonce to txParams
+        // if txMeta has lastGasPrice then it is a retry at same nonce with higher
+        // gas price transaction and their for the nonce should not be calculated
+        const nonce = txMeta.lastGasPrice ? txMeta.txParams.nonce : nonceLock.nextNonce
+        const customOrNonce = customNonceValue || nonce
 
-      txMeta.txParams.nonce = ethUtil.addHexPrefix(customOrNonce.toString(16))
-      // add nonce debugging information to txMeta
-      txMeta.nonceDetails = nonceLock.nonceDetails
-      if (customNonceValue) {
-        txMeta.nonceDetails.customNonceValue = customNonceValue
+        txMeta.txParams.nonce = ethUtil.addHexPrefix(customOrNonce.toString(16))
+        // add nonce debugging information to txMeta
+        txMeta.nonceDetails = nonceLock.nonceDetails
+        if (customNonceValue) {
+          txMeta.nonceDetails.customNonceValue = customNonceValue
+        }
+        this.txStateManager.updateTx(txMeta, 'transactions#approveTransaction')
+        // sign transaction
+        const rawTx = await this.signTransaction(txId)
+        await this.publishTransaction(txId, rawTx)
+        // must set transaction to submitted/failed before releasing lock
+        nonceLock.releaseLock()
       }
-      this.txStateManager.updateTx(txMeta, 'transactions#approveTransaction')
-      // sign transaction
-      const rawTx = await this.signTransaction(txId)
-      await this.publishTransaction(txId, rawTx)
-      // must set transaction to submitted/failed before releasing lock
-      nonceLock.releaseLock()
     } catch (err) {
       // this is try-catch wrapped so that we can guarantee that the nonceLock is released
       try {
@@ -551,46 +565,6 @@ export default class TransactionController extends EventEmitter {
     return rawTx
   }
 
-  async signMetaTx (txId) {
-    const txMeta = this.txStateManager.getTx(txId)
-    // add network/chain id
-    const chainId = this.getChainId()
-    const txParams = Object.assign({}, txMeta.txParams, { chainId })
-    // sign a meta tx tx
-    const fromAddress = txParams.from
-
-
-    // const proxyAccountFactory = new ProxyAccountForwarderFactory()
-    // // create a new signer object
-    // const signer = {
-    //     signMessage: (msg) => this.signMessage({ from: fromAddress, data: msg }),
-    //     address: fromAddress
-
-    // }
-
-
-    // proxyAccountFactory.createNew(chainId, 1, )
-
-    // this.signMessage()
-
-
-    const ethTx = new Transaction(txParams)
-    await this.signEthTx(ethTx, fromAddress)
-
-    // add r,s,v values for provider request purposes see createMetamaskMiddleware
-    // and JSON rpc standard for further explanation
-    txMeta.r = ethUtil.bufferToHex(ethTx.r)
-    txMeta.s = ethUtil.bufferToHex(ethTx.s)
-    txMeta.v = ethUtil.bufferToHex(ethTx.v)
-
-    this.txStateManager.updateTx(txMeta, 'transactions#signTransaction: add r, s, v values')
-
-    // set state to signed
-    this.txStateManager.setTxStatusSigned(txMeta.id)
-    const rawTx = ethUtil.bufferToHex(ethTx.serialize())
-    return rawTx
-  }
-
   /**
     publishes the raw tx and sets the txMeta to submitted
     @param {number} txId - the tx's Id
@@ -615,6 +589,105 @@ export default class TransactionController extends EventEmitter {
     this.setTxHash(txId, txHash)
 
     this.txStateManager.setTxStatusSubmitted(txId)
+  }
+
+  async signMetaTx (txId) {
+    const txMeta = this.txStateManager.getTx(txId)
+    // add network/chain id
+    const chainId = this.getChainId()
+    const txParams = Object.assign({}, txMeta.txParams, { chainId })
+    // sign a meta tx tx
+    const forwarderAddress = txParams.from
+    const signerAddress = this.getUnderlyingAddress(forwarderAddress)
+
+    const provider = new Web3Provider(this.provider)
+
+    const signer = {
+      signMessage: async (msg) => await this.signMessage({ from: signerAddress, data: msg }),
+      address: signerAddress,
+      getAddress: async () => signerAddress,
+      provider: provider,
+    }
+
+    const proxyAccountFactory = new ProxyAccountForwarderFactory()
+    const proxyAccount = await proxyAccountFactory.createNew(chainId, 1, signer)
+
+    //   target: string;
+    //   value: BigNumberish;
+    //   callData: string;
+    const signedTx = await proxyAccount.signMetaTransaction({
+      target: txMeta.to,
+      value: txMeta.value,
+      callData: txMeta.data,
+    })
+    //   to: string;
+    //   signer: string;
+    //   target: string;
+    //   value: string;
+    //   data: string;
+    //   replayProtection: string;
+    //   replayProtectionAuthority: string;
+    //   chainId: number;
+    //   signature: string;
+
+    this.txStateManager.updateTx(txMeta, 'transactions#signTransaction: add r, s, v values')
+
+    // set state to signed
+    this.txStateManager.setTxStatusSigned(txMeta.id)
+
+    const rawTx = await proxyAccount.encodeSignedMetaTransaction(signedTx)
+    return rawTx
+  }
+
+  /**
+    publishes the raw tx and sets the txMeta to submitted
+    @param {number} txId - the tx's Id
+    @param {string} rawMetaTx - the full formed metatx
+    @returns {Promise<void>}
+  */
+  async publishMetaTransaction (txId, rawMetaTx) {
+    const txMeta = this.txStateManager.getTx(txId)
+    txMeta.rawTx = rawMetaTx
+    this.txStateManager.updateTx(txMeta, 'transactions#publishTransaction')
+
+    const forwarderAddress = txMeta.from
+    const signerAddress = this.getUnderlyingAddress(forwarderAddress)
+    const provider = new Web3Provider(this.provider)
+    const signer = {
+      signMessage: async (msg) => await this.signMessage({ from: signerAddress, data: msg }),
+      address: signerAddress,
+      getAddress: async () => signerAddress,
+      provider: provider,
+    }
+
+    const wrappedSigner = withAnyDotSender(signer)
+
+
+    let receipt
+    try {
+      receipt = await wrappedSigner.relay.sendTransaction({
+        to: forwarderAddress,
+        data: rawMetaTx,
+      })
+    } catch (error) {
+      if (error.message.toLowerCase().includes('known transaction')) {
+
+        // txHash = ethUtil.sha3(ethUtil.addHexPrefix(rawTx)).toString('hex')
+        // txHash = ethUtil.addHexPrefix(txHash)
+      } else {
+        // throw error
+      }
+      throw error
+    }
+
+    txMeta.relayTxReceipt = receipt
+    this.txStateManager.updateTx(txMeta, 'transactions#publishmetaTransaction: add relay receipt')
+    this.setTxHash(txId, '0x0000000000000000000000000000000000000000000000000000000000000000')
+    // this.setTxHash(txId, txHash)
+
+    this.txStateManager.setTxStatusSubmitted(txId)
+
+    return receipt
   }
 
   /**

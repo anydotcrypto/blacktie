@@ -1,6 +1,8 @@
 import EventEmitter from 'safe-event-emitter'
 import log from 'loglevel'
 import EthQuery from 'ethjs-query'
+import { AnyDotSenderCoreClient } from '@any-sender/client'
+import { Web3Provider } from 'ethers/providers'
 
 /**
 
@@ -46,6 +48,8 @@ export default class PendingTransactionTracker extends EventEmitter {
     this.publishTransaction = config.publishTransaction
     this.approveTransaction = config.approveTransaction
     this.confirmTransaction = config.confirmTransaction
+    this.isDerived = config.isDerived
+    this.provider = config.provider
   }
 
   /**
@@ -118,9 +122,16 @@ export default class PendingTransactionTracker extends EventEmitter {
    * @private
    */
   async _resubmitTx (txMeta, latestBlockNumber) {
+    if (this.isDerived(txMeta.from)) {
+      return
+    }
+
     if (!txMeta.firstRetryBlockNumber) {
       this.emit('tx:block-update', txMeta, latestBlockNumber)
     }
+
+
+    // we dont resubmit for derived accounts
 
     const firstRetryBlockNumber = txMeta.firstRetryBlockNumber || latestBlockNumber
     const txBlockDistance = Number.parseInt(latestBlockNumber, 16) - Number.parseInt(firstRetryBlockNumber, 16)
@@ -156,47 +167,83 @@ export default class PendingTransactionTracker extends EventEmitter {
    * @private
    */
   async _checkPendingTx (txMeta) {
-    const txHash = txMeta.hash
-    const txId = txMeta.id
+    if (this.isDerived(txMeta.from)) {
+      const txId = txMeta.id
+      const provider = new Web3Provider(this.provider)
+      const relayReceipt = txMeta.relayTxReceipt
 
-    // Only check submitted txs
-    if (txMeta.status !== 'submitted') {
-      return
-    }
+      const topics = AnyDotSenderCoreClient.getRelayExecutedEventTopics(relayReceipt.relayTransaction)
+      const logs = await provider.getLogs({
+        fromBlock: 0,
+        toBlock: 'latest',
+        to: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
+        topics: topics,
+      })
 
-    // extra check in case there was an uncaught error during the
-    // signature and submission process
-    if (!txHash) {
-      const noTxHashErr = new Error('We had an error while submitting this transaction, please try again.')
-      noTxHashErr.name = 'NoTxHashError'
-      this.emit('tx:failed', txId, noTxHashErr)
+      if (logs.length > 0) {
+        try {
+          const transactionReceipt = await this.query.getTransactionReceipt(logs[0].transactionHash)
+          if (transactionReceipt?.blockNumber) {
+            this.emit('tx:confirmed', txId, transactionReceipt)
+            return
+          }
+        } catch (err) {
+          txMeta.warning = {
+            error: err.message,
+            message: 'There was a problem loading this transaction.',
+          }
+          this.emit('tx:warning', txMeta, err)
+          return
+        }
 
-      return
-    }
+        if (await this._checkIfTxWasDropped(txMeta)) {
+          this.emit('tx:dropped', txId)
+          return
+        }
+      }
+    } else {
+      const txHash = txMeta.hash
+      const txId = txMeta.id
 
-    if (await this._checkIfNonceIsTaken(txMeta)) {
-      this.emit('tx:dropped', txId)
-      return
-    }
-
-    try {
-      const transactionReceipt = await this.query.getTransactionReceipt(txHash)
-      if (transactionReceipt?.blockNumber) {
-        this.emit('tx:confirmed', txId, transactionReceipt)
+      // Only check submitted txs
+      if (txMeta.status !== 'submitted') {
         return
       }
-    } catch (err) {
-      txMeta.warning = {
-        error: err.message,
-        message: 'There was a problem loading this transaction.',
-      }
-      this.emit('tx:warning', txMeta, err)
-      return
-    }
 
-    if (await this._checkIfTxWasDropped(txMeta)) {
-      this.emit('tx:dropped', txId)
-      return
+      // extra check in case there was an uncaught error during the
+      // signature and submission process
+      if (!txHash) {
+        const noTxHashErr = new Error('We had an error while submitting this transaction, please try again.')
+        noTxHashErr.name = 'NoTxHashError'
+        this.emit('tx:failed', txId, noTxHashErr)
+
+        return
+      }
+
+      if (await this._checkIfNonceIsTaken(txMeta)) {
+        this.emit('tx:dropped', txId)
+        return
+      }
+
+      try {
+        const transactionReceipt = await this.query.getTransactionReceipt(txHash)
+        if (transactionReceipt?.blockNumber) {
+          this.emit('tx:confirmed', txId, transactionReceipt)
+          return
+        }
+      } catch (err) {
+        txMeta.warning = {
+          error: err.message,
+          message: 'There was a problem loading this transaction.',
+        }
+        this.emit('tx:warning', txMeta, err)
+        return
+      }
+
+      if (await this._checkIfTxWasDropped(txMeta)) {
+        this.emit('tx:dropped', txId)
+        return
+      }
     }
   }
 

@@ -414,6 +414,7 @@ export default class MetamaskController extends EventEmitter {
       signTransaction: this.keyringController.signTransaction.bind(this.keyringController),
       signMessage: this.keyringController.signMessage.bind(this.keyringController),
       isDerived: this.keyringController.isDerived.bind(this.keyringController),
+      getUnderlyingAddress: this.keyringController.getUnderlyingAddress.bind(this.keyringController),
       provider: this.provider,
       blockTracker: this.blockTracker,
       getGasPrice: this.getGasPrice.bind(this),

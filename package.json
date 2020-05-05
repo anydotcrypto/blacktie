@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "3box": "^1.10.2",
+    "@any-sender/client": "0.2.1-beta.8",
     "@anydotcrypto/metatransactions": "0.0.11-1",
     "@babel/runtime": "^7.5.5",
     "@download/blockies": "^1.0.3",
