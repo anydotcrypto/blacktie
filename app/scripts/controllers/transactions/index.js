@@ -6,6 +6,7 @@ import EthQuery from 'ethjs-query'
 import { ethErrors } from 'eth-json-rpc-errors'
 import abi from 'human-standard-token-abi'
 import abiDecoder from 'abi-decoder'
+// import { ProxyAccountForwarderFactory, ProxyAccountForwarder } from '@anydotcrypto/metatransactions/dist'
 
 abiDecoder.addABI(abi)
 
@@ -77,6 +78,8 @@ export default class TransactionController extends EventEmitter {
     this.getPermittedAccounts = opts.getPermittedAccounts
     this.blockTracker = opts.blockTracker
     this.signEthTx = opts.signTransaction
+    this.signMessage = opts.signMessage
+    this.isDerived = opts.isDerived
     this.getGasPrice = opts.getGasPrice
     this.inProcessOfSigning = new Set()
 
@@ -531,6 +534,46 @@ export default class TransactionController extends EventEmitter {
     const txParams = Object.assign({}, txMeta.txParams, { chainId })
     // sign tx
     const fromAddress = txParams.from
+    const ethTx = new Transaction(txParams)
+    await this.signEthTx(ethTx, fromAddress)
+
+    // add r,s,v values for provider request purposes see createMetamaskMiddleware
+    // and JSON rpc standard for further explanation
+    txMeta.r = ethUtil.bufferToHex(ethTx.r)
+    txMeta.s = ethUtil.bufferToHex(ethTx.s)
+    txMeta.v = ethUtil.bufferToHex(ethTx.v)
+
+    this.txStateManager.updateTx(txMeta, 'transactions#signTransaction: add r, s, v values')
+
+    // set state to signed
+    this.txStateManager.setTxStatusSigned(txMeta.id)
+    const rawTx = ethUtil.bufferToHex(ethTx.serialize())
+    return rawTx
+  }
+
+  async signMetaTx (txId) {
+    const txMeta = this.txStateManager.getTx(txId)
+    // add network/chain id
+    const chainId = this.getChainId()
+    const txParams = Object.assign({}, txMeta.txParams, { chainId })
+    // sign a meta tx tx
+    const fromAddress = txParams.from
+
+
+    // const proxyAccountFactory = new ProxyAccountForwarderFactory()
+    // // create a new signer object
+    // const signer = {
+    //     signMessage: (msg) => this.signMessage({ from: fromAddress, data: msg }),
+    //     address: fromAddress
+
+    // }
+
+
+    // proxyAccountFactory.createNew(chainId, 1, )
+
+    // this.signMessage()
+
+
     const ethTx = new Transaction(txParams)
     await this.signEthTx(ethTx, fromAddress)
 

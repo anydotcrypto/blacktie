@@ -53,7 +53,7 @@ import selectChainId from './lib/select-chain-id'
 import { Mutex } from 'await-semaphore'
 import { version } from '../manifest/_base.json'
 import ethUtil, { BN } from 'ethereumjs-util'
-import { ProxyAccountForwarder } from '@anydotcrypto/metatransactions'
+import { ProxyAccountForwarder } from '@anydotcrypto/metatransactions/dist'
 
 const GWEI_BN = new BN('1000000000')
 import percentile from 'percentile'
@@ -74,34 +74,46 @@ import {
 import backEndMetaMetricsEvent from './lib/backend-metametrics'
 
 class DerivedAccountKeyringController extends KeyringController {
-  async addNewAccount (selectedKeyring, shouldDerive) {
-    const oldAccounts = await super.getAccounts()
-    const keyState = await super.addNewAccount(selectedKeyring)
-    const newAccounts = await super.getAccounts()
+  constructor (opts) {
+    super(opts)
 
+    if (!this.store.getState().derivedState) {
+      this.store.setState({ derivedState: [] })
+    }
+  }
 
-    const existingDerivedState = this.store.getState().derivedState || []
-    newAccounts.forEach((address) => {
-      if (!oldAccounts.includes(address)) {
-        existingDerivedState.push({
-          underlyingAddress: address,
-          derivedAddress: shouldDerive ? ProxyAccountForwarder.buildCreate2Address('0xc9d6292CA60605CB2d443a5395737a307E417E53', address, '0x645fa0a381ce70c078a0e83aae5bca546f39e1c0') : address,
-        })
-        this.store.updateState({ derivedState: existingDerivedState })
-      }
-    })
+  /**
+   * Update the store derived state with new accounts
+   * @param {*} accounts The new accounts
+   * @param {*} shouldDerive Whether or not we should derive a state for them
+   */
+  async addDerivedStateToStore (accounts, shouldDerive) {
+    const derivedState = this.store.getState().derivedState
 
-    const newKeyrings = keyState.keyrings.map(
+    // these are newly added derived accounts, lets add them to the internal state
+    accounts.forEach((a) =>
+      derivedState.push({
+        underlyingAddress: a,
+        derivedAddress: shouldDerive ? ProxyAccountForwarder.buildCreate2Address('0xc9d6292CA60605CB2d443a5395737a307E417E53', a, '0x645fa0a381ce70c078a0e83aae5bca546f39e1c0') : a,
+      })
+    )
+
+    this.store.updateState({ derivedState })
+  }
+
+  /**
+   * Update the mem store for the current accounts. Sets derived states into the memstore
+   */
+  async _updateMemStoreKeyrings () {
+    const derivedState = this.store.getState().derivedState
+    const keyrings = await Promise.all(this.keyrings.map(this.displayForKeyring))
+
+    // now loop through the keyring accounts, we find if they have a derived state
+    // and put that on the memstore
+    const derivedKeyRings = keyrings.map(
       (k) => {
-        if (!k.accounts) {
-          return {
-            type: k.type,
-            accounts: [],
-          }
-        }
-
         const accounts = k.accounts.map((a) => {
-          const existingAddress = existingDerivedState.filter((e) => e.underlyingAddress === a)[0]
+          const existingAddress = derivedState.filter((e) => e.underlyingAddress === a)[0]
           if (existingAddress && existingAddress.derivedAddress) {
             return existingAddress.derivedAddress
           } else {
@@ -116,33 +128,53 @@ class DerivedAccountKeyringController extends KeyringController {
       }
     )
 
-    const newState = { ...keyState, keyrings: newKeyrings, derivedState: existingDerivedState }
-
-    // overwrite the state everytime
-    this.memStore.updateState(newState)
-
-    return newState
+    return this.memStore.updateState({ keyrings: derivedKeyRings })
   }
 
   /**
-   * Fetch an underlying address from it's derived one
-   * @param {*} derivedAddress The derived address for which an underlying address will be returned
+   * Add a new account to the selected keyring, specify whether the keyring should derive a create2 address for this account
+   * @param {*} selectedKeyring The keyring on which to add a new account
+   * @param {*} shouldDerive Whether to derive a create2 address
    */
-  async getUnderlyingAddress (derivedAddress) {
-    const keyState = this.memStore.getState()
+  async addNewAccount (selectedKeyring, shouldDerive) {
+    const newKeyState = await selectedKeyring.addAccounts(1)
+      .then((accounts) => {
+        accounts.forEach((hexAccount) => {
+          this.emit('newAccount', hexAccount)
+        })
+        return accounts
+      })
+      .then((accounts) => this.addDerivedStateToStore(accounts, shouldDerive))
+      .then(this.persistAllKeyrings.bind(this))
+      .then(this._updateMemStoreKeyrings.bind(this))
+      .then(this.fullUpdate.bind(this))
 
-    const derivedState = keyState.derivedState.filter((a) => a.derivedAddress === derivedAddress)[0]
-    if (derivedState && derivedState.underlyingAddress) {
-      return derivedState.underlyingAddress
+    return newKeyState
+  }
+
+
+  /**
+   * Fetch an underlying address from it's derived one.
+   * Not all addresses will have a derived state from which we can look up an underlying address, for
+   * this case we just return the provided address
+   * @param {*} address The address for which an underlying address will be returned
+   */
+  getUnderlyingAddress (address) {
+    const derivedState = this.store.getState().derivedState
+
+    const derivedAddressState = derivedState.filter((a) => a.derivedAddress === address)[0]
+
+    if (derivedAddressState && derivedAddressState.underlyingAddress) {
+      return derivedAddressState.underlyingAddress
     } else {
-      return derivedAddress
+      return address
     }
   }
 
   async getAccounts () {
     const accounts = await super.getAccounts()
     // fetch the derived account
-    const derivedState = this.store.getState().derivedState || []
+    const derivedState = this.store.getState().derivedState
 
     const derivedAccounts = accounts.map((a) => {
       const addressState = derivedState.filter((d) => d.underlyingAddress === a)[0]
@@ -154,6 +186,52 @@ class DerivedAccountKeyringController extends KeyringController {
     })
 
     return derivedAccounts
+  }
+
+  async getKeyringForAccount (address) {
+    const underlyingAddress = await this.getUnderlyingAddress(address)
+    return await super.getKeyringForAccount(underlyingAddress)
+  }
+
+
+  async checkForDuplicate (type, newAccountArray) {
+    // we need to override because of the use of this.getAccounts here
+    // which will now return derived accounts
+
+    return this.getAccounts()
+      .then((accounts) => {
+        const underlyingAccounts = accounts.map((a) => this.getUnderlyingAddress(a))
+        switch (type) {
+          case 'Simple Key Pair': {
+            const isIncluded = Boolean(
+              underlyingAccounts.find(
+                (key) => (
+                  key === newAccountArray[0] ||
+                key === ethUtil.stripHexPrefix(newAccountArray[0])),
+              ),
+            )
+            return isIncluded
+              ? Promise.reject(new Error('The account you\'re are trying to import is a duplicate'))
+              : Promise.resolve(newAccountArray)
+          }
+          default: {
+            return Promise.resolve(newAccountArray)
+          }
+        }
+      })
+  }
+
+  async exportAccount (address) {
+    return await super.exportAccount(this.getUnderlyingAddress(address))
+  }
+
+  async removeAccount (address) {
+    return await super.removeAccount(this.getUnderlyingAddress(address))
+  }
+
+  isDerived (address) {
+    const underlyingAddress = this.getUnderlyingAddress(address)
+    return underlyingAddress !== address
   }
 }
 
@@ -334,6 +412,8 @@ export default class MetamaskController extends EventEmitter {
       txHistoryLimit: 40,
       getNetwork: this.networkController.getNetworkState.bind(this),
       signTransaction: this.keyringController.signTransaction.bind(this.keyringController),
+      signMessage: this.keyringController.signMessage.bind(this.keyringController),
+      isDerived: this.keyringController.isDerived.bind(this.keyringController),
       provider: this.provider,
       blockTracker: this.blockTracker,
       getGasPrice: this.getGasPrice.bind(this),
