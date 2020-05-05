@@ -119,7 +119,6 @@ export default class TransactionController extends EventEmitter {
       isDerived: this.isDerived,
       approveTransaction: this.approveTransaction.bind(this),
       getCompletedTransactions: this.txStateManager.getConfirmedTransactions.bind(this.txStateManager),
-      provider: this.provider,
     })
 
     this.txStateManager.store.subscribe(() => this.emit('update:badge'))
