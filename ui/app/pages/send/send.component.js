@@ -39,6 +39,7 @@ export default class SendTransactionScreen extends Component {
     recentBlocks: PropTypes.array,
     resetSendState: PropTypes.func.isRequired,
     selectedAddress: PropTypes.string,
+    isDerivedAddress: PropTypes.bool,
     selectedToken: PropTypes.object,
     showHexData: PropTypes.bool,
     to: PropTypes.string,
@@ -95,6 +96,7 @@ export default class SendTransactionScreen extends Component {
       updateToNicknameIfNecessary,
       qrCodeData,
       qrCodeDetected,
+      isDerivedAddress,
     } = this.props
 
     let updateGas = false
@@ -129,6 +131,7 @@ export default class SendTransactionScreen extends Component {
         primaryCurrency,
         selectedToken,
         tokenBalance,
+        isDerivedAddress,
       })
       const gasFeeErrorObject = selectedToken
         ? getGasFeeErrorObject({
@@ -138,6 +141,7 @@ export default class SendTransactionScreen extends Component {
           gasTotal,
           primaryCurrency,
           selectedToken,
+          isDerivedAddress,
         })
         : { gasFee: null }
       updateSendErrors(Object.assign(amountErrorObject, gasFeeErrorObject))

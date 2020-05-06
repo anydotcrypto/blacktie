@@ -20,6 +20,7 @@ import {
   conversionRateSelector,
   getKnownMethodData,
   getFeatureFlags,
+  isDerived,
 } from '../../../selectors'
 import { isBalanceSufficient } from '../../../pages/send/send.utils'
 
@@ -30,6 +31,7 @@ const mapStateToProps = (state, ownProps) => {
   const { transactionGroup: { primaryTransaction } = {} } = ownProps
   const { txParams: { gas: gasLimit, gasPrice, data } = {}, transactionCategory } = primaryTransaction
   const selectedAddress = getSelectedAddress(state)
+  const isDerivedAddress = isDerived(state, selectedAddress)
   const selectedAccountBalance = accounts[selectedAddress].balance
   const isDeposit = transactionCategory === 'incoming'
   const selectRpcInfo = frequentRpcListDetail.find((rpcInfo) => rpcInfo.rpcUrl === provider.rpcTarget)
@@ -43,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     }),
     balance: selectedAccountBalance,
     conversionRate: conversionRateSelector(state),
+    isDerivedAddress,
   })
 
   const transactionTimeFeatureActive = getFeatureFlags(state).transactionTime

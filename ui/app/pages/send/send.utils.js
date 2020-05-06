@@ -55,11 +55,14 @@ function isBalanceSufficient ({
   conversionRate = 1,
   gasTotal = '0x0',
   primaryCurrency,
+  isDerivedAddress,
 }) {
-  const totalAmount = addCurrencies(amount, gasTotal, {
+  const derivedGas = isDerivedAddress ? '0x0' : gasTotal
+
+  const totalAmount = addCurrencies(amount, derivedGas, {
     aBase: 16,
     bBase: 16,
-    toNumericBase: 'hex',
+    toNumericBased: 'hex',
   })
 
   const balanceIsSufficient = conversionGTE(
@@ -111,8 +114,10 @@ function getAmountErrorObject ({
   primaryCurrency,
   selectedToken,
   tokenBalance,
+  isDerivedAddress,
 }) {
   let insufficientFunds = false
+
   if (gasTotal && conversionRate && !selectedToken) {
     insufficientFunds = !isBalanceSufficient({
       amount,
@@ -121,6 +126,7 @@ function getAmountErrorObject ({
       conversionRate,
       gasTotal,
       primaryCurrency,
+      isDerivedAddress,
     })
   }
 
@@ -158,6 +164,7 @@ function getGasFeeErrorObject ({
   conversionRate,
   gasTotal,
   primaryCurrency,
+  isDerived,
 }) {
   let gasFeeError = null
 
@@ -169,6 +176,7 @@ function getGasFeeErrorObject ({
       conversionRate,
       gasTotal,
       primaryCurrency,
+      isDerived,
     })
 
     if (insufficientFunds) {

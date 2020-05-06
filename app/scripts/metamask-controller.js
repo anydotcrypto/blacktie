@@ -412,7 +412,7 @@ export default class MetamaskController extends EventEmitter {
       txHistoryLimit: 40,
       getNetwork: this.networkController.getNetworkState.bind(this),
       signTransaction: this.keyringController.signTransaction.bind(this.keyringController),
-      signMessage: this.keyringController.signMessage.bind(this.keyringController),
+      signMessage: this.keyringController.signPersonalMessage.bind(this.keyringController),
       isDerived: this.keyringController.isDerived.bind(this.keyringController),
       getUnderlyingAddress: this.keyringController.getUnderlyingAddress.bind(this.keyringController),
       provider: this.provider,

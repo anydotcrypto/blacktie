@@ -42,6 +42,8 @@ import {
   getBasicGasEstimateBlockTime,
   getTxParams,
   isCustomPriceSafe,
+  getSelectedAccount,
+  isDerived,
 } from '../../../../selectors'
 import {
   getTokenBalance,
@@ -109,11 +111,14 @@ const mapStateToProps = (state, ownProps) => {
 
   const sendAmount = maxModeOn && !isTokenSelected ? subtractHexWEIsFromRenderableEth(balance, customGasTotal) : addHexWEIsToRenderableEth(value, '0x0')
 
+  const account = getSelectedAccount(state)
+  const isDerivedAddress = isDerived(state, account)
   const insufficientBalance = maxModeOn ? false : !isBalanceSufficient({
     amount: value,
     gasTotal: customGasTotal,
     balance,
     conversionRate,
+    isDerivedAddress,
   })
 
 

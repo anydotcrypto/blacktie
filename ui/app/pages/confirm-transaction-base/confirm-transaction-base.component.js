@@ -96,6 +96,7 @@ export default class ConfirmTransactionBase extends Component {
     tryReverseResolveAddress: PropTypes.func.isRequired,
     hideSenderToRecipient: PropTypes.bool,
     showAccountInHeader: PropTypes.bool,
+    isDerivedAddress: PropTypes.bool,
   }
 
   state = {
@@ -158,6 +159,7 @@ export default class ConfirmTransactionBase extends Component {
         } = {},
       } = {},
       customGas,
+      isDerivedAddress,
     } = this.props
 
     const insufficientBalance = balance && !isBalanceSufficient({
@@ -165,6 +167,7 @@ export default class ConfirmTransactionBase extends Component {
       gasTotal: hexTransactionFee || '0x0',
       balance,
       conversionRate,
+      isDerivedAddress,
     })
 
     if (insufficientBalance) {

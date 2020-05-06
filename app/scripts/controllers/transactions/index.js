@@ -6,7 +6,6 @@ import EthQuery from 'ethjs-query'
 import { ethErrors } from 'eth-json-rpc-errors'
 import abi from 'human-standard-token-abi'
 import abiDecoder from 'abi-decoder'
-// import { ProxyAccountForwarderFactory, ProxyAccountForwarder } from '@anydotcrypto/metatransactions/dist'
 
 abiDecoder.addABI(abi)
 
@@ -39,104 +38,23 @@ import { hexToBn, bnToHex, BnMultiplyByFraction } from '../../lib/util'
 import { TRANSACTION_NO_CONTRACT_ERROR_KEY } from '../../../../ui/app/helpers/constants/error-keys'
 import { Web3Provider } from 'ethers/providers'
 import { ProxyAccountForwarderFactory } from '@anydotcrypto/metatransactions/dist'
+import { ethers } from 'ethers'
+import { hexlify } from 'ethers/utils'
+import { AnyDotSenderCoreClient } from './anyDotSenderClient'
 
-const utils_1 = require('ethers/utils')
-const data_entities_1 = require('@any-sender/data-entities')
-const contracts_1 = require('@any-sender/contracts')
-/**
- * Client library for interacting with the any.sender API
- */
-class AnyDotSenderCoreClient extends data_entities_1.ApiClient {
-  /**
-   * Client library for interacting with the any.sender API
-   * @param config Configuration options for this client
-   * @param mockService Optional. If provided the mock service will be used as any.sender instead of the config
-   */
-  constructor (config, mockService) {
-    super(config.apiUrl)
-    this.mockService = mockService
-    this.receiptsignerAddress = config.receiptSignerAddress
+class SimpleSigner extends ethers.Signer {
+  constructor (provider, signMessage, signerAddress) {
+    super()
+    this.provider = provider
+    this.signMessage = signMessage
+    this.address = signerAddress
   }
-  /**
-   * Computes the id of a relay transaction
-   * @param relayTransaction
-   */
-  static relayTxId (relayTransaction) {
-    return new data_entities_1.UnsignedRelayTransactionWrapper(relayTransaction)
-      .id
+
+  async getAddress () {
+    return this.address
   }
-  /**
-   * Gets the topics needed to watch for a RelayExecuted event
-   * @param relayTransaction
-   */
-  static getRelayExecutedEventTopics (relayTransaction) {
-    const relayInterface = new contracts_1.RelayFactory().interface
-    return relayInterface.events.RelayExecuted.encodeTopics([
-      AnyDotSenderCoreClient.relayTxId(relayTransaction),
-      null,
-      null,
-      null,
-      null,
-      null,
-    ])
-  }
-  /**
-   * Fetch the user's balance from the any.sender payment gateway service
-   * All public information via the blockchain, so API provides easy access.
-   * @param address Ethereum account
-   */
-  async balance (address) {
-    if (this.mockService) {
-      return this.mockService.balance(address)
-    }
-    const serialisation = await this.executeGetRequest(
-      data_entities_1.PaymentGatewayRoutes.BALANCE_ROUTE + '/' + address
-    )
-    return new utils_1.BigNumber(serialisation.balance)
-  }
-  /**
-   * Check that the returned receipt was correctly signed
-   * @param receipt
-   */
-  async isValidReceipt (receipt) {
-    const transactionWrapper = new data_entities_1.UnsignedRelayTransactionWrapper(
-      receipt.relayTransaction
-    )
-    if (transactionWrapper.id !== receipt.id) {
-      throw new data_entities_1.InvalidReceiptIdError(
-        'The returned receipt id is invalid.',
-        receipt.relayTransaction,
-        receipt.id
-      )
-    }
-    const recoveredAddress = utils_1.verifyMessage(
-      utils_1.arrayify(transactionWrapper.id),
-      receipt.receiptSignature
-    )
-    if (
-      recoveredAddress.toLowerCase() !== this.receiptsignerAddress.toLowerCase()
-    ) {
-      throw new data_entities_1.InvalidReceiptSignatureError(
-        'The returned relayer signature is invalid.',
-        receipt.relayTransaction,
-        receipt.receiptSignature
-      )
-    }
-  }
-  /**
-   * Relay a transaction via the any.sender API
-   * @param relayTransaction
-   */
-  async relay (relayTransaction) {
-    const receipt = this.mockService
-      ? await this.mockService.relay(relayTransaction)
-      : await this.executePostRequest(
-        relayTransaction,
-        data_entities_1.RELAY_ROUTE
-      )
-    // check the receipt
-    await this.isValidReceipt(receipt)
-    return receipt
+  async sendTransaction (transaction) {
+    throw new Error('Send transaction not implemented for derived signer.')
   }
 }
 
@@ -758,6 +676,7 @@ export default class TransactionController extends EventEmitter {
     this.txStateManager.setTxStatusSubmitted(txId)
   }
 
+
   async signMetaTx (txId) {
     const txMeta = this.txStateManager.getTx(txId)
     // add network/chain id
@@ -769,13 +688,12 @@ export default class TransactionController extends EventEmitter {
 
     const provider = new Web3Provider(this.provider)
 
-    const signer = {
-      signMessage: async (msg) =>
-        await this.signMessage({ from: signerAddress, data: msg }),
-      address: signerAddress,
-      getAddress: async () => signerAddress,
-      provider: provider,
-    }
+    const signer = new SimpleSigner(
+      provider,
+      async (msg) => await this.signMessage({ from: signerAddress, data: hexlify(msg) }),
+      signerAddress
+    )
+
 
     const proxyAccountFactory = new ProxyAccountForwarderFactory()
     const proxyAccount = await proxyAccountFactory.createNew(
@@ -788,9 +706,9 @@ export default class TransactionController extends EventEmitter {
     //   value: BigNumberish;
     //   callData: string;
     const signedTx = await proxyAccount.signMetaTransaction({
-      target: txMeta.to,
-      value: txMeta.value,
-      callData: txMeta.data,
+      target: txMeta.txParams.to,
+      value: txMeta.txParams.value,
+      callData: txMeta.txParams.data || '0x',
     })
     //   to: string;
     //   signer: string;
@@ -827,7 +745,7 @@ export default class TransactionController extends EventEmitter {
     const chainId = this.getChainId()
 
     let receipt
-    const forwarderAddress = txMeta.from
+    const forwarderAddress = txMeta.txParams.from
     const signerAddress = this.getUnderlyingAddress(forwarderAddress)
     const provider = new Web3Provider(this.provider)
     const currentBlock = await provider.getBlockNumber()
@@ -859,7 +777,7 @@ export default class TransactionController extends EventEmitter {
         from: signerAddress,
         compensation: '1000000000000000',
         deadlineBlockNumber: currentBlock + 500,
-        gas: txMeta.gasLimit,
+        gas: parseInt(txMeta.txParams.gas),
         relayContractAddress: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
       }
       const txId = AnyDotSenderCoreClient.relayTxId(relayTx)

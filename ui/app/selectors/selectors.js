@@ -86,6 +86,12 @@ export function selectedAccountIsDerived (state) {
   return underlyingSelectedAddress !== selectedAddress
 }
 
+export function isDerived (state, address) {
+  const underlyingSelectedAddress = getUnderlyingAddress(state, address)
+
+  return underlyingSelectedAddress !== address
+}
+
 export function getUnderlyingAddress (state, address) {
   const derivedState = state.metamask.derivedState
 

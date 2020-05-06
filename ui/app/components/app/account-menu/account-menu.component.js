@@ -169,7 +169,7 @@ export default class AccountMenu extends Component {
           />
           <div className="account-menu__account-info">
             <div className="account-menu__name">
-              { identity.name || '' }
+              { (identity.name || '') }
             </div>
             <UserPreferencedCurrencyDisplay
               className="account-menu__balance"

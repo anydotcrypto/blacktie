@@ -27,6 +27,7 @@ import {
 import {
   getSelectedAddress,
   getAddressBook,
+  isDerived,
 } from '../../selectors'
 import { getTokens } from './send-content/add-recipient/add-recipient.selectors'
 import {
@@ -55,6 +56,8 @@ import {
 
 function mapStateToProps (state) {
   const editingTransactionId = getSendEditingTransactionId(state)
+  const selectedAddress = getSelectedAddress(state)
+  const isDerivedAddress = isDerived(state, selectedAddress)
 
   return {
     addressBook: getAddressBook(state),
@@ -71,7 +74,8 @@ function mapStateToProps (state) {
     primaryCurrency: getPrimaryCurrency(state),
     qrCodeData: getQrCodeData(state),
     recentBlocks: getRecentBlocks(state),
-    selectedAddress: getSelectedAddress(state),
+    selectedAddress: selectedAddress,
+    isDerivedAddress: isDerivedAddress,
     selectedToken: getSelectedToken(state),
     showHexData: getSendHexDataFeatureFlagState(state),
     to: getSendTo(state),

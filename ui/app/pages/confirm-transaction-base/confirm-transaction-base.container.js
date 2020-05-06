@@ -36,6 +36,7 @@ import {
   getUseNonceField,
   preferencesSelector,
   transactionFeeSelector,
+  isDerived,
 } from '../../selectors'
 
 const casedContractMap = Object.keys(contractMap).reduce((acc, base) => {
@@ -52,6 +53,7 @@ const customNonceMerge = (txData) => (customNonceValue ? ({
 }) : txData)
 
 const mapStateToProps = (state, ownProps) => {
+
   const { toAddress: propsToAddress, customTxParamsData, match: { params = {} } } = ownProps
   const { id: paramsTransactionId } = params
   const { showFiatInTestnets } = preferencesSelector(state)
@@ -122,11 +124,14 @@ const mapStateToProps = (state, ownProps) => {
     .reduce((acc, key) => ({ ...acc, [key]: unapprovedTxs[key] }), {})
   const unapprovedTxCount = valuesFor(currentNetworkUnapprovedTxs).length
 
+  const isDerivedAddress = isDerived(state, fromAddress)
+
   const insufficientBalance = !isBalanceSufficient({
     amount,
     gasTotal: calcGasTotal(gasLimit, gasPrice),
     balance,
     conversionRate,
+    isDerivedAddress,
   })
 
   const methodData = getKnownMethodData(state, data) || {}
@@ -178,6 +183,7 @@ const mapStateToProps = (state, ownProps) => {
     metaMetricsSendCount,
     transactionCategory,
     nextNonce,
+    isDerivedAddress,
   }
 }
 
@@ -211,7 +217,7 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const getValidateEditGas = ({ balance, conversionRate, txData }) => {
+const getValidateEditGas = ({ balance, conversionRate, txData, isDerivedAddress }) => {
   const { txParams: { value: amount } = {} } = txData
 
   return ({ gasLimit, gasPrice }) => {
@@ -221,6 +227,7 @@ const getValidateEditGas = ({ balance, conversionRate, txData }) => {
       gasTotal,
       balance,
       conversionRate,
+      isDerivedAddress,
     })
 
     if (!hasSufficientBalance) {
@@ -256,7 +263,7 @@ const getValidateEditGas = ({ balance, conversionRate, txData }) => {
 }
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  const { balance, conversionRate, txData, unapprovedTxs } = stateProps
+  const { balance, conversionRate, txData, unapprovedTxs, isDerivedAddress } = stateProps
   const {
     cancelAllTransactions: dispatchCancelAllTransactions,
     showCustomizeGasModal: dispatchShowCustomizeGasModal,
@@ -264,7 +271,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...otherDispatchProps
   } = dispatchProps
 
-  const validateEditGas = getValidateEditGas({ balance, conversionRate, txData })
+  const validateEditGas = getValidateEditGas({ balance, conversionRate, txData, isDerivedAddress })
 
   return {
     ...stateProps,
