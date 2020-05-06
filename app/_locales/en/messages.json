@@ -582,6 +582,9 @@
   "ethereumPublicAddress": {
     "message": "Ethereum Public Address"
   },
+  "ethereumUnderlyingAddress": {
+    "message": "Ethereum Signing Authorithy"
+  },
   "etherscanView": {
     "message": "View account on Etherscan"
   },
