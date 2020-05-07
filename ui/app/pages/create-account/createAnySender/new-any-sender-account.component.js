@@ -19,7 +19,7 @@ export default class NewAnySenderAccountCreateForm extends Component {
     const { newAccountName, defaultAccountName } = this.state
     const { history, createAccount } = this.props
     const createClick = (_) => {
-      createAccount(newAccountName || defaultAccountName)
+      createAccount('any.' + (newAccountName || defaultAccountName))
         .then(() => {
           this.context.metricsEvent({
             eventOpts: {

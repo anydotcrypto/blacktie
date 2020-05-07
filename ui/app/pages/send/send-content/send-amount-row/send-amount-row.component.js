@@ -27,6 +27,7 @@ export default class SendAmountRow extends Component {
     updateSendAmountError: PropTypes.func,
     updateGas: PropTypes.func,
     maxModeOn: PropTypes.bool,
+    isDerivedAddress: PropTypes.bool,
   }
 
   static contextTypes = {
@@ -59,6 +60,7 @@ export default class SendAmountRow extends Component {
       tokenBalance,
       updateGasFeeError,
       updateSendAmountError,
+      isDerivedAddress,
     } = this.props
 
     updateSendAmountError({
@@ -70,6 +72,7 @@ export default class SendAmountRow extends Component {
       primaryCurrency,
       selectedToken,
       tokenBalance,
+      isDerivedAddress,
     })
 
     if (selectedToken) {

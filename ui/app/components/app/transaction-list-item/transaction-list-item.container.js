@@ -23,6 +23,7 @@ import {
   isDerived,
 } from '../../../selectors'
 import { isBalanceSufficient } from '../../../pages/send/send.utils'
+import { getAmountConversionRate } from '../../../pages/send/send.selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const { metamask: { accounts, provider, frequentRpcListDetail } } = state
@@ -36,6 +37,7 @@ const mapStateToProps = (state, ownProps) => {
   const isDeposit = transactionCategory === 'incoming'
   const selectRpcInfo = frequentRpcListDetail.find((rpcInfo) => rpcInfo.rpcUrl === provider.rpcTarget)
   const { rpcPrefs } = selectRpcInfo || {}
+  const amountConversionRate = getAmountConversionRate(state)
 
   const hasEnoughCancelGas = primaryTransaction.txParams && isBalanceSufficient({
     amount: '0x0',
@@ -46,6 +48,7 @@ const mapStateToProps = (state, ownProps) => {
     balance: selectedAccountBalance,
     conversionRate: conversionRateSelector(state),
     isDerivedAddress,
+    amountConversionRate,
   })
 
   const transactionTimeFeatureActive = getFeatureFlags(state).transactionTime

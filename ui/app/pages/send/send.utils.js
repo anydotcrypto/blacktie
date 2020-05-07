@@ -22,6 +22,7 @@ import {
 
 import abi from 'ethereumjs-abi'
 import ethUtil from 'ethereumjs-util'
+import BigNumber from 'bignumber.js'
 
 export {
   addGasBuffer,
@@ -73,7 +74,7 @@ function isBalanceSufficient ({
       conversionRate,
     },
     {
-      value: totalAmount,
+      value: '0x' + new BigNumber(totalAmount).toString(16),
       fromNumericBase: 'hex',
       conversionRate: Number(amountConversionRate) || conversionRate,
       fromCurrency: primaryCurrency,
@@ -167,7 +168,6 @@ function getGasFeeErrorObject ({
   isDerived,
 }) {
   let gasFeeError = null
-
   if (gasTotal && conversionRate) {
     const insufficientFunds = !isBalanceSufficient({
       amount: '0x0',

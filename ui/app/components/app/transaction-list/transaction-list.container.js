@@ -8,12 +8,14 @@ import {
   selectedTokenSelector,
   nonceSortedCompletedTransactionsSelector,
   nonceSortedPendingTransactionsSelector,
+  selectedAccountIsDerived,
 } from '../../../selectors'
 import { fetchBasicGasAndTimeEstimates, fetchGasEstimates } from '../../../ducks/gas/gas.duck'
 
 const mapStateToProps = (state) => {
   const pendingTransactions = nonceSortedPendingTransactionsSelector(state)
   const firstPendingTransactionId = pendingTransactions[0] && pendingTransactions[0].primaryTransaction.id
+  const isDerivedAddress = selectedAccountIsDerived(state)
   return {
     completedTransactions: nonceSortedCompletedTransactionsSelector(state),
     pendingTransactions,
@@ -22,6 +24,7 @@ const mapStateToProps = (state) => {
     selectedAddress: getSelectedAddress(state),
     assetImages: getAssetImages(state),
     transactionTimeFeatureActive: getFeatureFlags(state).transactionTime,
+    isDerivedAddress,
   }
 }
 

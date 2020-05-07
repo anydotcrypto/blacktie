@@ -53,7 +53,7 @@ class SimpleSigner extends ethers.Signer {
   async getAddress () {
     return this.address
   }
-  async sendTransaction (transaction) {
+  async sendTransaction () {
     throw new Error('Send transaction not implemented for derived signer.')
   }
 }
@@ -142,6 +142,7 @@ export default class TransactionController extends EventEmitter {
       getCompletedTransactions: this.txStateManager.getConfirmedTransactions.bind(
         this.txStateManager
       ),
+      setTxHash: this.setTxHash.bind(this),
     })
 
     this.txStateManager.store.subscribe(() => this.emit('update:badge'))
@@ -566,11 +567,13 @@ export default class TransactionController extends EventEmitter {
       // get next nonce
       const txMeta = this.txStateManager.getTx(txId)
       const fromAddress = txMeta.txParams.from
+
       if (this.isDerived(fromAddress)) {
+        const proxyAccountForwarder = await this.getProxyAccountForwarder(fromAddress)
         this.txStateManager.updateTx(txMeta, 'transactions#approveTransaction')
         // sign transaction
-        const rawTx = await this.signMetaTx(txId)
-        await this.publishMetaTransaction(txId, rawTx)
+        const rawTx = await this.signMetaTx(txId, proxyAccountForwarder)
+        await this.publishMetaTransaction(txId, rawTx, proxyAccountForwarder)
         // must set transaction to submitted/failed before releasing lock
       } else {
         // wait for a nonce
@@ -676,36 +679,87 @@ export default class TransactionController extends EventEmitter {
     this.txStateManager.setTxStatusSubmitted(txId)
   }
 
-
-  async signMetaTx (txId) {
-    const txMeta = this.txStateManager.getTx(txId)
-    // add network/chain id
+  async getProxyAccountForwarder (from) {
     const chainId = this.getChainId()
-    const txParams = Object.assign({}, txMeta.txParams, { chainId })
-    // sign a meta tx tx
-    const forwarderAddress = txParams.from
+    const forwarderAddress = from
     const signerAddress = this.getUnderlyingAddress(forwarderAddress)
-
     const provider = new Web3Provider(this.provider)
-
     const signer = new SimpleSigner(
       provider,
       async (msg) => await this.signMessage({ from: signerAddress, data: hexlify(msg) }),
       signerAddress
     )
-
-
     const proxyAccountFactory = new ProxyAccountForwarderFactory()
-    const proxyAccount = await proxyAccountFactory.createNew(
+    return await proxyAccountFactory.createNew(
       chainId,
       1,
       signer
     )
+  }
+
+  async sendViaAnyDotSender (from, to, gas, data) {
+    const chainId = this.getChainId()
+    const provider = new Web3Provider(this.provider)
+    const currentBlock = await provider.getBlockNumber()
+
+    try {
+      let url
+      let receiptSigner
+      switch (chainId) {
+        case 1: {
+          url = 'https://api.anydot.dev/any.sender.mainnet'
+          receiptSigner = '0x02111c619c5b7e2aa5c1f5e09815be264d925422'
+          break
+        }
+        case 3: {
+          url = 'https://api.anydot.dev/any.sender.ropsten'
+          receiptSigner = '0xe41743Ca34762b84004D3ABe932443FC51D561D5'
+          break
+        }
+        default: throw new Error('Unexpected chain id for meta transaction. Only ropsten and mainnet are valid.')
+      }
+
+      const client = new AnyDotSenderCoreClient({
+        apiUrl: url, receiptSignerAddress: receiptSigner,
+      })
+
+      const relayTx = {
+        to: to,
+        data: data,
+        from: from,
+        compensation: '1000000000000000',
+        deadlineBlockNumber: currentBlock + 500,
+        gas: parseInt(gas),
+        relayContractAddress: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
+      }
+      const txId = AnyDotSenderCoreClient.relayTxId(relayTx)
+      const sig = await this.signMessage({ from: from, data: txId })
+      return await client.relay.bind(client)({ ...relayTx, signature: sig })
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
+  }
+
+
+  async deployProxyContract (txId, proxyAccountForwarder) {
+    const txMeta = this.txStateManager.getTx(txId)
+    const forwarderAddress = txMeta.txParams.from
+    const signerAddress = this.getUnderlyingAddress(forwarderAddress)
+
+    const createData = await proxyAccountForwarder.createProxyContract()
+    const web3Provider = new Web3Provider(this.provider)
+    const gas = await web3Provider.estimateGas({ to: createData.to, data: createData.callData })
+    return await this.sendViaAnyDotSender(signerAddress, createData.to, gas, createData.callData)
+  }
+
+  async signMetaTx (txId, proxyAccountForwarder) {
+    const txMeta = this.txStateManager.getTx(txId)
 
     //   target: string;
     //   value: BigNumberish;
     //   callData: string;
-    const signedTx = await proxyAccount.signMetaTransaction({
+    const signedTx = await proxyAccountForwarder.signMetaTransaction({
       target: txMeta.txParams.to,
       value: txMeta.txParams.value,
       callData: txMeta.txParams.data || '0x',
@@ -728,9 +782,10 @@ export default class TransactionController extends EventEmitter {
     // set state to signed
     this.txStateManager.setTxStatusSigned(txMeta.id)
 
-    const rawTx = await proxyAccount.encodeSignedMetaTransaction(signedTx)
+    const rawTx = await proxyAccountForwarder.encodeSignedMetaTransaction(signedTx)
     return rawTx
   }
+
 
   /**
     publishes the raw tx and sets the txMeta to submitted
@@ -738,60 +793,25 @@ export default class TransactionController extends EventEmitter {
     @param {string} rawMetaTx - the full formed metatx
     @returns {Promise<void>}
   */
-  async publishMetaTransaction (txId, rawMetaTx) {
+  async publishMetaTransaction (txId, rawMetaTx, proxyAccountForwarder) {
     const txMeta = this.txStateManager.getTx(txId)
     txMeta.rawTx = rawMetaTx
     this.txStateManager.updateTx(txMeta, 'transactions#publishTransaction')
-    const chainId = this.getChainId()
 
-    let receipt
     const forwarderAddress = txMeta.txParams.from
     const signerAddress = this.getUnderlyingAddress(forwarderAddress)
-    const provider = new Web3Provider(this.provider)
-    const currentBlock = await provider.getBlockNumber()
 
-    try {
-      let url
-      let receiptSigner
-      switch (chainId) {
-        case 1: {
-          url = 'https://api.anydot.dev/any.sender.mainnet'
-          receiptSigner = '0x02111c619c5b7e2aa5c1f5e09815be264d925422'
-          break
-        }
-        case 3: {
-          url = 'https://api.anydot.dev/any.sender.ropsten'
-          receiptSigner = '0xe41743Ca34762b84004D3ABe932443FC51D561D5'
-          break
-        }
-        default: throw new Error('Unexpected chain id for meta transaction. Only ropsten and mainnet are valid.')
-      }
-
-      const client = new AnyDotSenderCoreClient({
-        apiUrl: url, receiptSigner,
+    let receipt
+    if (!await proxyAccountForwarder.isProxyContractDeployed()) {
+      receipt = await this.deployProxyContract(txId, proxyAccountForwarder)
+      // now we wait a while before sending the actual tx
+      setTimeout(() => {
+        this.sendViaAnyDotSender(signerAddress, forwarderAddress, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx)
       })
 
-      const relayTx = {
-        to: forwarderAddress,
-        data: rawMetaTx,
-        from: signerAddress,
-        compensation: '1000000000000000',
-        deadlineBlockNumber: currentBlock + 500,
-        gas: parseInt(txMeta.txParams.gas),
-        relayContractAddress: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
-      }
-      const txId = AnyDotSenderCoreClient.relayTxId(relayTx)
-      const sig = await this.signMessage({ from: signerAddress, data: txId })
-      receipt = await client.relay({ ...relayTx, signature: sig })
-    } catch (error) {
-      console.error(error)
-      if (error.message.toLowerCase().includes('known transaction')) {
-        // txHash = ethUtil.sha3(ethUtil.addHexPrefix(rawTx)).toString('hex')
-        // txHash = ethUtil.addHexPrefix(txHash)
-      } else {
-        // throw error
-      }
-      throw error
+    } else {
+      // now lets check if the proxy actually exists, if it doesnt we'll create it and tag on at the end
+      receipt = await this.sendViaAnyDotSender(signerAddress, forwarderAddress, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx)
     }
 
     txMeta.relayTxReceipt = receipt
@@ -799,11 +819,7 @@ export default class TransactionController extends EventEmitter {
       txMeta,
       'transactions#publishmetaTransaction: add relay receipt'
     )
-    this.setTxHash(
-      txId,
-      '0x0000000000000000000000000000000000000000000000000000000000000000'
-    )
-    // this.setTxHash(txId, txHash)
+    this.setTxHash(txId, receipt.id)
 
     this.txStateManager.setTxStatusSubmitted(txId)
 
@@ -847,7 +863,7 @@ export default class TransactionController extends EventEmitter {
     }
 
     this.txStateManager.setTxStatusConfirmed(txId)
-    this._markNonceDuplicatesDropped(txId)
+    // this._markNonceDuplicatesDropped(txId)
   }
 
   /**

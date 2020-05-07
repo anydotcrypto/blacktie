@@ -204,7 +204,7 @@ class ExtensionPlatform {
     const nonce = parseInt(txMeta.txParams.nonce, 16)
 
     const title = 'Confirmed transaction'
-    const message = `Transaction ${nonce} confirmed! View on Etherscan`
+    const message = nonce ? `Transaction ${nonce} confirmed! View on Etherscan` : `Transaction confirmed! View on Etherscan`
     this._showNotification(title, message, url)
   }
 
@@ -212,7 +212,7 @@ class ExtensionPlatform {
 
     const nonce = parseInt(txMeta.txParams.nonce, 16)
     const title = 'Failed transaction'
-    const message = `Transaction ${nonce} failed! ${errorMessage || txMeta.err.message}`
+    const message = nonce ? `Transaction ${nonce} failed! ${errorMessage || txMeta.err.message}` : `Transaction failed! ${errorMessage || txMeta.err.message}`
     this._showNotification(title, message)
   }
 

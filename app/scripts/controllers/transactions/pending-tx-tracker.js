@@ -50,6 +50,7 @@ export default class PendingTransactionTracker extends EventEmitter {
     this.confirmTransaction = config.confirmTransaction
     this.isDerived = config.isDerived
     this.provider = config.provider
+    this.setTxHash = config.setTxHash
   }
 
   /**
@@ -122,6 +123,7 @@ export default class PendingTransactionTracker extends EventEmitter {
    * @private
    */
   async _resubmitTx (txMeta, latestBlockNumber) {
+    // we dont resubmit for derived accounts
     if (this.isDerived(txMeta.from)) {
       return
     }
@@ -129,9 +131,6 @@ export default class PendingTransactionTracker extends EventEmitter {
     if (!txMeta.firstRetryBlockNumber) {
       this.emit('tx:block-update', txMeta, latestBlockNumber)
     }
-
-
-    // we dont resubmit for derived accounts
 
     const firstRetryBlockNumber = txMeta.firstRetryBlockNumber || latestBlockNumber
     const txBlockDistance = Number.parseInt(latestBlockNumber, 16) - Number.parseInt(firstRetryBlockNumber, 16)
@@ -167,26 +166,29 @@ export default class PendingTransactionTracker extends EventEmitter {
    * @private
    */
   async _checkPendingTx (txMeta) {
-    if (this.isDerived(txMeta.from)) {
+    if (this.isDerived(txMeta.txParams.from)) {
       const txId = txMeta.id
       const provider = new Web3Provider(this.provider)
       const relayReceipt = txMeta.relayTxReceipt
 
       const topics = AnyDotSenderCoreClient.getRelayExecutedEventTopics(relayReceipt.relayTransaction)
-      const logs = await provider.getLogs({
+      const filter = {
         fromBlock: 0,
         toBlock: 'latest',
         to: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
         topics: topics,
-      })
+      }
+      const logs = await provider.getLogs(filter)
 
       if (logs.length > 0) {
         try {
           const transactionReceipt = await this.query.getTransactionReceipt(logs[0].transactionHash)
           if (transactionReceipt?.blockNumber) {
+            this.setTxHash(txId, transactionReceipt.transactionHash)
             this.emit('tx:confirmed', txId, transactionReceipt)
             return
           }
+
         } catch (err) {
           txMeta.warning = {
             error: err.message,
@@ -196,10 +198,10 @@ export default class PendingTransactionTracker extends EventEmitter {
           return
         }
 
-        if (await this._checkIfTxWasDropped(txMeta)) {
-          this.emit('tx:dropped', txId)
-          return
-        }
+        // if (await this._checkIfTxWasDropped(txMeta)) {
+        //     this.emit('tx:dropped', txId)
+        //     return
+        // }
       }
     } else {
       const txHash = txMeta.hash

@@ -22,6 +22,7 @@ export default class TransactionList extends PureComponent {
     fetchGasEstimates: PropTypes.func,
     transactionTimeFeatureActive: PropTypes.bool,
     firstPendingTransactionId: PropTypes.number,
+    isDerivedAddress: PropTypes.bool,
   }
 
   componentDidMount () {
@@ -70,7 +71,7 @@ export default class TransactionList extends PureComponent {
 
   renderTransactions () {
     const { t } = this.context
-    const { isWideViewport, pendingTransactions = [], completedTransactions = [] } = this.props
+    const { isWideViewport, pendingTransactions = [], completedTransactions = [], isDerivedAddress } = this.props
     const pendingLength = pendingTransactions.length
 
     return (
@@ -83,7 +84,7 @@ export default class TransactionList extends PureComponent {
               </div>
               {
                 pendingTransactions.map((transactionGroup, index) => (
-                  this.renderTransaction(transactionGroup, index, true)
+                  this.renderTransaction(transactionGroup, index, true, isDerivedAddress)
                 ))
               }
             </div>
@@ -111,15 +112,15 @@ export default class TransactionList extends PureComponent {
     )
   }
 
-  renderTransaction (transactionGroup, index, isPendingTx = false) {
+  renderTransaction (transactionGroup, index, isPendingTx = false, isDerivedAddress) {
     const { selectedToken, assetImages, firstPendingTransactionId } = this.props
 
     return (
       <TransactionListItem
         transactionGroup={transactionGroup}
         key={`${transactionGroup.nonce}:${index}`}
-        showSpeedUp={isPendingTx && this.shouldShowSpeedUp(transactionGroup, index === 0)}
-        showCancel={isPendingTx && this.shouldShowCancel(transactionGroup)}
+        showSpeedUp={isPendingTx && this.shouldShowSpeedUp(transactionGroup, index === 0 && !isDerivedAddress)}
+        showCancel={isPendingTx && this.shouldShowCancel(transactionGroup) && !isDerivedAddress}
         isEarliestNonce={isPendingTx && index === 0}
         token={selectedToken}
         assetImages={assetImages}

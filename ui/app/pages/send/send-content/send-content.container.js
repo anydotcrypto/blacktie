@@ -6,16 +6,19 @@ import {
 import {
   accountsWithSendEtherInfoSelector,
   getAddressBookEntry,
+  selectedAccountIsDerived,
 } from '../../../selectors'
 import * as actions from '../../../store/actions'
 
 function mapStateToProps (state) {
   const ownedAccounts = accountsWithSendEtherInfoSelector(state)
   const to = getSendTo(state)
+  const isDerivedAddress = selectedAccountIsDerived(state)
   return {
     isOwnedAccount: !!ownedAccounts.find(({ address }) => address.toLowerCase() === to.toLowerCase()),
     contact: getAddressBookEntry(state, to),
     to,
+    isDerivedAddress,
   }
 }
 

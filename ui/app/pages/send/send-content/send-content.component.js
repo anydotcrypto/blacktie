@@ -19,6 +19,7 @@ export default class SendContent extends Component {
     showHexData: PropTypes.bool,
     contact: PropTypes.object,
     isOwnedAccount: PropTypes.bool,
+    isDerivedAddress: PropTypes.bool,
   }
 
   updateGas = (updateData) => this.props.updateGas(updateData)
@@ -30,7 +31,7 @@ export default class SendContent extends Component {
           { this.maybeRenderAddContact() }
           <SendAssetRow />
           <SendAmountRow updateGas={this.updateGas} />
-          <SendGasRow />
+          { !this.props.isDerivedAddress && <SendGasRow /> }
           {
             this.props.showHexData && (
               <SendHexDataRow

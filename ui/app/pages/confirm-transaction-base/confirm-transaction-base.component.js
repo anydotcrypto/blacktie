@@ -226,6 +226,7 @@ export default class ConfirmTransactionBase extends Component {
       secondaryTotalTextOverride,
       hexTransactionFee,
       hexTransactionTotal,
+      hexTransactionAmount,
       hideDetails,
       useNonceField,
       customNonceValue,
@@ -237,6 +238,7 @@ export default class ConfirmTransactionBase extends Component {
       hideFiatConversion,
       nextNonce,
       getNextNonce,
+      isDerivedAddress,
     } = this.props
 
     if (hideDetails) {
@@ -246,37 +248,39 @@ export default class ConfirmTransactionBase extends Component {
     return (
       detailsComponent || (
         <div className="confirm-page-container-content__details">
-          <div className="confirm-page-container-content__gas-fee">
-            <ConfirmDetailRow
-              label="Gas Fee"
-              value={hexTransactionFee}
-              headerText="Edit"
-              headerTextClassName="confirm-detail-row__header-text--edit"
-              onHeaderClick={() => this.handleEditGas()}
-              secondaryText={hideFiatConversion ? this.context.t('noConversionRateAvailable') : ''}
-            />
-            {advancedInlineGasShown
-              ? (
-                <AdvancedGasInputs
-                  updateCustomGasPrice={(newGasPrice) => updateGasAndCalculate({ ...customGas, gasPrice: newGasPrice })}
-                  updateCustomGasLimit={(newGasLimit) => updateGasAndCalculate({ ...customGas, gasLimit: newGasLimit })}
-                  customGasPrice={customGas.gasPrice}
-                  customGasLimit={customGas.gasLimit}
-                  insufficientBalance={insufficientBalance}
-                  customPriceIsSafe
-                  isSpeedUp={false}
-                />
-              )
-              : null
-            }
-          </div>
+          { !isDerivedAddress && (
+            <div className="confirm-page-container-content__gas-fee">
+              <ConfirmDetailRow
+                label="Gas Fee"
+                value={hexTransactionFee}
+                headerText="Edit"
+                headerTextClassName="confirm-detail-row__header-text--edit"
+                onHeaderClick={() => this.handleEditGas()}
+                secondaryText={hideFiatConversion ? this.context.t('noConversionRateAvailable') : ''}
+              />
+              {advancedInlineGasShown
+                ? (
+                  <AdvancedGasInputs
+                    updateCustomGasPrice={(newGasPrice) => updateGasAndCalculate({ ...customGas, gasPrice: newGasPrice })}
+                    updateCustomGasLimit={(newGasLimit) => updateGasAndCalculate({ ...customGas, gasLimit: newGasLimit })}
+                    customGasPrice={customGas.gasPrice}
+                    customGasLimit={customGas.gasLimit}
+                    insufficientBalance={insufficientBalance}
+                    customPriceIsSafe
+                    isSpeedUp={false}
+                  />
+                )
+                : null
+              }
+            </div>
+          )}
           <div className={useNonceField ? 'confirm-page-container-content__gas-fee' : null}>
             <ConfirmDetailRow
               label="Total"
-              value={hexTransactionTotal}
+              value={isDerivedAddress ? hexTransactionAmount : hexTransactionTotal}
               primaryText={primaryTotalTextOverride}
               secondaryText={hideFiatConversion ? this.context.t('noConversionRateAvailable') : secondaryTotalTextOverride}
-              headerText="Amount + Gas Fee"
+              headerText={isDerivedAddress ? 'Amount' : 'Amount + Gas Fee' }
               headerTextClassName="confirm-detail-row__header-text--total"
               primaryValueTextColor="#2f9ae0"
             />

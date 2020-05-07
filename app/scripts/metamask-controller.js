@@ -64,6 +64,7 @@ import LedgerBridgeKeyring from '@metamask/eth-ledger-bridge-keyring'
 import EthQuery from 'eth-query'
 import nanoid from 'nanoid'
 import contractMap from 'eth-contract-metadata'
+import { normalize as normalizeAddress } from 'eth-sig-util'
 
 import {
   AddressBookController,
@@ -77,9 +78,12 @@ class DerivedAccountKeyringController extends KeyringController {
   constructor (opts) {
     super(opts)
 
+    console.log(this.store.getState())
     if (!this.store.getState().derivedState) {
-      this.store.setState({ derivedState: [] })
+      this.store.updateState({ derivedState: [] })
     }
+
+    console.log(this.memStore.getState())
   }
 
   /**
@@ -88,13 +92,14 @@ class DerivedAccountKeyringController extends KeyringController {
    * @param {*} shouldDerive Whether or not we should derive a state for them
    */
   async addDerivedStateToStore (accounts, shouldDerive) {
+
     const derivedState = this.store.getState().derivedState
 
     // these are newly added derived accounts, lets add them to the internal state
     accounts.forEach((a) =>
       derivedState.push({
         underlyingAddress: a,
-        derivedAddress: shouldDerive ? ProxyAccountForwarder.buildCreate2Address('0xc9d6292CA60605CB2d443a5395737a307E417E53', a, '0x645fa0a381ce70c078a0e83aae5bca546f39e1c0') : a,
+        derivedAddress: shouldDerive ? normalizeAddress(ProxyAccountForwarder.buildProxyAccountAddress('0xc9d6292CA60605CB2d443a5395737a307E417E53', a, '0x645fa0a381ce70c078a0e83aae5bca546f39e1c0')) : a,
       })
     )
 
@@ -144,11 +149,14 @@ class DerivedAccountKeyringController extends KeyringController {
         })
         return accounts
       })
-      .then((accounts) => this.addDerivedStateToStore(accounts, shouldDerive))
-      .then(this.persistAllKeyrings.bind(this))
+      .then(
+        (accounts) => this.addDerivedStateToStore.bind(this)(accounts, shouldDerive)
+
+      ).then(
+        this.persistAllKeyrings.bind(this)
+      )
       .then(this._updateMemStoreKeyrings.bind(this))
       .then(this.fullUpdate.bind(this))
-
     return newKeyState
   }
 
@@ -1129,6 +1137,7 @@ export default class MetamaskController extends EventEmitter {
     if (!primaryKeyring) {
       throw new Error('MetamaskController - No HD Key Tree found')
     }
+
     const keyringController = this.keyringController
     const oldAccounts = await keyringController.getAccounts()
     const keyState = await keyringController.addNewAccount(primaryKeyring, true)
@@ -1137,6 +1146,7 @@ export default class MetamaskController extends EventEmitter {
     await this.verifySeedPhrase()
 
     this.preferencesController.setAddresses(newAccounts)
+
     newAccounts.forEach((address) => {
       if (!oldAccounts.includes(address)) {
         this.preferencesController.setSelectedAddress(address)

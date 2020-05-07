@@ -63,16 +63,6 @@
     web3-core "^1.2.6"
     web3-core-helpers "^1.2.6"
 
-"@any-sender/client@^0.2.0-beta.0":
-  version "0.2.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@any-sender/client/-/client-0.2.0-beta.0.tgz#9a4623c168976f64323afa815e83d207a96c5396"
-  integrity sha512-9ZRoOX5ya5MsEqH6ZGHbM0aqrQoCq4FSyy5pNYqcr+jNdJ5Yo0ellWAu7U1+cGOIspGu5nlHEDkqXsVVi2V7Zw==
-  dependencies:
-    "@any-sender/data-entities" "0.2.0-beta.0"
-    "@pisa-research/errors" "^0.1.26"
-    cross-fetch "^3.0.4"
-    ethers "^4.0.40"
-
 "@any-sender/common@0.2.1-beta.8":
   version "0.2.1-beta.8"
   resolved "https://registry.yarnpkg.com/@any-sender/common/-/common-0.2.1-beta.8.tgz#0e3a744e4a5b30c7ce4f09894d2b2eae34f12f26"
@@ -92,13 +82,6 @@
     express-http-context "^1.2.3"
     uuid "^3.3.3"
 
-"@any-sender/contracts@0.2.0-beta.0":
-  version "0.2.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@any-sender/contracts/-/contracts-0.2.0-beta.0.tgz#b4575aea0087efe810845eb7c4aaed9f3c0ac402"
-  integrity sha512-BoNESzvmIirlZLC/oDDMAumJwSpk9BS7lEuNzvdGsJNYfc+NcX2Jz3+WOuIzLqUVUhFB5cjaQlN4Fz3Nv4SDUg==
-  dependencies:
-    "@openzeppelin/contracts" "3.0.0-beta.0"
-
 "@any-sender/contracts@0.2.1-beta.8":
   version "0.2.1-beta.8"
   resolved "https://registry.yarnpkg.com/@any-sender/contracts/-/contracts-0.2.1-beta.8.tgz#edef700db58f4e23f7c8aecb207d7130a4f2aa5c"
@@ -106,17 +89,6 @@
   dependencies:
     "@openzeppelin/contracts" "3.0.0-beta.0"
     ethers "^4.0.47"
-
-"@any-sender/data-entities@0.2.0-beta.0":
-  version "0.2.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@any-sender/data-entities/-/data-entities-0.2.0-beta.0.tgz#5cc1f77bcf5143bd69d7646d679810c60b44242c"
-  integrity sha512-rJIRmGllUsbKhlH9JWl5fHINPn2BVLKQUDuS3yKFiI6teNICGlfIzMLFK2h/fPOg9r5pfGe5fBxf+QfJxEYZ3w==
-  dependencies:
-    "@any-sender/contracts" "0.2.0-beta.0"
-    "@pisa-research/errors" "^0.1.26"
-    "@pisa-research/utils" "^0.1.26"
-    cross-fetch "^3.0.4"
-    ethers "^4.0.40"
 
 "@any-sender/data-entities@0.2.1-beta.8":
   version "0.2.1-beta.8"
@@ -129,12 +101,11 @@
     cross-fetch "^3.0.4"
     ethers "^4.0.47"
 
-"@anydotcrypto/metatransactions@0.0.11-1":
-  version "0.0.11-1"
-  resolved "https://registry.yarnpkg.com/@anydotcrypto/metatransactions/-/metatransactions-0.0.11-1.tgz#b9266ea9b9d26c39de0ec8d8420d02b42787e9fa"
-  integrity sha512-0bzVWciPh+uRqyw87CU6O3z/KbmNtem7d5anqkbw+tdjW3ORWme3K+sJz4Z0Wricb5+5LPUxKLCTp1DPKKGTWQ==
+"@anydotcrypto/metatransactions@0.0.11-4":
+  version "0.0.11-4"
+  resolved "https://registry.yarnpkg.com/@anydotcrypto/metatransactions/-/metatransactions-0.0.11-4.tgz#c7f01aa3e579638918ca692f17310eb0ac5f3047"
+  integrity sha512-rJrA3KJNaUUwfGMnP/d6xRfI1AMZohqpR0NwqiwwaxwG9MKHb1dDWf6sdU3vGbCKDB4jtl8fe94B1DT9nOLMqw==
   dependencies:
-    "@any-sender/client" "^0.2.0-beta.0"
     "@chainlink/contracts" "0.0.3"
     "@openzeppelin/contracts" "3.0.0-beta.0"
     "@pisa-research/test-utils" "^0.1.36"
@@ -2111,7 +2082,7 @@
     subleveldown "^4.1.0"
     uuid "^3.3.3"
 
-"@pisa-research/errors@0.1.41", "@pisa-research/errors@^0.1.26", "@pisa-research/errors@^0.1.41":
+"@pisa-research/errors@0.1.41", "@pisa-research/errors@^0.1.41":
   version "0.1.41"
   resolved "https://registry.yarnpkg.com/@pisa-research/errors/-/errors-0.1.41.tgz#2f43aec9ae0fc391c5d054143abc4cd2f6669849"
   integrity sha512-eXGoQAO2aku6hhBrPanJkO8OX1OSCbrimuZhqyJdPzB/Rzi2Pdfa5b/Z9DkYOd8IfTNtKOGG7HRMrdiu3dQrAA==
@@ -2124,7 +2095,7 @@
     chai "^4.2.0"
     ts-mockito "^2.3.1"
 
-"@pisa-research/utils@0.1.41", "@pisa-research/utils@^0.1.26", "@pisa-research/utils@^0.1.41":
+"@pisa-research/utils@0.1.41", "@pisa-research/utils@^0.1.41":
   version "0.1.41"
   resolved "https://registry.yarnpkg.com/@pisa-research/utils/-/utils-0.1.41.tgz#c204e51ab879def3cfb36bf1be14f9545a00e6d7"
   integrity sha512-pynY4E96gj7RwnkmM75418/4P2/GoorC2W/I14owfck9F3qpeW74JwoaG1C31HsfsU5iVx8tqNhSGBXbTHCPMQ==
@@ -11536,7 +11507,7 @@ ethers@4.0.0-beta.3:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^4.0.0-beta.1, ethers@^4.0.32, ethers@^4.0.40, ethers@^4.0.43, ethers@^4.0.44, ethers@^4.0.47:
+ethers@^4.0.0-beta.1, ethers@^4.0.32, ethers@^4.0.43, ethers@^4.0.44, ethers@^4.0.47:
   version "4.0.47"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.47.tgz#91b9cd80473b1136dd547095ff9171bd1fc68c85"
   integrity sha512-hssRYhngV4hiDNeZmVU/k5/E8xmLG8UpcNUzg6mb7lqhgpFPH/t7nuv20RjRrEf0gblzvi2XwR5Te+V3ZFc9pQ==

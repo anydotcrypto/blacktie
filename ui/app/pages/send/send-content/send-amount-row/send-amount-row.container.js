@@ -11,6 +11,9 @@ import {
   getSendMaxModeState,
 } from '../../send.selectors'
 import {
+  selectedAccountIsDerived,
+} from '../../../../selectors'
+import {
   sendAmountIsInError,
 } from './send-amount-row.selectors'
 import { getAmountErrorObject, getGasFeeErrorObject } from '../../send.utils'
@@ -37,6 +40,7 @@ function mapStateToProps (state) {
     selectedToken: getSelectedToken(state),
     tokenBalance: getTokenBalance(state),
     maxModeOn: getSendMaxModeState(state),
+    isDerivedAddress: selectedAccountIsDerived(state),
   }
 }
 

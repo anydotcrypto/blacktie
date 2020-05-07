@@ -34,6 +34,7 @@ import {
   getBasicGasEstimateLoadingStatus,
   getRenderableEstimateDataForSmallButtonsFromGWEI,
   getDefaultActiveButtonIndex,
+  selectedAccountIsDerived,
 } from '../../../../selectors'
 import SendGasRow from './send-gas-row.component'
 
@@ -50,11 +51,14 @@ function mapStateToProps (state) {
   const conversionRate = getConversionRate(state)
   const balance = getCurrentEthBalance(state)
 
+  const isDerived = selectedAccountIsDerived(state)
+
   const insufficientBalance = !isBalanceSufficient({
     amount: getSelectedToken(state) ? '0x0' : getSendAmount(state),
     gasTotal,
     balance,
     conversionRate,
+    isDerivedAddress: isDerived,
   })
 
   return {
