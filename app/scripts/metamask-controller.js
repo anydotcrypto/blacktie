@@ -78,12 +78,9 @@ class DerivedAccountKeyringController extends KeyringController {
   constructor (opts) {
     super(opts)
 
-    console.log(this.store.getState())
     if (!this.store.getState().derivedState) {
       this.store.updateState({ derivedState: [] })
     }
-
-    console.log(this.memStore.getState())
   }
 
   /**
