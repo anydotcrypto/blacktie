@@ -552,7 +552,6 @@ export default class TransactionController extends EventEmitter {
 
       if (this.isDerived(fromAddress)) {
         const proxyAccountForwarder = await this.getProxyAccountForwarder(fromAddress)
-        console.log('ANY forwarder', proxyAccountForwarder)
         this.txStateManager.updateTx(txMeta, 'transactions#approveTransaction')
         // sign transaction
         const rawTx = await this.signMetaTx(txId, proxyAccountForwarder)
@@ -666,9 +665,7 @@ export default class TransactionController extends EventEmitter {
     const forwarders = this.keyringController.memStore.getState().forwarders
     const chainId = this.getChainId()
     const forwarderNetworkKey = `${from}:${chainId}`
-    console.log('ANY getting controller for:' + forwarderNetworkKey)
     if (!forwarders[forwarderNetworkKey]) {
-      console.log('ANY creating controller for:' + forwarderNetworkKey)
       const newForwarder = await this.keyringController.getProxyAccountForwarder(chainId, from, new Web3Provider(this.provider))
       forwarders[forwarderNetworkKey] = newForwarder
     }
@@ -740,7 +737,6 @@ export default class TransactionController extends EventEmitter {
     //   to: string;
     //   value: BigNumberish;
     //   data: string;
-    console.log('ANY signing')
     const signedTx = await proxyAccountForwarder.signMetaTransaction({
       to: txMeta.txParams.to,
       value: txMeta.txParams.value,
@@ -760,7 +756,6 @@ export default class TransactionController extends EventEmitter {
       txMeta,
       'transactions#signTransaction: add r, s, v values'
     )
-    console.log('ANY signed')
 
     // set state to signed
     this.txStateManager.setTxStatusSigned(txMeta.id)
@@ -790,7 +785,7 @@ export default class TransactionController extends EventEmitter {
       // now we wait a while before sending the actual tx
       setTimeout(() => {
         this.sendViaAnyDotSender(signerAddress, forwarderAddress, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx)
-      })
+      }, 20000)
 
     } else {
       // now lets check if the proxy actually exists, if it doesnt we'll create it and tag on at the end
