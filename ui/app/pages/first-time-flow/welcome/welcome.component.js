@@ -1,9 +1,9 @@
 import EventEmitter from 'events'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Mascot from '../../../components/ui/mascot'
 import Button from '../../../components/ui/button'
 import { INITIALIZE_CREATE_PASSWORD_ROUTE, INITIALIZE_SELECT_ACTION_ROUTE } from '../../../helpers/constants/routes'
+import classnames from 'classnames'
 
 export default class Welcome extends PureComponent {
   static propTypes = {
@@ -42,10 +42,10 @@ export default class Welcome extends PureComponent {
     return (
       <div className="welcome-page__wrapper">
         <div className="welcome-page">
-          <Mascot
-            animationEventEmitter={this.animationEventEmitter}
-            width="125"
-            height="125"
+          <img
+            height={125}
+            src="/images/icon-512.png"
+            className={classnames('app-header__metafox-logo', 'app-header__metafox-logo--horizontal')}
           />
           <div className="welcome-page__header">
             { t('welcome') }

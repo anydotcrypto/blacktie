@@ -54,7 +54,7 @@ export default class PermissionPageContainerContent extends PureComponent {
           </div>
           <div className="permission-result__identicon-container">
             <div className="permission-result__identicon-border">
-              <img src="/images/logo/metamask-fox.svg" />
+              <img src="/images/icon-128.png" />
             </div>
           </div>
         </div>

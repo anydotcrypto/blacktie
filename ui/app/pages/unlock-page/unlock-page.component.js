@@ -6,6 +6,7 @@ import getCaretCoordinates from 'textarea-caret'
 import { EventEmitter } from 'events'
 import Mascot from '../../components/ui/mascot'
 import { DEFAULT_ROUTE } from '../../helpers/constants/routes'
+import classnames from 'classnames'
 
 export default class UnlockPage extends Component {
   static contextTypes = {
@@ -140,13 +141,10 @@ export default class UnlockPage extends Component {
     return (
       <div className="unlock-page__container">
         <div className="unlock-page">
-          <div className="unlock-page__mascot-container">
-            <Mascot
-              animationEventEmitter={this.animationEventEmitter}
-              width="120"
-              height="120"
-            />
-          </div>
+          <img
+            height={125}
+            src="/images/icon-512.png"
+          />
           <h1 className="unlock-page__title">
             { t('welcomeBack') }
           </h1>

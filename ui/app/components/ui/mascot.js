@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { createRef, Component } from 'react'
 import metamaskLogo from 'metamask-logo'
 import { debounce } from 'lodash'
+import classnames from 'classnames'
 
 export default class Mascot extends Component {
   static propTypes = {
@@ -13,19 +14,19 @@ export default class Mascot extends Component {
   constructor (props) {
     super(props)
 
-    const { width = '200', height = '200' } = props
+    // const { width = '200', height = '200' } = props
 
-    this.logo = metamaskLogo({
-      followMouse: true,
-      pxNotRatio: true,
-      width,
-      height,
-    })
+    // this.logo = metamaskLogo({
+    //   followMouse: true,
+    //   pxNotRatio: true,
+    //   width,
+    //   height,
+    // })
 
-    this.mascotContainer = createRef()
+    // this.mascotContainer = createRef()
 
-    this.refollowMouse = debounce(this.logo.setFollowMouse.bind(this.logo, true), 1000)
-    this.unfollowMouse = this.logo.setFollowMouse.bind(this.logo, false)
+    // this.refollowMouse = debounce(this.logo.setFollowMouse.bind(this.logo, true), 1000)
+    // this.unfollowMouse = this.logo.setFollowMouse.bind(this.logo, false)
   }
 
   handleAnimationEvents () {
@@ -39,32 +40,38 @@ export default class Mascot extends Component {
   }
 
   lookAt (target) {
-    this.unfollowMouse()
-    this.logo.lookAt(target)
-    this.refollowMouse()
+    // this.unfollowMouse()
+    // this.logo.lookAt(target)
+    // this.refollowMouse()
   }
 
   componentDidMount () {
-    this.mascotContainer.current.appendChild(this.logo.container)
+    // this.mascotContainer.current.appendChild(this.logo.container)
   }
 
   componentWillUnmount () {
-    this.animations = this.props.animationEventEmitter
-    this.animations.removeAllListeners()
-    this.logo.container.remove()
-    this.logo.stopAnimation()
+    // this.animations = this.props.animationEventEmitter
+    // this.animations.removeAllListeners()
+    // this.logo.container.remove()
+    // this.logo.stopAnimation()
   }
 
   render () {
     // this is a bit hacky
     // the event emitter is on `this.props`
     // and we dont get that until render
-    this.handleAnimationEvents()
+    // <div
+    //   ref={this.mascotContainer}
+    //   style={{ zIndex: 0 }}
+    // />
+    // this.handleAnimationEvents()
     return (
-      <div
-        ref={this.mascotContainer}
-        style={{ zIndex: 0 }}
+      <img
+        height={125}
+        src="/images/icon-512.png"
+        className={classnames('app-header__metafox-logo', 'app-header__metafox-logo--horizontal')}
       />
+
     )
   }
 }
