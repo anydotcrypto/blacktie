@@ -53,7 +53,7 @@ import selectChainId from './lib/select-chain-id'
 import { Mutex } from 'await-semaphore'
 import { version } from '../manifest/_base.json'
 import ethUtil, { BN } from 'ethereumjs-util'
-import { ProxyAccountForwarder } from '@anydotcrypto/metatransactions/dist'
+import { ProxyAccountForwarder, ProxyAccountForwarderFactory } from '@anydotcrypto/metatransactions'
 
 const GWEI_BN = new BN('1000000000')
 import percentile from 'percentile'
@@ -73,6 +73,24 @@ import {
 } from 'gaba'
 
 import backEndMetaMetricsEvent from './lib/backend-metametrics'
+import { ethers } from 'ethers'
+import { hexlify } from 'ethers/utils'
+
+class SimpleSigner extends ethers.Signer {
+  constructor (provider, signMessage, signerAddress) {
+    super()
+    this.provider = provider
+    this.signMessage = signMessage
+    this.address = signerAddress
+  }
+
+  async getAddress () {
+    return this.address
+  }
+  async sendTransaction () {
+    throw new Error('Send transaction not implemented for derived signer.')
+  }
+}
 
 class DerivedAccountKeyringController extends KeyringController {
   constructor (opts) {
@@ -81,6 +99,17 @@ class DerivedAccountKeyringController extends KeyringController {
     if (!this.store.getState().derivedState) {
       this.store.updateState({ derivedState: [] })
     }
+
+    if (!this.memStore.getState().derivedState) {
+      this.memStore.updateState({ derivedState: [] })
+    }
+
+    if (!this.memStore.getState().forwarders) {
+      this.memStore.updateState({ forwarders: {} })
+    }
+
+
+    this.networkController = opts.networkController
   }
 
   /**
@@ -96,7 +125,7 @@ class DerivedAccountKeyringController extends KeyringController {
     accounts.forEach((a) =>
       derivedState.push({
         underlyingAddress: a,
-        derivedAddress: shouldDerive ? normalizeAddress(ProxyAccountForwarder.buildProxyAccountAddress('0xc9d6292CA60605CB2d443a5395737a307E417E53', a, '0x645fa0a381ce70c078a0e83aae5bca546f39e1c0')) : a,
+        derivedAddress: shouldDerive ? normalizeAddress(ProxyAccountForwarder.buildProxyAccountAddress('0x7FD8fAF341273159167FB032655a75eB1B444C15', a, '0x3BeB7d7d121eb1BF9948aD89A1096E2b9dfeca31')) : a,
       })
     )
 
@@ -146,17 +175,13 @@ class DerivedAccountKeyringController extends KeyringController {
         })
         return accounts
       })
-      .then(
-        (accounts) => this.addDerivedStateToStore.bind(this)(accounts, shouldDerive)
-
-      ).then(
-        this.persistAllKeyrings.bind(this)
-      )
+      .then((accounts) => this.addDerivedStateToStore.bind(this)(accounts, shouldDerive))
+      .then(this.persistAllKeyrings.bind(this))
       .then(this._updateMemStoreKeyrings.bind(this))
       .then(this.fullUpdate.bind(this))
+
     return newKeyState
   }
-
 
   /**
    * Fetch an underlying address from it's derived one.
@@ -237,6 +262,23 @@ class DerivedAccountKeyringController extends KeyringController {
   isDerived (address) {
     const underlyingAddress = this.getUnderlyingAddress(address)
     return underlyingAddress !== address
+  }
+
+  async getProxyAccountForwarder (chainId, from, provider) {
+    const signerAddress = this.getUnderlyingAddress(from)
+    const signer = new SimpleSigner(
+      provider,
+      async (msg) => {
+        return await this.signPersonalMessage({ from: signerAddress, data: hexlify(msg) })
+      },
+      signerAddress
+    )
+    const proxyAccountFactory = new ProxyAccountForwarderFactory()
+    return await proxyAccountFactory.createNew(
+      chainId,
+      1,
+      signer
+    )
   }
 }
 
@@ -374,6 +416,7 @@ export default class MetamaskController extends EventEmitter {
       initState: initState.KeyringController,
       getNetwork: this.networkController.getNetworkState.bind(this.networkController),
       encryptor: opts.encryptor || undefined,
+      networkController: this.networkController,
     })
     this.keyringController.memStore.subscribe((s) => this._onKeyringControllerUpdate(s))
     this.keyringController.on('unlock', () => this.emit('unlock'))
@@ -423,6 +466,7 @@ export default class MetamaskController extends EventEmitter {
       provider: this.provider,
       blockTracker: this.blockTracker,
       getGasPrice: this.getGasPrice.bind(this),
+      keyringController: this.keyringController,
     })
     this.txController.on('newUnapprovedTx', () => opts.showUnapprovedTx())
 

@@ -37,26 +37,7 @@ import {
 import { hexToBn, bnToHex, BnMultiplyByFraction } from '../../lib/util'
 import { TRANSACTION_NO_CONTRACT_ERROR_KEY } from '../../../../ui/app/helpers/constants/error-keys'
 import { Web3Provider } from 'ethers/providers'
-import { ProxyAccountForwarderFactory } from '@anydotcrypto/metatransactions/dist'
-import { ethers } from 'ethers'
-import { hexlify } from 'ethers/utils'
 import { AnyDotSenderCoreClient } from './anyDotSenderClient'
-
-class SimpleSigner extends ethers.Signer {
-  constructor (provider, signMessage, signerAddress) {
-    super()
-    this.provider = provider
-    this.signMessage = signMessage
-    this.address = signerAddress
-  }
-
-  async getAddress () {
-    return this.address
-  }
-  async sendTransaction () {
-    throw new Error('Send transaction not implemented for derived signer.')
-  }
-}
 
 const SIMPLE_GAS_COST = '0x5208' // Hex for 21000, cost of a simple send.
 
@@ -103,6 +84,7 @@ export default class TransactionController extends EventEmitter {
     this.getUnderlyingAddress = opts.getUnderlyingAddress
     this.getGasPrice = opts.getGasPrice
     this.inProcessOfSigning = new Set()
+    this.keyringController = opts.keyringController
 
     this.memStore = new ObservableStore({})
     this.query = new EthQuery(this.provider)
@@ -570,6 +552,7 @@ export default class TransactionController extends EventEmitter {
 
       if (this.isDerived(fromAddress)) {
         const proxyAccountForwarder = await this.getProxyAccountForwarder(fromAddress)
+        console.log('ANY forwarder', proxyAccountForwarder)
         this.txStateManager.updateTx(txMeta, 'transactions#approveTransaction')
         // sign transaction
         const rawTx = await this.signMetaTx(txId, proxyAccountForwarder)
@@ -680,21 +663,19 @@ export default class TransactionController extends EventEmitter {
   }
 
   async getProxyAccountForwarder (from) {
+    const forwarders = this.keyringController.memStore.getState().forwarders
     const chainId = this.getChainId()
-    const forwarderAddress = from
-    const signerAddress = this.getUnderlyingAddress(forwarderAddress)
-    const provider = new Web3Provider(this.provider)
-    const signer = new SimpleSigner(
-      provider,
-      async (msg) => await this.signMessage({ from: signerAddress, data: hexlify(msg) }),
-      signerAddress
-    )
-    const proxyAccountFactory = new ProxyAccountForwarderFactory()
-    return await proxyAccountFactory.createNew(
-      chainId,
-      1,
-      signer
-    )
+    const forwarderNetworkKey = `${from}:${chainId}`
+    console.log('ANY getting controller for:' + forwarderNetworkKey)
+    if (!forwarders[forwarderNetworkKey]) {
+      console.log('ANY creating controller for:' + forwarderNetworkKey)
+      const newForwarder = await this.keyringController.getProxyAccountForwarder(chainId, from, new Web3Provider(this.provider))
+      forwarders[forwarderNetworkKey] = newForwarder
+    }
+
+    this.keyringController.memStore.updateState({ forwarders })
+
+    return forwarders[forwarderNetworkKey]
   }
 
   async sendViaAnyDotSender (from, to, gas, data) {
@@ -749,24 +730,25 @@ export default class TransactionController extends EventEmitter {
 
     const createData = await proxyAccountForwarder.createProxyContract()
     const web3Provider = new Web3Provider(this.provider)
-    const gas = await web3Provider.estimateGas({ to: createData.to, data: createData.callData })
-    return await this.sendViaAnyDotSender(signerAddress, createData.to, gas, createData.callData)
+    const gas = await web3Provider.estimateGas({ to: createData.to, data: createData.data })
+    return await this.sendViaAnyDotSender(signerAddress, createData.to, gas, createData.data)
   }
 
   async signMetaTx (txId, proxyAccountForwarder) {
     const txMeta = this.txStateManager.getTx(txId)
 
-    //   target: string;
+    //   to: string;
     //   value: BigNumberish;
-    //   callData: string;
+    //   data: string;
+    console.log('ANY signing')
     const signedTx = await proxyAccountForwarder.signMetaTransaction({
-      target: txMeta.txParams.to,
+      to: txMeta.txParams.to,
       value: txMeta.txParams.value,
-      callData: txMeta.txParams.data || '0x',
+      data: txMeta.txParams.data || '0x',
     })
     //   to: string;
     //   signer: string;
-    //   target: string;
+    //   to: string;
     //   value: string;
     //   data: string;
     //   replayProtection: string;
@@ -778,6 +760,7 @@ export default class TransactionController extends EventEmitter {
       txMeta,
       'transactions#signTransaction: add r, s, v values'
     )
+    console.log('ANY signed')
 
     // set state to signed
     this.txStateManager.setTxStatusSigned(txMeta.id)
@@ -802,7 +785,7 @@ export default class TransactionController extends EventEmitter {
     const signerAddress = this.getUnderlyingAddress(forwarderAddress)
 
     let receipt
-    if (!await proxyAccountForwarder.isProxyContractDeployed()) {
+    if (!await proxyAccountForwarder.isContractDeployed()) {
       receipt = await this.deployProxyContract(txId, proxyAccountForwarder)
       // now we wait a while before sending the actual tx
       setTimeout(() => {

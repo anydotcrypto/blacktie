@@ -101,19 +101,17 @@
     cross-fetch "^3.0.4"
     ethers "^4.0.47"
 
-"@anydotcrypto/metatransactions@0.0.11-4":
-  version "0.0.11-4"
-  resolved "https://registry.yarnpkg.com/@anydotcrypto/metatransactions/-/metatransactions-0.0.11-4.tgz#c7f01aa3e579638918ca692f17310eb0ac5f3047"
-  integrity sha512-rJrA3KJNaUUwfGMnP/d6xRfI1AMZohqpR0NwqiwwaxwG9MKHb1dDWf6sdU3vGbCKDB4jtl8fe94B1DT9nOLMqw==
+"@anydotcrypto/metatransactions@0.0.11-10":
+  version "0.0.11-10"
+  resolved "https://registry.yarnpkg.com/@anydotcrypto/metatransactions/-/metatransactions-0.0.11-10.tgz#815ae943350e47aaec51fa033134c9d58acc26ef"
+  integrity sha512-befmezbT4k+DynSOKfhoG4DPBv7tJHkAvoZ9NRvMQIjIVM6Pc8r/cl29Qnjt9Ftf1DysKpWkeMhbRDnIjLbp7Q==
   dependencies:
     "@chainlink/contracts" "0.0.3"
     "@openzeppelin/contracts" "3.0.0-beta.0"
     "@pisa-research/test-utils" "^0.1.36"
-    "@types/bn.js" "^4.11.6"
-    bn.js "^5.1.1"
+    "@pisa-research/utils" "^0.1.39"
     ethers "^4.0.43"
     npm "^6.14.4"
-    secure-random "^1.1.2"
     ts-node "^8.8.2"
     typechain "^1.0.3"
     typechain-target-ethers "^1.0.4"
@@ -2095,7 +2093,7 @@
     chai "^4.2.0"
     ts-mockito "^2.3.1"
 
-"@pisa-research/utils@0.1.41", "@pisa-research/utils@^0.1.41":
+"@pisa-research/utils@0.1.41", "@pisa-research/utils@^0.1.39", "@pisa-research/utils@^0.1.41":
   version "0.1.41"
   resolved "https://registry.yarnpkg.com/@pisa-research/utils/-/utils-0.1.41.tgz#c204e51ab879def3cfb36bf1be14f9545a00e6d7"
   integrity sha512-pynY4E96gj7RwnkmM75418/4P2/GoorC2W/I14owfck9F3qpeW74JwoaG1C31HsfsU5iVx8tqNhSGBXbTHCPMQ==
@@ -2842,7 +2840,7 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/bn.js@^4.11.4", "@types/bn.js@^4.11.6":
+"@types/bn.js@^4.11.4":
   version "4.11.6"
   resolved "https://registry.yarnpkg.com/@types/bn.js/-/bn.js-4.11.6.tgz#c306c70d9358aaea33cd4eda092a742b9505967c"
   integrity sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==
@@ -6060,11 +6058,6 @@ bn.js@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-2.2.0.tgz#12162bc2ae71fc40a5626c33438f3a875cd37625"
   integrity sha1-EhYrwq5x/EClYmwzQ486h1zTdiU=
-
-bn.js@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.1.1.tgz#48efc4031a9c4041b9c99c6941d903463ab62eb5"
-  integrity sha512-IUTD/REb78Z2eodka1QZyyEk66pciRcP6Sroka0aI3tG/iwIdYLrBD62RsubR7vqdt3WyX8p4jxeatzmRSphtA==
 
 body-parser@1.19.0, body-parser@^1.15.0, body-parser@^1.16.0, body-parser@^1.16.1:
   version "1.19.0"
@@ -26494,11 +26487,6 @@ secp256k1@^3.0.1, secp256k1@^3.6.1, secp256k1@^3.6.2:
     elliptic "^6.4.1"
     nan "^2.14.0"
     safe-buffer "^5.1.2"
-
-secure-random@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/secure-random/-/secure-random-1.1.2.tgz#ed103b460a851632d420d46448b2a900a41e7f7c"
-  integrity sha512-H2bdSKERKdBV1SwoqYm6C0y+9EA94v6SUBOWO8kDndc4NoUih7Dv6Tsgma7zO1lv27wIvjlD0ZpMQk7um5dheQ==
 
 seedrandom@3.0.1:
   version "3.0.1"

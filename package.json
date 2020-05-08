@@ -70,7 +70,7 @@
   "dependencies": {
     "3box": "^1.10.2",
     "@any-sender/client": "0.2.1-beta.8",
-    "@anydotcrypto/metatransactions": "0.0.11-4",
+    "@anydotcrypto/metatransactions": "0.0.11-10",
     "@babel/runtime": "^7.5.5",
     "@download/blockies": "^1.0.3",
     "@fortawesome/fontawesome-free": "^5.13.0",
