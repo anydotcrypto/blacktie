@@ -72,7 +72,7 @@ export default class Routes extends Component {
     setLastActiveTime: PropTypes.func,
     history: PropTypes.object,
     location: PropTypes.object,
-    lockMetaMask: PropTypes.func,
+    lockBlackTie: PropTypes.func,
     submittedPendingTransactions: PropTypes.array,
     isMouseUser: PropTypes.bool,
     setMouseUserState: PropTypes.func,
@@ -269,7 +269,7 @@ export default class Routes extends Component {
       passwordBox.focus()
     } else {
       // currently active: deactivate
-      this.props.lockMetaMask()
+      this.props.lockBlackTie()
     }
   }
 

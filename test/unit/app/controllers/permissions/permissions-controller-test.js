@@ -101,8 +101,8 @@ describe('permissions controller', function () {
       assert.deepEqual(cAccounts, [], 'origin should have no accounts')
     })
 
-    it('does not handle "MetaMask" origin as special case', async function () {
-      const metamaskAccounts = await permController.getAccounts('MetaMask')
+    it('does not handle "BlackTie" origin as special case', async function () {
+      const metamaskAccounts = await permController.getAccounts('BlackTie')
       assert.deepEqual(metamaskAccounts, [], 'origin should have no accounts')
     })
   })

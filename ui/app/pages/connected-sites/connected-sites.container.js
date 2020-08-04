@@ -18,7 +18,7 @@ import { DEFAULT_ROUTE } from '../../helpers/constants/routes'
 import { getOriginFromUrl } from '../../helpers/utils/util'
 
 const mapStateToProps = (state) => {
-  const { openMetaMaskTabs } = state.appState
+  const { openBlackTieTabs } = state.appState
   const { title, url, id } = state.activeTab
   const connectedDomains = getConnectedDomainsForSelectedAddress(state)
   const originOfCurrentTab = getOriginOfCurrentTab(state)
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
   ]?.length
 
   let tabToConnect
-  if (url && currentTabHasNoAccounts && !openMetaMaskTabs[id]) {
+  if (url && currentTabHasNoAccounts && !openBlackTieTabs[id]) {
     tabToConnect = {
       title,
       origin: getOriginFromUrl(url),

@@ -29,7 +29,7 @@ then
 fi
 
 git \
-    -c user.name='MetaMask Bot' \
+    -c user.name='BlackTie Bot' \
     -c user.email='metamaskbot@users.noreply.github.com' \
     commit --message "${CIRCLE_BRANCH/-/ }" \
         CHANGELOG.md app/manifest.json

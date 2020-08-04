@@ -59,7 +59,7 @@ function updateQueryParams (newView) {
 }
 
 //
-// MetaMask Controller
+// BlackTie Controller
 //
 
 const controller = new MetamaskController({

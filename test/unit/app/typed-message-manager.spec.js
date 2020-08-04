@@ -97,8 +97,8 @@ describe('Typed Message Manager', function () {
   })
 
   it('approves messages', async function () {
-    const messageMetaMaskId = messages[0].msgParams
-    typedMessageManager.approveMessage(messageMetaMaskId)
+    const messageBlackTieId = messages[0].msgParams
+    typedMessageManager.approveMessage(messageBlackTieId)
     assert.equal(messages[0].status, 'approved')
   })
 

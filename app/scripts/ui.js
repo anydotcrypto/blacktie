@@ -22,7 +22,7 @@ import Dnode from 'dnode'
 import Eth from 'ethjs'
 import EthQuery from 'eth-query'
 import urlUtil from 'url'
-import launchMetaMaskUi from '../../ui'
+import launchBlackTieUi from '../../ui'
 import StreamProvider from 'web3-stream-provider'
 import { setupMultiplex } from './lib/stream-utils.js'
 import log from 'loglevel'
@@ -61,7 +61,7 @@ async function start () {
   initializeUiWithTab(activeTab)
 
   function displayCriticalError (container, err) {
-    container.innerHTML = '<div class="critical-error">The MetaMask app failed to load: please open and close MetaMask again to restart.</div>'
+    container.innerHTML = '<div class="critical-error">The BlackTie app failed to load: please open and close BlackTie again to restart.</div>'
     container.style.height = '80px'
     log.error(err.stack)
     throw err
@@ -110,7 +110,7 @@ function initializeUi (activeTab, container, connectionStream, cb) {
       return cb(err)
     }
 
-    launchMetaMaskUi({
+    launchBlackTieUi({
       activeTab,
       container,
       backgroundConnection,

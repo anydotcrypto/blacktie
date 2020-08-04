@@ -32,7 +32,7 @@ import {
   getCustomNonceValue,
   getIsMainnet,
   getKnownMethodData,
-  getMetaMaskAccounts,
+  getBlackTieAccounts,
   getUseNonceField,
   preferencesSelector,
   transactionFeeSelector,
@@ -88,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
     value: amount,
     data,
   } = (transaction && transaction.txParams) || txParams
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   const assetImage = assetImages[txParamsToAddress]
 
   const { balance } = accounts[fromAddress]

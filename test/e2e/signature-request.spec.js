@@ -15,7 +15,7 @@ const fixtureServer = new FixtureServer()
 
 const ganacheServer = new Ganache()
 
-describe('MetaMask', function () {
+describe('BlackTie', function () {
   let driver
   let publicAddress
 
@@ -99,7 +99,7 @@ describe('MetaMask', function () {
 
       await driver.delay(regularDelayMs)
       windowHandles = await driver.getAllWindowHandles()
-      await driver.switchToWindowWithTitle('MetaMask Notification', windowHandles)
+      await driver.switchToWindowWithTitle('BlackTie Notification', windowHandles)
       await driver.delay(regularDelayMs)
 
       const title = await driver.findElement(By.css('.signature-request-content__title'))

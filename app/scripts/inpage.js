@@ -15,7 +15,7 @@ const cleanContextForImports = () => {
   try {
     global.define = undefined
   } catch (_) {
-    console.warn('MetaMask - global.define could not be deleted.')
+    console.warn('BlackTie - global.define could not be deleted.')
   }
 }
 
@@ -26,7 +26,7 @@ const restoreContextAfterImports = () => {
   try {
     global.define = __define
   } catch (_) {
-    console.warn('MetaMask - global.define could not be overwritten.')
+    console.warn('BlackTie - global.define could not be overwritten.')
   }
 }
 
@@ -66,18 +66,18 @@ initProvider({
 // setup web3
 
 if (typeof window.web3 !== 'undefined') {
-  throw new Error(`MetaMask detected another web3.
-     MetaMask will not work reliably with another web3 extension.
-     This usually happens if you have two MetaMasks installed,
-     or MetaMask and another web3 extension. Please remove one
+  throw new Error(`BlackTie detected another web3.
+     BlackTie will not work reliably with another web3 extension.
+     This usually happens if you have two BlackTies installed,
+     or BlackTie and another web3 extension. Please remove one
      and try again.`)
 }
 
 const web3 = new Web3(window.ethereum)
 web3.setProvider = function () {
-  log.debug('MetaMask - overrode web3.setProvider')
+  log.debug('BlackTie - overrode web3.setProvider')
 }
-log.debug('MetaMask - injected web3')
+log.debug('BlackTie - injected web3')
 
 window.ethereum._web3Ref = web3.eth
 

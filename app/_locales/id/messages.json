@@ -6,7 +6,7 @@
     "message": "Interaksi Kontrak"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "BlackTie",
     "description": "The name of the application"
   },
   "reject": {
@@ -76,7 +76,7 @@
     "message": "Tambah Token yang Disarankan"
   },
   "addAcquiredTokens": {
-    "message": "Tambahkan token yang sudah Anda peroleh menggunakan MetaMask"
+    "message": "Tambahkan token yang sudah Anda peroleh menggunakan BlackTie"
   },
   "amount": {
     "message": "Jumlah"
@@ -110,7 +110,7 @@
     "message": "Jangka Waktu Keluar-Otomatis (menit)"
   },
   "autoLockTimeLimitDescription": {
-    "message": "Atur waktu diam dalam menit sebelum MetaMask mengeluarkan Anda secara otomatis"
+    "message": "Atur waktu diam dalam menit sebelum BlackTie mengeluarkan Anda secara otomatis"
   },
   "average": {
     "message": "Rata-rata"
@@ -125,7 +125,7 @@
     "message": "Cadangkan kode Pemulihan Rahasia guna mengamankan dompet dan dana Anda."
   },
   "backupApprovalInfo": {
-    "message": "Kode rahasia Anda diperlukan untuk memulihkan dompet jika perangkat hilang, lupa sandi, harus menginstal ulang MetaMask, atau ingin mengakses dompet Anda di perangkat lain."
+    "message": "Kode rahasia Anda diperlukan untuk memulihkan dompet jika perangkat hilang, lupa sandi, harus menginstal ulang BlackTie, atau ingin mengakses dompet Anda di perangkat lain."
   },
   "backupNow": {
     "message": "Cadangkan sekarang"
@@ -153,13 +153,13 @@
     "message": "Peramban Anda tidak didukung..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask dirancang dan dibangun di California."
+    "message": "BlackTie dirancang dan dibangun di California."
   },
   "buyWithWyre": {
     "message": "Membeli ETH dengan Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre mengizinkan Anda menggunakan kartu kredit untuk mendepositkan ETH langsung ke akun  MetaMask."
+    "message": "Wyre mengizinkan Anda menggunakan kartu kredit untuk mendepositkan ETH langsung ke akun  BlackTie."
   },
   "buyCoinSwitch": {
     "message": "Beli di CoinSwitch"
@@ -204,7 +204,7 @@
     "message": "Tutup"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "Anda harus menggunakan MetaMask di Google Chrome untuk menyambung ke dompet Perangkat Keras Anda."
+    "message": "Anda harus menggunakan BlackTie di Google Chrome untuk menyambung ke dompet Perangkat Keras Anda."
   },
   "confirm": {
     "message": "Konfirmasi"
@@ -366,7 +366,7 @@
     "message": "Jangan pernah bagikan frasa dengan siapa pun."
   },
   "endOfFlowMessage5": {
-    "message": "Hati-hati terhadap phishing! MetaMask tidak akan pernah meminta frasa benih Anda secara spontan."
+    "message": "Hati-hati terhadap phishing! BlackTie tidak akan pernah meminta frasa benih Anda secara spontan."
   },
   "endOfFlowMessage6": {
     "message": "Jika Anda perlu mencadangkan frase seed lagi, Anda dapat menemukannya dalam Pengaturan -> Keamanan."
@@ -375,7 +375,7 @@
     "message": "Jika Anda punya pertanyaan atau melihat sesuatu yang ganjil, kirimkan email ke support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "MetaMask tidak dapat memulihkan frasa seed Anda. Pelajari lebih lanjut."
+    "message": "BlackTie tidak dapat memulihkan frasa seed Anda. Pelajari lebih lanjut."
   },
   "endOfFlowMessage9": {
     "message": "Pelajari lebih lanjut."
@@ -491,7 +491,7 @@
     "message": "Hubungkan dompet peranti keras"
   },
   "hardwareWalletsMsg": {
-    "message": "Pilih dompet hardware yang ingin Anda pakai dengan MetaMask"
+    "message": "Pilih dompet hardware yang ingin Anda pakai dengan BlackTie"
   },
   "havingTroubleConnecting": {
     "message": "Kesulitan menghubungkan?"
@@ -523,7 +523,7 @@
     "message": "Impor Akun"
   },
   "importAccountMsg": {
-    "message": "Akun impor tidak akan dihubungkan dengan frasa benih akun MetaMask yang diciptakan pertama kali. Pelajari lebih lanjut tentang akun impor"
+    "message": "Akun impor tidak akan dihubungkan dengan frasa benih akun BlackTie yang diciptakan pertama kali. Pelajari lebih lanjut tentang akun impor"
   },
   "importAccountSeedPhrase": {
     "message": "Impor Akun dengan Frasa Benih"
@@ -633,7 +633,7 @@
     "message": "Menghubungkan Anda ke Ethereum dan Web Terdesentralisasi."
   },
   "metamaskVersion": {
-    "message": "Versi MetaMask"
+    "message": "Versi BlackTie"
   },
   "missingYourTokens": {
     "message": "Tidak melihat token Anda?"
@@ -648,13 +648,13 @@
     "message": "Akun Dompet Saya"
   },
   "myWalletAccountsDescription": {
-    "message": "Semua akun Anda yang dibuat oleh MetaMask otomatis akan ditambahkan ke bagian ini."
+    "message": "Semua akun Anda yang dibuat oleh BlackTie otomatis akan ditambahkan ke bagian ini."
   },
   "mustSelectOne": {
     "message": "Harus memilih setidaknya 1 token."
   },
   "needEtherInWallet": {
-    "message": "Untuk berinteraksi dengan aplikasi terdesentralisasi menggunakan MetaMask, Anda memerlukan adanya Ether di dompet Anda."
+    "message": "Untuk berinteraksi dengan aplikasi terdesentralisasi menggunakan BlackTie, Anda memerlukan adanya Ether di dompet Anda."
   },
   "needImportFile": {
     "message": "Anda harus memilih berkas untuk diimpor.",
@@ -697,8 +697,8 @@
   "newNetwork": {
     "message": "Jaringan Baru"
   },
-  "newToMetaMask": {
-    "message": "Baru di MetaMask?"
+  "newToBlackTie": {
+    "message": "Baru di BlackTie?"
   },
   "noAlreadyHaveSeed": {
     "message": "Tidak, saya sudah memiliki frasa seed"
@@ -707,7 +707,7 @@
     "message": "Lindungi Kunci Anda!"
   },
   "protectYourKeysMessage1": {
-    "message": "Berhati-hatilah dengan frasa seed Anda — terdapat laporan tentang website yang coba mengimitasi MetaMask. MetaMask tidak akan pernah meminta frasa seed Anda!"
+    "message": "Berhati-hatilah dengan frasa seed Anda — terdapat laporan tentang website yang coba mengimitasi BlackTie. BlackTie tidak akan pernah meminta frasa seed Anda!"
   },
   "protectYourKeysMessage2": {
     "message": "Jaga keamanan frasa Anda. Jika Anda menemukan sesuatu yang mencurigakan, atau ragu dengan sebuah situs web, kirim surel ke support@metamask.io"
@@ -764,7 +764,7 @@
     "message": "Berpartisipasilah di MetaMetrics"
   },
   "participateInMetaMetricsDescription": {
-    "message": "Berpartisipasilah dalam MetaMetrics guna membantu kami menjadikan MetaMask lebih baik"
+    "message": "Berpartisipasilah dalam MetaMetrics guna membantu kami menjadikan BlackTie lebih baik"
   },
   "password": {
     "message": "Sandi"
@@ -991,7 +991,7 @@
     "message": "Pilih Akun"
   },
   "selectAnAccountHelp": {
-    "message": "Pilih akun untuk dilihat di MetaMask"
+    "message": "Pilih akun untuk dilihat di BlackTie"
   },
   "selectAHigherGasFee": {
     "message": "Pilih biaya gas yang lebih tinggi untuk mempercepat proses transaksi Anda.*"
@@ -1105,19 +1105,19 @@
     "message": "Sinkronkan dengan seluler"
   },
   "syncWithMobileDesc": {
-    "message": "Anda dapat menyinkronkan akun dan informasi Anda dengan perangkat seluler. Buka aplikasi seluler MetaMask, pilih \"Pengaturan\" lalu ketuk \"Sinkronkan dari Ekstensi Peramban\""
+    "message": "Anda dapat menyinkronkan akun dan informasi Anda dengan perangkat seluler. Buka aplikasi seluler BlackTie, pilih \"Pengaturan\" lalu ketuk \"Sinkronkan dari Ekstensi Peramban\""
   },
   "syncWithMobileDescNewUsers": {
-    "message": "Jika Anda baru saja membuka aplikasi MetaMask Mobile untuk pertama kali, ikuti langkah-langkah pada ponsel Anda."
+    "message": "Jika Anda baru saja membuka aplikasi BlackTie Mobile untuk pertama kali, ikuti langkah-langkah pada ponsel Anda."
   },
   "syncWithMobileScanThisCode": {
-    "message": "Pindai kode ini dengan aplikasi ponsel MetaMask "
+    "message": "Pindai kode ini dengan aplikasi ponsel BlackTie "
   },
   "syncWithMobileBeCareful": {
     "message": "Pastikan tidak ada yang melihat ke layar ketika kode ini Anda pindai"
   },
   "syncWithMobileComplete": {
-    "message": "Data Anda telah berhasil disinkronkan. Nikmati aplikasi mobile MetaMask!"
+    "message": "Data Anda telah berhasil disinkronkan. Nikmati aplikasi mobile BlackTie!"
   },
   "terms": {
     "message": "Syarat Penggunaan"
@@ -1199,7 +1199,7 @@
     "message": "Coba lagi"
   },
   "typePassword": {
-    "message": "Ketik kata sandi MetaMask Anda"
+    "message": "Ketik kata sandi BlackTie Anda"
   },
   "unapproved": {
     "message": "Tak disetujui"
@@ -1265,7 +1265,7 @@
     "message": "Selamat Datang Kembali!"
   },
   "welcome": {
-    "message": "Selamat Datang di MetaMask"
+    "message": "Selamat Datang di BlackTie"
   },
   "writePhrase": {
     "message": "Tuliskan frasa ini di selembar kertas dan simpan di tempat aman. Jika ingin lebih aman, tulislah di beberapa lembar kertas dan simpan masing-masing kertas di 2 - 3 lokasi berbeda."

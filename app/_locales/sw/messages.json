@@ -6,7 +6,7 @@
     "message": "Mwingiliono wa Mkataba"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "BlackTie",
     "description": "The name of the application"
   },
   "reject": {
@@ -76,7 +76,7 @@
     "message": "Ongeza Vianzio Vilivyopendekezwa"
   },
   "addAcquiredTokens": {
-    "message": "Ongeza vianzio ulivyopata kwa kutumia MetaMask"
+    "message": "Ongeza vianzio ulivyopata kwa kutumia BlackTie"
   },
   "amount": {
     "message": "Kiasi"
@@ -110,7 +110,7 @@
     "message": "Kihesabu Muda wa Kuondoka Kwenye Akaunti Kiotomatiki (dakika)"
   },
   "autoLockTimeLimitDescription": {
-    "message": "Weka muda katika dakika kabla MetaMask haijaondoa kwenye akaunti kiotomatiki."
+    "message": "Weka muda katika dakika kabla BlackTie haijaondoa kwenye akaunti kiotomatiki."
   },
   "average": {
     "message": "Wastani"
@@ -125,7 +125,7 @@
     "message": "Hifadhi msimbo wa Siri wa Kurejesha data ili kuweka salama waleti yako na fedha."
   },
   "backupApprovalInfo": {
-    "message": "Msimbo huu wa siri unahitajika ili kurejesha waleti yako ikitokea umepoteza kifaa chako, umesahau nenosiri lako, umelazimika kusakinisha MetaMask, au unataka kufikia waleti yako kwenye kifaa kingine."
+    "message": "Msimbo huu wa siri unahitajika ili kurejesha waleti yako ikitokea umepoteza kifaa chako, umesahau nenosiri lako, umelazimika kusakinisha BlackTie, au unataka kufikia waleti yako kwenye kifaa kingine."
   },
   "backupNow": {
     "message": "Hifadhi sasa"
@@ -150,13 +150,13 @@
     "message": "Kivinjari chaku hakiwezeshwi..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask imeundwa na kutengenezwa California."
+    "message": "BlackTie imeundwa na kutengenezwa California."
   },
   "buyWithWyre": {
     "message": "Nunua ETH kwa kutumia Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre inakuwezesha kutumia kadi ya benki kuweka ETH moja kwa moja kwenye akaunti yako ya MetaMask."
+    "message": "Wyre inakuwezesha kutumia kadi ya benki kuweka ETH moja kwa moja kwenye akaunti yako ya BlackTie."
   },
   "buyCoinSwitch": {
     "message": "Nunua kwenye CoinSwitch"
@@ -198,7 +198,7 @@
     "message": "Funga"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "Unapaswa kutumia MetaMask kwenye Google Chrome ili kuungnisha kwenye Waleti yako ya Programu Maunzi."
+    "message": "Unapaswa kutumia BlackTie kwenye Google Chrome ili kuungnisha kwenye Waleti yako ya Programu Maunzi."
   },
   "confirm": {
     "message": "Thibitisha"
@@ -369,7 +369,7 @@
     "message": "Kamwe usimpatia mtu yeye kirai hicho."
   },
   "endOfFlowMessage5": {
-    "message": "Kuwa makini na walaghai! MetaMask kamwe haitakuomba kirai chako kianzio."
+    "message": "Kuwa makini na walaghai! BlackTie kamwe haitakuomba kirai chako kianzio."
   },
   "endOfFlowMessage6": {
     "message": "Ikiwa unataka kuhifadhi tena kwa njia mbadla kirai chako kianzio, unaweza kukipata kwenye Mipangilio -> Usalama."
@@ -378,7 +378,7 @@
     "message": "Ikiwa una maswali au umeona kitu ambacho ni cha ulaghai, tuma barua pepe support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "MetaMask haiwezi kurejesha kirai chako kianzio. Pata maelezo ziadi."
+    "message": "BlackTie haiwezi kurejesha kirai chako kianzio. Pata maelezo ziadi."
   },
   "endOfFlowMessage9": {
     "message": "Jifunze zaidi."
@@ -494,7 +494,7 @@
     "message": "Unganisha waleti ya programu maunzi"
   },
   "hardwareWalletsMsg": {
-    "message": "Chagua waleti ya programu maunzi ambayo ungependa kutumia kwenye MetaMask"
+    "message": "Chagua waleti ya programu maunzi ambayo ungependa kutumia kwenye BlackTie"
   },
   "havingTroubleConnecting": {
     "message": "Je, unapata shida kuunganisha?"
@@ -523,7 +523,7 @@
     "message": "Ingiza Akaunti"
   },
   "importAccountMsg": {
-    "message": "Akaunti zilizoingizwa hazitahusishwa na kirai chako cha kianzio cha akaunti ya MetaMask iliyoundwa awali. Pata maelezo zaidi kuhusu akaunti zilizoingizwa"
+    "message": "Akaunti zilizoingizwa hazitahusishwa na kirai chako cha kianzio cha akaunti ya BlackTie iliyoundwa awali. Pata maelezo zaidi kuhusu akaunti zilizoingizwa"
   },
   "importAccountSeedPhrase": {
     "message": "Hamisha Akaunti kwa kutumia Kirai Kianzio"
@@ -630,7 +630,7 @@
     "message": "Kukuunganisha kwenye Ethereum na Wavutiu Uliotawanywa."
   },
   "metamaskVersion": {
-    "message": "Toleo la MetaMask"
+    "message": "Toleo la BlackTie"
   },
   "missingYourTokens": {
     "message": "Je, huoni vianzio vyako?"
@@ -645,13 +645,13 @@
     "message": "Akaunti angu za Waleti"
   },
   "myWalletAccountsDescription": {
-    "message": "Akaunti zako zote za MetaMask zilizofunguliwa zitaongezwa kiotomatiki kwenye sehemu hii."
+    "message": "Akaunti zako zote za BlackTie zilizofunguliwa zitaongezwa kiotomatiki kwenye sehemu hii."
   },
   "mustSelectOne": {
     "message": "Lazima uchague angalau kianzio 1."
   },
   "needEtherInWallet": {
-    "message": "Ili kuingiliana na programu zilizosambazwa kwa kutumia MetaMask, utahitaji kuwa na Ether kwenye waleti yako."
+    "message": "Ili kuingiliana na programu zilizosambazwa kwa kutumia BlackTie, utahitaji kuwa na Ether kwenye waleti yako."
   },
   "needImportFile": {
     "message": "Unapaswa kuchagua faili la kuhamisha.",
@@ -694,8 +694,8 @@
   "newNetwork": {
     "message": "Mtandao Mpya"
   },
-  "newToMetaMask": {
-    "message": "MetaMask mpya?"
+  "newToBlackTie": {
+    "message": "BlackTie mpya?"
   },
   "noAlreadyHaveSeed": {
     "message": "Hapana, tayari nini kirai cha kuanzia"
@@ -704,7 +704,7 @@
     "message": "Linda Funguo Zako!"
   },
   "protectYourKeysMessage1": {
-    "message": "Kuwa mwangalifu na kirai kianzio chako - kumekuwa na taarifa za tovuti ambazo zinajaribu kuiga MetaMask. MetaMask kamwe haitakuomba kirai kianzio chako!"
+    "message": "Kuwa mwangalifu na kirai kianzio chako - kumekuwa na taarifa za tovuti ambazo zinajaribu kuiga BlackTie. BlackTie kamwe haitakuomba kirai kianzio chako!"
   },
   "protectYourKeysMessage2": {
     "message": "Weka salama kirai kianzio chako. Ikiwa unaona kitu cha kilaghai, au huna uhakika na tovuti fulani, tuma barua pepe kwenda support@metamask.io"
@@ -761,7 +761,7 @@
     "message": "Shiriki katika MetaMetrics"
   },
   "participateInMetaMetricsDescription": {
-    "message": "Shiriki katika MetaMetrics ili kutusaidia kufanya MetaMask kuwa bora zaidi"
+    "message": "Shiriki katika MetaMetrics ili kutusaidia kufanya BlackTie kuwa bora zaidi"
   },
   "password": {
     "message": "Nenosiri"
@@ -988,7 +988,7 @@
     "message": "Chagua Akaunti"
   },
   "selectAnAccountHelp": {
-    "message": "Chagua akaunti kuangalia kwenye MetaMask"
+    "message": "Chagua akaunti kuangalia kwenye BlackTie"
   },
   "selectAHigherGasFee": {
     "message": "Chagua ada ya juu ya gesi ili kuharakisha uchakataji wa muamala wako.*"
@@ -1102,19 +1102,19 @@
     "message": "Oanisha na simu"
   },
   "syncWithMobileDesc": {
-    "message": "Unaweza kuoanisha akaunti zako na taarifa kwa kifaa chako cha simu ya mkononi. Fungua programu ya simu ya MetaMask, kisha nenda kwenye \"Mipangilio\" na bofya kwenye \"Oanisha kutoka kwenye Kiendelezi cha Kivinjari\""
+    "message": "Unaweza kuoanisha akaunti zako na taarifa kwa kifaa chako cha simu ya mkononi. Fungua programu ya simu ya BlackTie, kisha nenda kwenye \"Mipangilio\" na bofya kwenye \"Oanisha kutoka kwenye Kiendelezi cha Kivinjari\""
   },
   "syncWithMobileDescNewUsers": {
-    "message": "Ikiwa ndio umefungua tu programu ya simu ya MetaMask kwa mara ya kwanza, fuata hatua kwenye simu yako."
+    "message": "Ikiwa ndio umefungua tu programu ya simu ya BlackTie kwa mara ya kwanza, fuata hatua kwenye simu yako."
   },
   "syncWithMobileScanThisCode": {
-    "message": "Kagua msimbo huu kwa kutumia programu yako ya simu ya MetaMask"
+    "message": "Kagua msimbo huu kwa kutumia programu yako ya simu ya BlackTie"
   },
   "syncWithMobileBeCareful": {
     "message": "Hakikisha hakuna mtu mwingine anayeangalia kwenye skrini yako unapokuwa unakagua msimbo huu."
   },
   "syncWithMobileComplete": {
-    "message": "Umefanikiwa kuoanisha data yako. Furahia programu yako ya simu ya MetaMask!"
+    "message": "Umefanikiwa kuoanisha data yako. Furahia programu yako ya simu ya BlackTie!"
   },
   "terms": {
     "message": "Masharti ya Matumizi"
@@ -1205,7 +1205,7 @@
     "message": "Jaribu tena"
   },
   "typePassword": {
-    "message": "Andika nenosiri lako la MetaMask"
+    "message": "Andika nenosiri lako la BlackTie"
   },
   "unapproved": {
     "message": "Haijaidhinishwa"
@@ -1271,7 +1271,7 @@
     "message": "Karibu Tena!"
   },
   "welcome": {
-    "message": "Karibu kwenye MetaMask"
+    "message": "Karibu kwenye BlackTie"
   },
   "writePhrase": {
     "message": "Andika kirai hiki kwenye karatasi na kihifadhi kwenye sehemu salama. Ikiwa unahitaji usalama zaidi, andika kwenye vipande kadhaa vya karatasi na tunza kila kimoja kwenye maeneo tofauti 2-3. "

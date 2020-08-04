@@ -13,7 +13,7 @@ const enLocaleMessages = require('../../app/_locales/en/messages.json')
 
 const ganacheServer = new Ganache()
 
-describe('MetaMask', function () {
+describe('BlackTie', function () {
   let driver
   let publicAddress
 
@@ -130,7 +130,7 @@ describe('MetaMask', function () {
       await driver.wait(until.elementTextMatches(txStatus, /Success/), 15000)
     })
 
-    it('switches back to MetaMask', async function () {
+    it('switches back to BlackTie', async function () {
       await driver.switchToWindow(extension)
     })
 

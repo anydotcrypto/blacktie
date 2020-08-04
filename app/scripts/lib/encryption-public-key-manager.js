@@ -12,7 +12,7 @@ import log from 'loglevel'
  * @property {number} id An id to track and identify the message object
  * @property {Object} msgParams The parameters to pass to the encryptionPublicKey method once the request is
  * approved.
- * @property {Object} msgParams.metamaskId Added to msgParams for tracking and identification within MetaMask.
+ * @property {Object} msgParams.metamaskId Added to msgParams for tracking and identification within BlackTie.
  * @property {string} msgParams.data A hex string conversion of the raw buffer data of the request
  * @property {number} time The epoch time at which the this message was created
  * @property {string} status Indicates whether the request is 'unapproved', 'approved', 'received' or 'rejected'
@@ -78,7 +78,7 @@ export default class EncryptionPublicKeyManager extends EventEmitter {
   addUnapprovedMessageAsync (address, req) {
     return new Promise((resolve, reject) => {
       if (!address) {
-        reject(new Error('MetaMask Message for EncryptionPublicKey: address field is required.'))
+        reject(new Error('BlackTie Message for EncryptionPublicKey: address field is required.'))
       }
       const msgId = this.addUnapprovedMessage(address, req)
       this.once(`${msgId}:finished`, (data) => {
@@ -86,9 +86,9 @@ export default class EncryptionPublicKeyManager extends EventEmitter {
           case 'received':
             return resolve(data.rawData)
           case 'rejected':
-            return reject(ethErrors.provider.userRejectedRequest('MetaMask Message for EncryptionPublicKey: User denied message EncryptionPublicKey.'))
+            return reject(ethErrors.provider.userRejectedRequest('BlackTie Message for EncryptionPublicKey: User denied message EncryptionPublicKey.'))
           default:
-            return reject(new Error(`MetaMask Message for EncryptionPublicKey: Unknown problem: ${JSON.stringify(address)}`))
+            return reject(new Error(`BlackTie Message for EncryptionPublicKey: Unknown problem: ${JSON.stringify(address)}`))
         }
       })
     })
@@ -156,8 +156,8 @@ export default class EncryptionPublicKeyManager extends EventEmitter {
    * Approves a EncryptionPublicKey. Sets the message status via a call to this.setMsgStatusApproved, and returns a promise
    * with any the message params modified for proper providing.
    *
-   * @param {Object} msgParams The msgParams to be used when eth_getEncryptionPublicKey is called, plus data added by MetaMask.
-   * @param {Object} msgParams.metamaskId Added to msgParams for tracking and identification within MetaMask.
+   * @param {Object} msgParams The msgParams to be used when eth_getEncryptionPublicKey is called, plus data added by BlackTie.
+   * @param {Object} msgParams.metamaskId Added to msgParams for tracking and identification within BlackTie.
    * @returns {Promise<object>} Promises the msgParams object with metamaskId removed.
    *
    */

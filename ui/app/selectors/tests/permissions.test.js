@@ -23,7 +23,7 @@ describe('selectors', function () {
               'permissions': [
                 {
                   '@context': [
-                    'https://github.com/MetaMask/rpc-cap',
+                    'https://github.com/BlackTie/rpc-cap',
                   ],
                   'caveats': [
                     {
@@ -45,7 +45,7 @@ describe('selectors', function () {
               'permissions': [
                 {
                   '@context': [
-                    'https://github.com/MetaMask/rpc-cap',
+                    'https://github.com/BlackTie/rpc-cap',
                   ],
                   'caveats': [
                     {
@@ -99,7 +99,7 @@ describe('selectors', function () {
               'permissions': [
                 {
                   '@context': [
-                    'https://github.com/MetaMask/rpc-cap',
+                    'https://github.com/BlackTie/rpc-cap',
                   ],
                   'caveats': [
                     {
@@ -121,7 +121,7 @@ describe('selectors', function () {
               'permissions': [
                 {
                   '@context': [
-                    'https://github.com/MetaMask/rpc-cap',
+                    'https://github.com/BlackTie/rpc-cap',
                   ],
                   'caveats': [
                     {

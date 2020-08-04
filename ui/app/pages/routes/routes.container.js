@@ -49,7 +49,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    lockMetaMask: () => dispatch(lockMetamask(false)),
+    lockBlackTie: () => dispatch(lockMetamask(false)),
     hideSidebar: () => dispatch(hideSidebar()),
     setCurrentCurrencyToUSD: () => dispatch(setCurrentCurrency('usd')),
     setMouseUserState: (isMouseUser) => dispatch(setMouseUserState(isMouseUser)),

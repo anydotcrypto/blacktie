@@ -57,9 +57,9 @@ export function getCurrentNetworkId (state) {
   return state.metamask.network
 }
 
-export const getMetaMaskAccounts = createSelector(
-  getMetaMaskAccountsRaw,
-  getMetaMaskCachedBalances,
+export const getBlackTieAccounts = createSelector(
+  getBlackTieAccountsRaw,
+  getBlackTieCachedBalances,
   (currentAccounts, cachedBalances) => Object.entries(currentAccounts).reduce((selectedAccounts, [accountID, account]) => {
     if (account.balance === null || account.balance === undefined) {
       return {
@@ -124,19 +124,19 @@ export function getNumberOfTokens (state) {
   return tokens ? tokens.length : 0
 }
 
-export function getMetaMaskKeyrings (state) {
+export function getBlackTieKeyrings (state) {
   return state.metamask.keyrings
 }
 
-export function getMetaMaskIdentities (state) {
+export function getBlackTieIdentities (state) {
   return state.metamask.identities
 }
 
-export function getMetaMaskAccountsRaw (state) {
+export function getBlackTieAccountsRaw (state) {
   return state.metamask.accounts
 }
 
-export function getMetaMaskCachedBalances (state) {
+export function getBlackTieCachedBalances (state) {
   const network = getCurrentNetworkId(state)
 
   return state.metamask.cachedBalances[network]
@@ -145,10 +145,10 @@ export function getMetaMaskCachedBalances (state) {
 /**
  * Get ordered (by keyrings) accounts with identity and balance
  */
-export const getMetaMaskAccountsOrdered = createSelector(
-  getMetaMaskKeyrings,
-  getMetaMaskIdentities,
-  getMetaMaskAccounts,
+export const getBlackTieAccountsOrdered = createSelector(
+  getBlackTieKeyrings,
+  getBlackTieIdentities,
+  getBlackTieAccounts,
   (keyrings, identities, accounts) => keyrings
     .reduce((list, keyring) => list.concat(keyring.accounts), [])
     .filter((address) => !!identities[address])
@@ -170,14 +170,14 @@ export function getSelectedAccountCachedBalance (state) {
 }
 
 export function getSelectedAccount (state) {
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   const selectedAddress = getSelectedAddress(state)
 
   return accounts[selectedAddress]
 }
 
 export function getTargetAccount (state, targetAddress) {
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   return accounts[targetAddress]
 }
 
@@ -234,7 +234,7 @@ export function getAddressBookEntryName (state, address) {
 }
 
 export function accountsWithSendEtherInfoSelector (state) {
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   const { identities } = state.metamask
 
   const accountsWithSendEtherInfo = Object.entries(accounts).map(([key, account]) => {

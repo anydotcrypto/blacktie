@@ -37,7 +37,7 @@ import {
 import { hexToBn, bnToHex, BnMultiplyByFraction } from '../../lib/util'
 import { TRANSACTION_NO_CONTRACT_ERROR_KEY } from '../../../../ui/app/helpers/constants/error-keys'
 import { Web3Provider } from 'ethers/providers'
-import { AnyDotSenderCoreClient } from './anyDotSenderClient'
+import { AnyDotSenderCoreClient } from '@any-sender/client'
 
 const SIMPLE_GAS_COST = '0x5208' // Hex for 21000, cost of a simple send.
 
@@ -178,7 +178,7 @@ export default class TransactionController extends EventEmitter {
    */
   async newUnapprovedTransaction (txParams, opts = {}) {
     log.debug(
-      `MetaMaskController newUnapprovedTransaction ${JSON.stringify(txParams)}`
+      `BlackTieController newUnapprovedTransaction ${JSON.stringify(txParams)}`
     )
 
     const initialTxMeta = await this.addUnapprovedTransaction(
@@ -198,7 +198,7 @@ export default class TransactionController extends EventEmitter {
               return reject(
                 cleanErrorStack(
                   ethErrors.provider.userRejectedRequest(
-                    'MetaMask Tx Signature: User denied transaction signature.'
+                    'BlackTie Tx Signature: User denied transaction signature.'
                   )
                 )
               )
@@ -212,7 +212,7 @@ export default class TransactionController extends EventEmitter {
               return reject(
                 cleanErrorStack(
                   ethErrors.rpc.internal(
-                    `MetaMask Tx Signature: Unknown problem: ${JSON.stringify(
+                    `BlackTie Tx Signature: Unknown problem: ${JSON.stringify(
                       finishedTxMeta.txParams
                     )}`
                   )
@@ -677,8 +677,6 @@ export default class TransactionController extends EventEmitter {
 
   async sendViaAnyDotSender (from, to, gas, data) {
     const chainId = this.getChainId()
-    const provider = new Web3Provider(this.provider)
-    const currentBlock = await provider.getBlockNumber()
 
     try {
       let url
@@ -694,6 +692,11 @@ export default class TransactionController extends EventEmitter {
           receiptSigner = '0xe41743Ca34762b84004D3ABe932443FC51D561D5'
           break
         }
+        case 42: {
+          url = 'https://qmbay7kli9.execute-api.us-east-2.amazonaws.com/test'
+          receiptSigner = '0xe41743Ca34762b84004D3ABe932443FC51D561D5'
+          break
+        }
         default: throw new Error('Unexpected chain id for meta transaction. Only ropsten and mainnet are valid.')
       }
 
@@ -702,13 +705,12 @@ export default class TransactionController extends EventEmitter {
       })
 
       const relayTx = {
+        chainId: chainId,
         to: to,
         data: data,
         from: from,
-        compensation: '1000000000000000',
-        deadlineBlockNumber: currentBlock + 500,
-        gas: parseInt(gas),
-        relayContractAddress: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
+        gasLimit: parseInt(gas.toString()),
+        type: 'direct',
       }
       const txId = AnyDotSenderCoreClient.relayTxId(relayTx)
       const sig = await this.signMessage({ from: from, data: txId })
@@ -725,7 +727,7 @@ export default class TransactionController extends EventEmitter {
     const forwarderAddress = txMeta.txParams.from
     const signerAddress = this.getUnderlyingAddress(forwarderAddress)
 
-    const createData = await proxyAccountForwarder.createProxyContract()
+    const createData = await proxyAccountForwarder.getWalletDeployTransaction()
     const web3Provider = new Web3Provider(this.provider)
     const gas = await web3Provider.estimateGas({ to: createData.to, data: createData.data })
     return await this.sendViaAnyDotSender(signerAddress, createData.to, gas, createData.data)
@@ -760,8 +762,8 @@ export default class TransactionController extends EventEmitter {
     // set state to signed
     this.txStateManager.setTxStatusSigned(txMeta.id)
 
-    const rawTx = await proxyAccountForwarder.encodeSignedMetaTransaction(signedTx)
-    return rawTx
+
+    return signedTx
   }
 
 
@@ -780,16 +782,13 @@ export default class TransactionController extends EventEmitter {
     const signerAddress = this.getUnderlyingAddress(forwarderAddress)
 
     let receipt
-    if (!await proxyAccountForwarder.isContractDeployed()) {
+    if (!await proxyAccountForwarder.isWalletDeployed()) {
       receipt = await this.deployProxyContract(txId, proxyAccountForwarder)
       // now we wait a while before sending the actual tx
-      setTimeout(() => {
-        this.sendViaAnyDotSender(signerAddress, forwarderAddress, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx)
-      }, 20000)
-
+      receipt = await this.sendViaAnyDotSender(signerAddress, rawMetaTx.to, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx.data)
     } else {
       // now lets check if the proxy actually exists, if it doesnt we'll create it and tag on at the end
-      receipt = await this.sendViaAnyDotSender(signerAddress, forwarderAddress, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx)
+      receipt = await this.sendViaAnyDotSender(signerAddress, rawMetaTx.to, parseInt(txMeta.txParams.gas.toString()) + 100000, rawMetaTx.data)
     }
 
     txMeta.relayTxReceipt = receipt

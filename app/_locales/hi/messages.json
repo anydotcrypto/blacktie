@@ -72,7 +72,7 @@
     "message": "सुझाए गए टोकन जोड़ें"
   },
   "addAcquiredTokens": {
-    "message": "MetaMask का उपयोग करके आपके द्वारा अर्जित किए गए टोकन जोड़ें"
+    "message": "BlackTie का उपयोग करके आपके द्वारा अर्जित किए गए टोकन जोड़ें"
   },
   "amount": {
     "message": "राशि "
@@ -82,7 +82,7 @@
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "BlackTie",
     "description": "The name of the application"
   },
   "approve": {
@@ -159,7 +159,7 @@
     "message": "Wyre से ETH खरीदें"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre आपको क्रेडिट कार्ड का उपयोग करके ETH को सीधे आपके MetaMask खाते में जमा करने देता है।"
+    "message": "Wyre आपको क्रेडिट कार्ड का उपयोग करके ETH को सीधे आपके BlackTie खाते में जमा करने देता है।"
   },
   "buyCoinSwitch": {
     "message": "CoinSwitch पर खरीदें"
@@ -204,7 +204,7 @@
     "message": "बंद करें"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "अपने हार्डवेयर वॉलेट से कनेक्ट करने के लिए आपको Google Chrome में MetaMask का उपयोग करना ज़रूरी है।"
+    "message": "अपने हार्डवेयर वॉलेट से कनेक्ट करने के लिए आपको Google Chrome में BlackTie का उपयोग करना ज़रूरी है।"
   },
   "confirm": {
     "message": "दुबारा पूछें"
@@ -504,7 +504,7 @@
     "message": "हार्डवेयर वॉलेट जोड़े"
   },
   "hardwareWalletsMsg": {
-    "message": "एक हार्डवेयर वॉलेट चुनें जिसका उपयोग आप MetaMask के साथ करना चाहते हैं"
+    "message": "एक हार्डवेयर वॉलेट चुनें जिसका उपयोग आप BlackTie के साथ करना चाहते हैं"
   },
   "havingTroubleConnecting": {
     "message": "कनेक्ट करने में परेशानी हो रही है?"
@@ -536,7 +536,7 @@
     "message": "खाता आयात करें"
   },
   "importAccountMsg": {
-    "message": "आयात किए गए खाते आपके मुख्य रूप से बनाए गए MetaMask खाते के सीडफ़्रेज़ से संबंधित नहीं होंगे। आयात किए गए खातों के बारे में अधिक जानें"
+    "message": "आयात किए गए खाते आपके मुख्य रूप से बनाए गए BlackTie खाते के सीडफ़्रेज़ से संबंधित नहीं होंगे। आयात किए गए खातों के बारे में अधिक जानें"
   },
   "importAccountSeedPhrase": {
     "message": "बीज वाक्यांश के साथ एक खाता आयात करें"
@@ -649,7 +649,7 @@
     "message": "आपको Ethereum और विकेंद्रीकृत वेब से कनेक्ट कर रहे हैं।"
   },
   "metamaskVersion": {
-    "message": "MetaMask का संस्करण"
+    "message": "BlackTie का संस्करण"
   },
   "missingYourTokens": {
     "message": "अपने टोकन को देख नहीं पा रहें हैं?"
@@ -713,8 +713,8 @@
   "newNetwork": {
     "message": "नया नेटवर्क"
   },
-  "newToMetaMask": {
-    "message": "MetaMask में नए है?"
+  "newToBlackTie": {
+    "message": "BlackTie में नए है?"
   },
   "noAlreadyHaveSeed": {
     "message": "जी नहीं, मेरे पास पहले से ही एक बीज वाक्यांश है"
@@ -723,7 +723,7 @@
     "message": "अपनी कुंजी को सुरक्षित रखें!"
   },
   "protectYourKeysMessage1": {
-    "message": "अपने सीड फ़्रेज़ के बारे में सावधान रहें — ऐसी वेबसाइटों की रिपोर्टें आई हैं जो MetaMask की नकल करने का प्रयास करती हैं। MetaMask आपके सीड फ़्रेज़ के बारे में कभी नहीं पूछेगा!"
+    "message": "अपने सीड फ़्रेज़ के बारे में सावधान रहें — ऐसी वेबसाइटों की रिपोर्टें आई हैं जो BlackTie की नकल करने का प्रयास करती हैं। BlackTie आपके सीड फ़्रेज़ के बारे में कभी नहीं पूछेगा!"
   },
   "protectYourKeysMessage2": {
     "message": "अपने वाक्यांश को सुरक्षित रखें। यदि आपको कुछ गड़बड़ दिखती है, या आप किसी वेबसाइट के बारे में अनिश्चित हैं तो support@metamask.io को ई मेल करें\n"
@@ -780,7 +780,7 @@
     "message": "मेटामेट्रिक्स में भाग लें"
   },
   "participateInMetaMetricsDescription": {
-    "message": "MetaMask को बेहतर बनाने में हमारी मदद के लिए MetaMetrics में भाग लें"
+    "message": "BlackTie को बेहतर बनाने में हमारी मदद के लिए MetaMetrics में भाग लें"
   },
   "password": {
     "message": "पासवर्ड"
@@ -1287,7 +1287,7 @@
     "message": "वापस आने पर स्वागत है!"
   },
   "welcome": {
-    "message": "MetaMask में आपका स्वागत है"
+    "message": "BlackTie में आपका स्वागत है"
   },
   "writePhrase": {
     "message": "इस वाक्यांश को कागज के टुकड़े पर लिखें और एक सुरक्षित स्थान पर संग्रहीत करें। यदि आप और भी अधिक सुरक्षा चाहते हैं, तो इसे कागज के कई टुकड़ों पर लिखें और प्रत्येक को 2 - 3 विभिन्न स्थानों में संग्रहीत करें।"

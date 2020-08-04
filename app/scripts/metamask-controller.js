@@ -1,6 +1,6 @@
 /**
  * @file      The central metamask controller. Aggregates other controllers and exports an api.
- * @copyright Copyright (c) 2018 MetaMask
+ * @copyright Copyright (c) 2018 BlackTie
  * @license   MIT
  */
 
@@ -125,7 +125,7 @@ class DerivedAccountKeyringController extends KeyringController {
     accounts.forEach((a) =>
       derivedState.push({
         underlyingAddress: a,
-        derivedAddress: shouldDerive ? normalizeAddress(ProxyAccountForwarder.buildProxyAccountAddress('0x7FD8fAF341273159167FB032655a75eB1B444C15', a, '0x3BeB7d7d121eb1BF9948aD89A1096E2b9dfeca31')) : a,
+        derivedAddress: shouldDerive ? normalizeAddress(ProxyAccountForwarder.getAddress(a)) : a,
       })
     )
 
@@ -564,7 +564,7 @@ export default class MetamaskController extends EventEmitter {
     const providerOpts = {
       static: {
         eth_syncing: false,
-        web3_clientVersion: `MetaMask/v${version}`,
+        web3_clientVersion: `BlackTie/v${version}`,
       },
       version,
       // account mgmt
@@ -1324,7 +1324,7 @@ export default class MetamaskController extends EventEmitter {
    * @returns {Promise<Object>} - Full state update.
    */
   signMessage (msgParams) {
-    log.info('MetaMaskController - signMessage')
+    log.info('BlackTieController - signMessage')
     const msgId = msgParams.metamaskId
 
     // sets the status op the message to 'approved'
@@ -1383,7 +1383,7 @@ export default class MetamaskController extends EventEmitter {
    * @returns {Promise<Object>} - A full state update.
    */
   signPersonalMessage (msgParams) {
-    log.info('MetaMaskController - signPersonalMessage')
+    log.info('BlackTieController - signPersonalMessage')
     const msgId = msgParams.metamaskId
     // sets the status op the message to 'approved'
     // and removes the metamaskId for signing
@@ -1436,7 +1436,7 @@ export default class MetamaskController extends EventEmitter {
   * @returns {Promise<Object>} - A full state update.
   */
   async decryptMessageInline (msgParams) {
-    log.info('MetaMaskController - decryptMessageInline')
+    log.info('BlackTieController - decryptMessageInline')
     // decrypt the message inline
     const msgId = msgParams.metamaskId
     const msg = this.decryptMessageManager.getMsg(msgId)
@@ -1462,7 +1462,7 @@ export default class MetamaskController extends EventEmitter {
   * @returns {Promise<Object>} - A full state update.
   */
   async decryptMessage (msgParams) {
-    log.info('MetaMaskController - decryptMessage')
+    log.info('BlackTieController - decryptMessage')
     const msgId = msgParams.metamaskId
     // sets the status op the message to 'approved'
     // and removes the metamaskId for decryption
@@ -1478,7 +1478,7 @@ export default class MetamaskController extends EventEmitter {
       // tells the listener that the message has been decrypted and can be returned to the dapp
       this.decryptMessageManager.setMsgStatusDecrypted(msgId, rawMess)
     } catch (error) {
-      log.info('MetaMaskController - eth_decrypt failed.', error)
+      log.info('BlackTieController - eth_decrypt failed.', error)
       this.decryptMessageManager.errorMessage(msgId, error)
     }
     return this.getState()
@@ -1521,7 +1521,7 @@ export default class MetamaskController extends EventEmitter {
   * @returns {Promise<Object>} - A full state update.
   */
   async encryptionPublicKey (msgParams) {
-    log.info('MetaMaskController - encryptionPublicKey')
+    log.info('BlackTieController - encryptionPublicKey')
     const msgId = msgParams.metamaskId
     // sets the status op the message to 'approved'
     // and removes the metamaskId for decryption
@@ -1535,7 +1535,7 @@ export default class MetamaskController extends EventEmitter {
       // and can be returned to the dapp
       this.encryptionPublicKeyManager.setMsgStatusReceived(msgId, publicKey)
     } catch (error) {
-      log.info('MetaMaskController - eth_getEncryptionPublicKey failed.', error)
+      log.info('BlackTieController - eth_getEncryptionPublicKey failed.', error)
       this.encryptionPublicKeyManager.errorMessage(msgId, error)
     }
     return this.getState()
@@ -1577,7 +1577,7 @@ export default class MetamaskController extends EventEmitter {
    * @returns {Object} - Full state update.
    */
   async signTypedMessage (msgParams) {
-    log.info('MetaMaskController - eth_signTypedData')
+    log.info('BlackTieController - eth_signTypedData')
     const msgId = msgParams.metamaskId
     const version = msgParams.version
     try {
@@ -1595,7 +1595,7 @@ export default class MetamaskController extends EventEmitter {
       this.typedMessageManager.setMsgStatusSigned(msgId, signature)
       return this.getState()
     } catch (error) {
-      log.info('MetaMaskController - eth_signTypedData failed.', error)
+      log.info('BlackTieController - eth_signTypedData failed.', error)
       this.typedMessageManager.errorMessage(msgId, error)
     }
   }
@@ -1634,7 +1634,7 @@ export default class MetamaskController extends EventEmitter {
    * transaction.
    * @param {number} originalTxId - the id of the txMeta that you want to attempt to cancel
    * @param {string} [customGasPrice] - the hex value to use for the cancel transaction
-   * @returns {Object} - MetaMask state
+   * @returns {Object} - BlackTie state
    */
   async createCancelTransaction (originalTxId, customGasPrice) {
     try {
@@ -1709,7 +1709,7 @@ export default class MetamaskController extends EventEmitter {
     const hostname = (new URL(sender.url)).hostname
     // Check if new connection is blacklisted if phishing detection is on
     if (usePhishDetect && this.phishingController.test(hostname)) {
-      log.debug('MetaMask - sending phishing warning for', hostname)
+      log.debug('BlackTie - sending phishing warning for', hostname)
       this.sendPhishingWarning(connectionStream, hostname)
       return
     }
@@ -2018,7 +2018,7 @@ export default class MetamaskController extends EventEmitter {
   // misc
 
   /**
-   * A method for emitting the full MetaMask state to all registered listeners.
+   * A method for emitting the full BlackTie state to all registered listeners.
    * @private
    */
   privateSendUpdate () {
@@ -2316,7 +2316,7 @@ export default class MetamaskController extends EventEmitter {
 
   // TODO: Replace isClientOpen methods with `controllerConnectionChanged` events.
   /**
-   * A method for recording whether the MetaMask user interface is open or not.
+   * A method for recording whether the BlackTie user interface is open or not.
    * @private
    * @param {boolean} open
    */
@@ -2354,7 +2354,7 @@ export default class MetamaskController extends EventEmitter {
   }
 
   /**
-   * Locks MetaMask
+   * Locks BlackTie
    */
   setLocked () {
     return this.keyringController.setLocked()

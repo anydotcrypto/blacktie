@@ -1,6 +1,6 @@
 # Lines starting with '#' are comments.
 # Each line is a file pattern followed by one or more owners.
 
-*                                    @MetaMask/extension-team
-.circleci/                           @MetaMask/extension-team @kumavis
-development/                         @MetaMask/extension-team @kumavis
+*                                    @BlackTie/extension-team
+.circleci/                           @BlackTie/extension-team @kumavis
+development/                         @BlackTie/extension-team @kumavis

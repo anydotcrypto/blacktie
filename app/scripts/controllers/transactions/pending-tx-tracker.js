@@ -1,7 +1,7 @@
 import EventEmitter from 'safe-event-emitter'
 import log from 'loglevel'
 import EthQuery from 'ethjs-query'
-import { AnyDotSenderCoreClient } from './anyDotSenderClient'
+import { AnyDotSenderCoreClient, AnyDotSenderProviderClient } from '@any-sender/client'
 import { Web3Provider } from 'ethers/providers'
 
 /**
@@ -170,25 +170,37 @@ export default class PendingTransactionTracker extends EventEmitter {
       const txId = txMeta.id
       const provider = new Web3Provider(this.provider)
       const relayReceipt = txMeta.relayTxReceipt
-
-      const topics = AnyDotSenderCoreClient.getRelayExecutedEventTopics(relayReceipt.relayTransaction)
-      const filter = {
-        fromBlock: 0,
-        toBlock: 'latest',
-        to: '0xa404d1219Ed6Fe3cF2496534de2Af3ca17114b06',
-        topics: topics,
+      let url
+      let receiptSigner
+      switch ((await provider.getNetwork()).chainId) {
+        case 1: {
+          url = 'https://api.anydot.dev/any.sender.mainnet'
+          receiptSigner = '0x02111c619c5b7e2aa5c1f5e09815be264d925422'
+          break
+        }
+        case 3: {
+          url = 'https://api.anydot.dev/any.sender.ropsten'
+          receiptSigner = '0xe41743Ca34762b84004D3ABe932443FC51D561D5'
+          break
+        }
+        case 42: {
+          url = 'https://qmbay7kli9.execute-api.us-east-2.amazonaws.com/test'
+          receiptSigner = '0xe41743Ca34762b84004D3ABe932443FC51D561D5'
+          break
+        }
+        default: throw new Error('Unexpected chain id for meta transaction. Only ropsten and mainnet are valid.')
       }
-      const logs = await provider.getLogs(filter)
 
-      if (logs.length > 0) {
+      const coreClient = new AnyDotSenderCoreClient({ apiUrl: url, receiptSignerAddress: receiptSigner })
+      const status = await coreClient.getStatus(AnyDotSenderCoreClient.relayTxId(relayReceipt.relayTransaction))
+
+      for (const stat of status) {
         try {
-          const transactionReceipt = await this.query.getTransactionReceipt(logs[0].transactionHash)
+          const transactionReceipt = await this.query.getTransactionReceipt(stat.ethTxHash)
           if (transactionReceipt?.blockNumber) {
-            this.setTxHash(txId, transactionReceipt.transactionHash)
             this.emit('tx:confirmed', txId, transactionReceipt)
             return
           }
-
         } catch (err) {
           txMeta.warning = {
             error: err.message,
@@ -197,11 +209,6 @@ export default class PendingTransactionTracker extends EventEmitter {
           this.emit('tx:warning', txMeta, err)
           return
         }
-
-        // if (await this._checkIfTxWasDropped(txMeta)) {
-        //     this.emit('tx:dropped', txId)
-        //     return
-        // }
       }
     } else {
       const txHash = txMeta.hash

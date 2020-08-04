@@ -6,7 +6,7 @@
     "message": "Ugovorna interakcija"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "BlackTie",
     "description": "The name of the application"
   },
   "reject": {
@@ -76,7 +76,7 @@
     "message": "Dodaj predložene tokene"
   },
   "addAcquiredTokens": {
-    "message": "Dodajte tokene koje ste kupili uslugom MetaMask"
+    "message": "Dodajte tokene koje ste kupili uslugom BlackTie"
   },
   "amount": {
     "message": "Iznos"
@@ -110,7 +110,7 @@
     "message": "Brojač za automatsko odjavljivanje (minute)"
   },
   "autoLockTimeLimitDescription": {
-    "message": "Postavite stanje u mirovanju u minutama prije nego što se MetaMask automatski odjavi"
+    "message": "Postavite stanje u mirovanju u minutama prije nego što se BlackTie automatski odjavi"
   },
   "average": {
     "message": "Prosječno"
@@ -125,7 +125,7 @@
     "message": "Sigurnosno kopirajte svoj sigurnosni kôd za obnavljanje kako biste zaštitili svoj novčanik i sredstva."
   },
   "backupApprovalInfo": {
-    "message": "Ovaj je sigurnosni kôd potreban za obnavljanje novčanika ako izgubite svoj uređaj, zaboravite svoju lozinku, morate ponovno instalirati MetaMask ili želite pristupiti svojem novčaniku na drugom uređaju."
+    "message": "Ovaj je sigurnosni kôd potreban za obnavljanje novčanika ako izgubite svoj uređaj, zaboravite svoju lozinku, morate ponovno instalirati BlackTie ili želite pristupiti svojem novčaniku na drugom uređaju."
   },
   "backupNow": {
     "message": "Sigurnosno kopiraj sada"
@@ -153,13 +153,13 @@
     "message": "Vaš se preglednik ne podržava..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask je osmišljen i izrađen u Kaliforniji."
+    "message": "BlackTie je osmišljen i izrađen u Kaliforniji."
   },
   "buyWithWyre": {
     "message": "Kupi ETH Wyerom"
   },
   "buyWithWyreDescription": {
-    "message": "Wyreom vam se omogućava korištenje kreditnom karticom za polaganje ETH-a izravno na vaš račun za MetaMask."
+    "message": "Wyreom vam se omogućava korištenje kreditnom karticom za polaganje ETH-a izravno na vaš račun za BlackTie."
   },
   "buyCoinSwitch": {
     "message": "Kupujte na usluzi CoinSwitch"
@@ -204,7 +204,7 @@
     "message": "Zatvori"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "Trebate upotrebljavati MetaMask u pregledniku Google Chrome kako biste ga povezali s vašim hardverskim novčanikom."
+    "message": "Trebate upotrebljavati BlackTie u pregledniku Google Chrome kako biste ga povezali s vašim hardverskim novčanikom."
   },
   "confirm": {
     "message": "Potvrdi"
@@ -375,7 +375,7 @@
     "message": "Nikada ne dijelite rečenicu ni s kim."
   },
   "endOfFlowMessage5": {
-    "message": "Pazite na krađu identiteta! Na usluzi MetaMask nikada vas se neće pitati početna rečenica."
+    "message": "Pazite na krađu identiteta! Na usluzi BlackTie nikada vas se neće pitati početna rečenica."
   },
   "endOfFlowMessage6": {
     "message": "Ako trebate ponovno sigurnosno kopirati svoju početnu rečenicu, možete je pronaći unutar stavke Postavke --> Sigurnost."
@@ -384,7 +384,7 @@
     "message": "Ako imate bilo kakvo pitanje ili vidite nešto što vam se čini sumnjivim, pošaljite nam elektroničku poruku na support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "Osoblje MetaMask ne može obnoviti vašu početnu rečenicu. Saznajte više."
+    "message": "Osoblje BlackTie ne može obnoviti vašu početnu rečenicu. Saznajte više."
   },
   "endOfFlowMessage9": {
     "message": "Saznajte više."
@@ -500,7 +500,7 @@
     "message": "Poveži hardverski novčanik"
   },
   "hardwareWalletsMsg": {
-    "message": "Odaberite hardverski novčanik koji biste željeli upotrebljavati s uslugom MetaMask"
+    "message": "Odaberite hardverski novčanik koji biste željeli upotrebljavati s uslugom BlackTie"
   },
   "havingTroubleConnecting": {
     "message": "Imate poteškoća s povezivanjem?"
@@ -532,7 +532,7 @@
     "message": "Uvezi račun"
   },
   "importAccountMsg": {
-    "message": "Uvezeni se računi ne pridružuju vašoj izvorno stvorenoj početnoj rečenici za MetaMask. Saznajte više o uvezenim računima"
+    "message": "Uvezeni se računi ne pridružuju vašoj izvorno stvorenoj početnoj rečenici za BlackTie. Saznajte više o uvezenim računima"
   },
   "importAccountSeedPhrase": {
     "message": "Uvezi račun početnom rečenicom"
@@ -645,7 +645,7 @@
     "message": "Povezujete se na Ethereum i decentralizirani internet."
   },
   "metamaskVersion": {
-    "message": "Inačica usluge MetaMask"
+    "message": "Inačica usluge BlackTie"
   },
   "missingYourTokens": {
     "message": "Ne vidite svoje tokene?"
@@ -660,13 +660,13 @@
     "message": "Moji računi za novčanik"
   },
   "myWalletAccountsDescription": {
-    "message": "Svi se vaši računi za MetaMask automatski dodaju u ovaj odjeljak."
+    "message": "Svi se vaši računi za BlackTie automatski dodaju u ovaj odjeljak."
   },
   "mustSelectOne": {
     "message": "Mora se odabrati barem jedan token."
   },
   "needEtherInWallet": {
-    "message": "Trebate Ether u svojem novčaniku kako biste ostvarili interakciju s decentraliziranim aplikacijama uporabom usluge MetaMask. "
+    "message": "Trebate Ether u svojem novčaniku kako biste ostvarili interakciju s decentraliziranim aplikacijama uporabom usluge BlackTie. "
   },
   "needImportFile": {
     "message": "Morate odabrati datoteku za uvoz.",
@@ -709,8 +709,8 @@
   "newNetwork": {
     "message": "Nova mreža"
   },
-  "newToMetaMask": {
-    "message": "Novi korisnik usluge MetaMask?"
+  "newToBlackTie": {
+    "message": "Novi korisnik usluge BlackTie?"
   },
   "noAlreadyHaveSeed": {
     "message": "Ne, već imam početnu fazu"
@@ -719,7 +719,7 @@
     "message": "Zaštitite svoje ključeve!"
   },
   "protectYourKeysMessage1": {
-    "message": "Pazite na svoju početnu rečenicu jer smo zaprimili prijave o postojanju mrežnih mjesta koja oponašaju mrežno mjesto usluge MetaMask. Na mrežnom se mjestu MetaMask nikada ne traži vaša početna rečenica!"
+    "message": "Pazite na svoju početnu rečenicu jer smo zaprimili prijave o postojanju mrežnih mjesta koja oponašaju mrežno mjesto usluge BlackTie. Na mrežnom se mjestu BlackTie nikada ne traži vaša početna rečenica!"
   },
   "protectYourKeysMessage2": {
     "message": "Zaštite svoju rečenicu. Ako vam se nešto čini sumnjivim ili nemate povjerenja u mrežno mjesto, pošaljite nam elektroničku poruku na support@metamask.io"
@@ -776,7 +776,7 @@
     "message": "Sudjelujte u anketi MetaMetrics"
   },
   "participateInMetaMetricsDescription": {
-    "message": "Sudjelujte u anketi MetaMetrics kako biste nam pomogli poboljšati uslugu MetaMask"
+    "message": "Sudjelujte u anketi MetaMetrics kako biste nam pomogli poboljšati uslugu BlackTie"
   },
   "password": {
     "message": "Zaporka"
@@ -1003,7 +1003,7 @@
     "message": "Odaberi račun"
   },
   "selectAnAccountHelp": {
-    "message": "Odaberi račun za prikaz u usluzi MetaMask"
+    "message": "Odaberi račun za prikaz u usluzi BlackTie"
   },
   "selectAHigherGasFee": {
     "message": "Odaberite višu naknadu za gorivo kako biste ubrzali obrađivanje vaše transakcije.*"
@@ -1117,19 +1117,19 @@
     "message": "Sinkroniziraj s mobilnim telefonom"
   },
   "syncWithMobileDesc": {
-    "message": "Možete sinkronizirati svoje račune i informacije s vašim mobilnim telefonom. Otvorite mobilnu aplikaciju MetaMask, idite u stavku „Postavke” i dodirnite „Sinkroniziraj iz dodatka preglednika”"
+    "message": "Možete sinkronizirati svoje račune i informacije s vašim mobilnim telefonom. Otvorite mobilnu aplikaciju BlackTie, idite u stavku „Postavke” i dodirnite „Sinkroniziraj iz dodatka preglednika”"
   },
   "syncWithMobileDescNewUsers": {
-    "message": "Kad otvorite mobilnu aplikaciju MetaMask po prvi puta, pridržavajte se koraka koji se prikazuju na telefonu."
+    "message": "Kad otvorite mobilnu aplikaciju BlackTie po prvi puta, pridržavajte se koraka koji se prikazuju na telefonu."
   },
   "syncWithMobileScanThisCode": {
-    "message": "Skenirajte ovaj kôd uporabom mobilne aplikacije MetaMask"
+    "message": "Skenirajte ovaj kôd uporabom mobilne aplikacije BlackTie"
   },
   "syncWithMobileBeCareful": {
     "message": "Pazite da nitko ne gleda u vaš zaslon dok skenirate ovaj kôd"
   },
   "syncWithMobileComplete": {
-    "message": "Vaši su podatci uspješno sinkronizirani. Uživajte u mobilnoj aplikaciji MetaMask!"
+    "message": "Vaši su podatci uspješno sinkronizirani. Uživajte u mobilnoj aplikaciji BlackTie!"
   },
   "terms": {
     "message": "Odredbe uporabe"
@@ -1217,7 +1217,7 @@
     "message": "Pokušaj ponovo"
   },
   "typePassword": {
-    "message": "Upišite svoju lozinku MetaMask."
+    "message": "Upišite svoju lozinku BlackTie."
   },
   "unapproved": {
     "message": "Neodobreno"
@@ -1283,7 +1283,7 @@
     "message": "Dobro došli natrag!"
   },
   "welcome": {
-    "message": "Dobro došli u uslugu MetaMask"
+    "message": "Dobro došli u uslugu BlackTie"
   },
   "writePhrase": {
     "message": "Zapišite ovu rečenicu na komad papira i pohranite je na sigurnom mjestu. Ako je želite još bolje zaštititi, zapišite je na više komada papira, a zatim svaki komad pohranite na dva do tri drugačija mjesta."

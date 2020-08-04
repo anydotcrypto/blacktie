@@ -23,7 +23,7 @@ function createMetamaskMiddleware ({
     createScaffoldMiddleware({
       // staticSubprovider
       eth_syncing: false,
-      web3_clientVersion: `MetaMask/v${version}`,
+      web3_clientVersion: `BlackTie/v${version}`,
     }),
     createWalletSubprovider({
       getAccounts,

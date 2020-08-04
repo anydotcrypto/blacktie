@@ -50,7 +50,7 @@ async function start () {
   const depVizLink = `<a href="${depVizUrl}">background</a>`
 
   // link to artifacts
-  const allArtifactsUrl = `https://circleci.com/gh/MetaMask/metamask-extension/${CIRCLE_BUILD_NUM}#artifacts/containers/0`
+  const allArtifactsUrl = `https://circleci.com/gh/BlackTie/metamask-extension/${CIRCLE_BUILD_NUM}#artifacts/containers/0`
 
   const contentRows = [
     `builds: ${buildLinks}`,

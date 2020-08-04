@@ -2,24 +2,24 @@ import assert from 'assert'
 import reduceMetamask from '../../../../../ui/app/ducks/metamask/metamask'
 import actionConstants from '../../../../../ui/app/store/actionConstants'
 
-describe('MetaMask Reducers', function () {
+describe('BlackTie Reducers', function () {
 
   it('init state', function () {
     const initState = reduceMetamask(undefined, {})
     assert(initState)
   })
 
-  it('locks MetaMask', function () {
-    const unlockMetaMaskState = {
+  it('locks BlackTie', function () {
+    const unlockBlackTieState = {
       isUnlocked: true,
       isInitialzed: false,
       selectedAddress: 'test address',
     }
-    const lockMetaMask = reduceMetamask(unlockMetaMaskState, {
+    const lockBlackTie = reduceMetamask(unlockBlackTieState, {
       type: actionConstants.LOCK_METAMASK,
     })
 
-    assert.equal(lockMetaMask.isUnlocked, false)
+    assert.equal(lockBlackTie.isUnlocked, false)
   })
 
   it('sets rpc target', function () {

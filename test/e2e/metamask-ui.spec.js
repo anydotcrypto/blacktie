@@ -13,7 +13,7 @@ const enLocaleMessages = require('../../app/_locales/en/messages.json')
 
 const ganacheServer = new Ganache()
 
-describe('MetaMask', function () {
+describe('BlackTie', function () {
   let driver
   let tokenAddress
 
@@ -212,7 +212,7 @@ describe('MetaMask', function () {
     })
   })
 
-  describe('Send ETH from inside MetaMask using default gas', function () {
+  describe('Send ETH from inside BlackTie using default gas', function () {
     it('starts a send transaction', async function () {
       await driver.clickElement(By.xpath(`//button[contains(text(), 'Send')]`))
       await driver.delay(regularDelayMs)
@@ -275,7 +275,7 @@ describe('MetaMask', function () {
     })
   })
 
-  describe('Send ETH from inside MetaMask using fast gas option', function () {
+  describe('Send ETH from inside BlackTie using fast gas option', function () {
     it('starts a send transaction', async function () {
       await driver.clickElement(By.xpath(`//button[contains(text(), 'Send')]`))
       await driver.delay(regularDelayMs)
@@ -314,7 +314,7 @@ describe('MetaMask', function () {
     })
   })
 
-  describe('Send ETH from inside MetaMask using advanced gas modal', function () {
+  describe('Send ETH from inside BlackTie using advanced gas modal', function () {
     it('starts a send transaction', async function () {
       await driver.clickElement(By.xpath(`//button[contains(text(), 'Send')]`))
       await driver.delay(regularDelayMs)
@@ -428,7 +428,7 @@ describe('MetaMask', function () {
       await driver.delay(2000)
 
       windowHandles = await driver.getAllWindowHandles()
-      await driver.switchToWindowWithTitle('MetaMask Notification', windowHandles)
+      await driver.switchToWindowWithTitle('BlackTie Notification', windowHandles)
       await driver.delay(regularDelayMs)
 
       await driver.assertElementNotPresent(By.xpath(`//li[contains(text(), 'Data')]`))
@@ -837,7 +837,7 @@ describe('MetaMask', function () {
     })
   })
 
-  describe('Send token from inside MetaMask', function () {
+  describe('Send token from inside BlackTie', function () {
     let gasModal
     it('starts to send a transaction', async function () {
       await driver.clickElement(By.xpath(`//button[contains(text(), 'Send')]`))

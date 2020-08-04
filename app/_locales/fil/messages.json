@@ -66,7 +66,7 @@
     "message": "Magdagdag ng Mga Iminungkahing Token"
   },
   "addAcquiredTokens": {
-    "message": "Idagdag ang mga token na nakuha mo gamit ang MetaMask"
+    "message": "Idagdag ang mga token na nakuha mo gamit ang BlackTie"
   },
   "amount": {
     "message": "Halaga"
@@ -76,7 +76,7 @@
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "BlackTie",
     "description": "The name of the application"
   },
   "approve": {
@@ -101,7 +101,7 @@
     "message": "Auto-Logout Timer (minuto)"
   },
   "autoLockTimeLimitDescription": {
-    "message": "I-set ang idle time na minuto bago awtomatikong mag-log out ang MetaMask"
+    "message": "I-set ang idle time na minuto bago awtomatikong mag-log out ang BlackTie"
   },
   "back": {
     "message": "Bumalik"
@@ -113,7 +113,7 @@
     "message": "I-back up ang iyong Secret Recovery code para panatilihing secure ang iyong wallet at pondo."
   },
   "backupApprovalInfo": {
-    "message": "Ang secret code na ito ay kinakailangan para ma-recover ang iyong wallet kung sakaling mawawala mo ang iyong device, nakalimutan mo ang iyong password, kailangan mong i-install ulit ang MetaMask, o gusto mong i-access ang iyong wallet sa ibang device."
+    "message": "Ang secret code na ito ay kinakailangan para ma-recover ang iyong wallet kung sakaling mawawala mo ang iyong device, nakalimutan mo ang iyong password, kailangan mong i-install ulit ang BlackTie, o gusto mong i-access ang iyong wallet sa ibang device."
   },
   "backupNow": {
     "message": "I-back up ngayon"
@@ -138,13 +138,13 @@
     "message": "Hindi sinusuportahan ang iyong Browser..."
   },
   "builtInCalifornia": {
-    "message": "Ang MetaMask ay dinisenyo at binuo sa California."
+    "message": "Ang BlackTie ay dinisenyo at binuo sa California."
   },
   "buyWithWyre": {
     "message": "Bumili ng ETH gamit ang Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Binibigyang-daan ka ng Wyre na gumamit ng credit card para magdeposito ng ETH nang direkta sa iyong MetaMask account."
+    "message": "Binibigyang-daan ka ng Wyre na gumamit ng credit card para magdeposito ng ETH nang direkta sa iyong BlackTie account."
   },
   "buyCoinSwitch": {
     "message": "Bilhin sa CoinSwitch"
@@ -180,7 +180,7 @@
     "message": "Isara"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "Kailangan mong gamitin ang MetaMask sa Google Chrome upang makakonekta sa iyong Hardware Wallet."
+    "message": "Kailangan mong gamitin ang BlackTie sa Google Chrome upang makakonekta sa iyong Hardware Wallet."
   },
   "confirm": {
     "message": "Kumpirmahin"
@@ -348,7 +348,7 @@
     "message": "Huwag ibahagi ang parirala sa kahit sino."
   },
   "endOfFlowMessage5": {
-    "message": "Mag-ingat sa phishing! Hindi ka basta-basta hihilingin ng MetaMask ang iyong seed phrase."
+    "message": "Mag-ingat sa phishing! Hindi ka basta-basta hihilingin ng BlackTie ang iyong seed phrase."
   },
   "endOfFlowMessage6": {
     "message": "Kung kailangan mong i-back up ulit ang iyong seed phrase, makikita mo ito sa Mga Setting -> Seguridad."
@@ -357,7 +357,7 @@
     "message": "Kung may mga tanong ka o nakakita ka ng kahina-hinalang bagay, i-email ang support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "Hindi ma-recover ng MetaMask ang iyong seedphrase. Alamin pa."
+    "message": "Hindi ma-recover ng BlackTie ang iyong seedphrase. Alamin pa."
   },
   "endOfFlowMessage9": {
     "message": "Matuto pa."
@@ -467,7 +467,7 @@
     "message": "Magkonekta ng hardware wallet"
   },
   "hardwareWalletsMsg": {
-    "message": "Pumili ng hardware wallet na gusto mong gamitin sa MetaMask"
+    "message": "Pumili ng hardware wallet na gusto mong gamitin sa BlackTie"
   },
   "havingTroubleConnecting": {
     "message": "May problema ka ba sa pagkonekta?"
@@ -493,7 +493,7 @@
     "message": "Mag-import ng Account"
   },
   "importAccountMsg": {
-    "message": " Ang mga na-import na account ay hindi iuugnay sa orihinal na seedphrase na ginawa ng iyong MetaMask account. Matuto pa tungkol sa mga na-import na account "
+    "message": " Ang mga na-import na account ay hindi iuugnay sa orihinal na seedphrase na ginawa ng iyong BlackTie account. Matuto pa tungkol sa mga na-import na account "
   },
   "importAccountSeedPhrase": {
     "message": "Mag-import ng Account gamit ang Seed Phrase"
@@ -590,7 +590,7 @@
     "message": "Kinokonekta ka sa Ethereum at sa Decentralized Web."
   },
   "metamaskVersion": {
-    "message": "Bersyon ng MetaMask"
+    "message": "Bersyon ng BlackTie"
   },
   "missingYourTokens": {
     "message": "Hindi mo ba nakikita ang iyong mga token?"
@@ -605,13 +605,13 @@
     "message": "Mga Wallet Account Ko"
   },
   "myWalletAccountsDescription": {
-    "message": "Ang lahat ng iyong account na ginawa sa MetaMask ay awtomatikong idadagdag sa seksyong ito."
+    "message": "Ang lahat ng iyong account na ginawa sa BlackTie ay awtomatikong idadagdag sa seksyong ito."
   },
   "mustSelectOne": {
     "message": "Dapat pumili ng kahit 1 token."
   },
   "needEtherInWallet": {
-    "message": "Para gumamit ng mga decentralized na application gamit ang MetaMask, mangangailangan ka ng Ether sa iyong wallet."
+    "message": "Para gumamit ng mga decentralized na application gamit ang BlackTie, mangangailangan ka ng Ether sa iyong wallet."
   },
   "needImportFile": {
     "message": "Dapat kang pumili ng file na ii-import.",
@@ -650,8 +650,8 @@
   "newNetwork": {
     "message": "Bagong Network"
   },
-  "newToMetaMask": {
-    "message": "Bago ka ba sa MetaMask?"
+  "newToBlackTie": {
+    "message": "Bago ka ba sa BlackTie?"
   },
   "noAlreadyHaveSeed": {
     "message": "Hindi, may seed phrase na ako"
@@ -660,7 +660,7 @@
     "message": "Protektahan Ang Iyong Mga Key!"
   },
   "protectYourKeysMessage1": {
-    "message": "Mag-ingat sa iyong seed phrase — may mga ulat na may mga website na nagpapanggap bilang MetaMask. Hindi kailanman hihilingin ng MetaMask ang iyong seed phrase!"
+    "message": "Mag-ingat sa iyong seed phrase — may mga ulat na may mga website na nagpapanggap bilang BlackTie. Hindi kailanman hihilingin ng BlackTie ang iyong seed phrase!"
   },
   "protectYourKeysMessage2": {
     "message": "Panatilihing ligtas ang iyong parirala. Kung may makikita kang kahina-hinala, o hindi ka sigurado tungkol sa isang website, mag-email sa support@metamask.io"
@@ -717,7 +717,7 @@
     "message": "Makilahok sa MetaMetrics"
   },
   "participateInMetaMetricsDescription": {
-    "message": "Makilahok sa MetaMetrics para tulungan kaming mas pagandahin ang MetaMask"
+    "message": "Makilahok sa MetaMetrics para tulungan kaming mas pagandahin ang BlackTie"
   },
   "passwordsDontMatch": {
     "message": "Hindi Nagtutugma Ang Mga Password"
@@ -922,7 +922,7 @@
     "message": "Pumili ng Account"
   },
   "selectAnAccountHelp": {
-    "message": "Piliin ang account na titingnan sa MetaMask"
+    "message": "Piliin ang account na titingnan sa BlackTie"
   },
   "selectAHigherGasFee": {
     "message": "Pumili ng mas mataas na gas fee para pabilisin ang pagproseso ng iyong transaksyon.*"
@@ -1030,19 +1030,19 @@
     "message": "I-sync sa mobile"
   },
   "syncWithMobileDesc": {
-    "message": "Maaari mong i-sync ang iyong mga account at impormasyon sa iyong mobile device. Buksan ang MetaMask mobile app, pumunta sa \"Settings\" at mag-tap sa \"Sync from Browser Extension\""
+    "message": "Maaari mong i-sync ang iyong mga account at impormasyon sa iyong mobile device. Buksan ang BlackTie mobile app, pumunta sa \"Settings\" at mag-tap sa \"Sync from Browser Extension\""
   },
   "syncWithMobileDescNewUsers": {
-    "message": "Kung bubuksan mo ang MetaMask Mobile app sa unang pagkakataon, sundin lang ang mga hakbang sa iyong telepono."
+    "message": "Kung bubuksan mo ang BlackTie Mobile app sa unang pagkakataon, sundin lang ang mga hakbang sa iyong telepono."
   },
   "syncWithMobileScanThisCode": {
-    "message": "I-scan ang code na ito sa iyong MetaMask mobile app"
+    "message": "I-scan ang code na ito sa iyong BlackTie mobile app"
   },
   "syncWithMobileBeCareful": {
     "message": "Tiyaking walang ibang taong tumitingin sa iyong screen kapag sina-scan mo ang code na ito"
   },
   "syncWithMobileComplete": {
-    "message": "Matagumpay na na-sync ang iyong data. I-enjoy ang MetaMask mobile app!"
+    "message": "Matagumpay na na-sync ang iyong data. I-enjoy ang BlackTie mobile app!"
   },
   "terms": {
     "message": "Mga Tuntunin ng Paggamit"
@@ -1124,7 +1124,7 @@
     "message": "Subukang muli"
   },
   "typePassword": {
-    "message": "I-type ang iyong password sa MetaMask"
+    "message": "I-type ang iyong password sa BlackTie"
   },
   "unapproved": {
     "message": "Hindi inaprubahan"
@@ -1184,7 +1184,7 @@
     "message": "Welcome Ulit!"
   },
   "welcome": {
-    "message": "Welcome sa MetaMask"
+    "message": "Welcome sa BlackTie"
   },
   "writePhrase": {
     "message": "Isulat ang pariralang ito sa isang piraso ng papel at itago ito sa isang secure na lokasyon. Kung gusto mo ng higit pang seguridad, isulat ito sa maraming piraso ng papel at itago ang bawat isa sa 2 - 3 iba't ibang lokasyon."

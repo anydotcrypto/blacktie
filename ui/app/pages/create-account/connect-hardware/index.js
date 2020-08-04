@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as actions from '../../../store/actions'
-import { getMetaMaskAccounts } from '../../../selectors'
+import { getBlackTieAccounts } from '../../../selectors'
 import ConnectScreen from './connect-screen'
 import AccountList from './account-list'
 import { DEFAULT_ROUTE } from '../../../helpers/constants/routes'
@@ -240,7 +240,7 @@ const mapStateToProps = (state) => {
   const {
     metamask: { network, selectedAddress },
   } = state
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   const {
     appState: { defaultHdPaths },
   } = state

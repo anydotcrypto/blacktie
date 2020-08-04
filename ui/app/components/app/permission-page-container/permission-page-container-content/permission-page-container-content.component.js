@@ -143,9 +143,9 @@ export default class PermissionPageContainerContent extends PureComponent {
     const { t } = this.context
 
     if (redirect && permissionRejected) {
-      return t('cancelledConnectionWithMetaMask')
+      return t('cancelledConnectionWithBlackTie')
     } else if (redirect) {
-      return t('connectingWithMetaMask')
+      return t('connectingWithBlackTie')
     } else if (domainMetadata.extensionId) {
       return t('externalExtension', [domainMetadata.extensionId])
     } else if (allIdentitiesSelected) {

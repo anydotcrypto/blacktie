@@ -13,7 +13,7 @@ The account menu is the popup menu which contains options such as:
  
  ![Screenshot of account menu](https://i.imgur.com/xpkfIuR.png) 
  
- Above screenshot showing the menu bar in MetaMask 6.7.1
+ Above screenshot showing the menu bar in BlackTie 6.7.1
  
    
 

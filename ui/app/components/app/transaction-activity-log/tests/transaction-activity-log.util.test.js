@@ -177,7 +177,7 @@ describe('TransactionActivityLog utils', function () {
               op: 'add',
               path: '/origin',
               timestamp: 1535507561516,
-              value: 'MetaMask',
+              value: 'BlackTie',
             },
             [],
           ],

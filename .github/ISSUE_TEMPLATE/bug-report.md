@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Using MetaMask, but it's not working as you expect?
+about: Using BlackTie, but it's not working as you expect?
 
 ---
 
@@ -31,7 +31,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. OS X, Windows]
  - Hardware Wallet [e.g. Trezor Firmware version 1.8.3, Ledger Nano S Firmware version 1.6.0]
  - Browser [e.g. Chrome Version 79.0.3945.79 (Official Build) (64-bit), Firefox Browser 71.0 (64-bit)]
- - MetaMask Version [e.g. 5.0.2]
+ - BlackTie Version [e.g. 5.0.2]
 
 **Additional context (Error Messages, etc.)**
 Add any other context about the problem here.

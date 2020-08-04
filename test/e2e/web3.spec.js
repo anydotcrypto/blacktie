@@ -9,7 +9,7 @@ const {
 const { buildWebDriver } = require('./webdriver')
 const enLocaleMessages = require('../../app/_locales/en/messages.json')
 
-describe('Using MetaMask with an existing account', function () {
+describe('Using BlackTie with an existing account', function () {
   let driver
 
   const testSeedPhrase = 'forum vessel pink push lonely enact gentle tail admit parrot grunt dress'
@@ -115,7 +115,7 @@ describe('Using MetaMask with an existing account', function () {
       const windowHandles = await driver.getAllWindowHandles()
 
       const extension = windowHandles[0]
-      const popup = await driver.switchToWindowWithTitle('MetaMask Notification', windowHandles)
+      const popup = await driver.switchToWindowWithTitle('BlackTie Notification', windowHandles)
       const dapp = windowHandles.find((handle) => handle !== extension && handle !== popup)
 
       await driver.delay(regularDelayMs)

@@ -37,8 +37,8 @@
   "cancelling": {
     "message": "Cancelling..."
   },
-  "cancelledConnectionWithMetaMask": {
-    "message": "Cancelled Connection With MetaMask"
+  "cancelledConnectionWithBlackTie": {
+    "message": "Cancelled Connection With BlackTie"
   },
   "chartOnlyAvailableEth": {
     "message": "Chart only available on Ethereum networks."
@@ -46,11 +46,11 @@
   "connecting": {
     "message": "Connecting..."
   },
-  "connectWithMetaMask": {
-    "message": "Connect With MetaMask"
+  "connectWithBlackTie": {
+    "message": "Connect With BlackTie"
   },
-  "connectingWithMetaMask": {
-    "message": "Connecting With MetaMask..."
+  "connectingWithBlackTie": {
+    "message": "Connecting With BlackTie..."
   },
   "connectTo": {
     "message": "Connect to $1",
@@ -146,7 +146,7 @@
     "message": "Add Suggested Tokens"
   },
   "addAcquiredTokens": {
-    "message": "Add the tokens you've acquired using MetaMask"
+    "message": "Add the tokens you've acquired using BlackTie"
   },
   "allowOriginSpendToken": {
     "message": "Allow $1 to spend your $2?",
@@ -195,7 +195,7 @@
     "message": "Auto-Lock Timer (minutes)"
   },
   "autoLockTimeLimitDescription": {
-    "message": "Set the idle time in minutes before MetaMask will become locked."
+    "message": "Set the idle time in minutes before BlackTie will become locked."
   },
   "average": {
     "message": "Average"
@@ -210,7 +210,7 @@
     "message": "Backup your Secret Recovery code to keep your wallet and funds secure."
   },
   "backupApprovalInfo": {
-    "message": "This secret code is required to recover your wallet in case you lose your device, forget your password, have to re-install MetaMask, or want to access your wallet on another device."
+    "message": "This secret code is required to recover your wallet in case you lose your device, forget your password, have to re-install BlackTie, or want to access your wallet on another device."
   },
   "backupNow": {
     "message": "Backup now"
@@ -247,13 +247,13 @@
     "message": "Your Browser is not supported..."
   },
   "builtInCalifornia": {
-    "message": "MetaMask is designed and built in California."
+    "message": "BlackTie is a fork of Metamask."
   },
   "buyWithWyre": {
     "message": "Buy ETH with Wyre"
   },
   "buyWithWyreDescription": {
-    "message": "Wyre lets you use a debit card to deposit ETH right in to your MetaMask account."
+    "message": "Wyre lets you use a debit card to deposit ETH right in to your BlackTie account."
   },
   "buyCoinSwitch": {
     "message": "Buy on CoinSwitch"
@@ -301,7 +301,7 @@
     "message": "Close"
   },
   "chromeRequiredForHardwareWallets": {
-    "message": "You need to use MetaMask on Google Chrome in order to connect to your Hardware Wallet."
+    "message": "You need to use BlackTie on Google Chrome in order to connect to your Hardware Wallet."
   },
   "confirm": {
     "message": "Confirm"
@@ -421,7 +421,7 @@
     "message": "Custom Spend Limit"
   },
   "dataBackupFoundInfo": {
-    "message": "Some of your account data was backed up during a previous installation of MetaMask. This could include your settings, contacts, and tokens. Would you like to restore this data now?"
+    "message": "Some of your account data was backed up during a previous installation of BlackTie. This could include your settings, contacts, and tokens. Would you like to restore this data now?"
   },
   "decimalsMustZerotoTen": {
     "message": "Decimals must be at least 0, and not over 36."
@@ -505,7 +505,7 @@
     "message": "Never share the phrase with anyone."
   },
   "endOfFlowMessage5": {
-    "message": "Be careful of phishing! MetaMask will never spontaneously ask for your seed phrase."
+    "message": "Be careful of phishing! BlackTie will never spontaneously ask for your seed phrase."
   },
   "endOfFlowMessage6": {
     "message": "If you need to back up your seed phrase again, you can find it in Settings -> Security."
@@ -514,7 +514,7 @@
     "message": "If you ever have questions or see something fishy, email support@metamask.io."
   },
   "endOfFlowMessage8": {
-    "message": "MetaMask cannot recover your seedphrase."
+    "message": "BlackTie cannot recover your seedphrase."
   },
   "endOfFlowMessage9": {
     "message": "Learn more."
@@ -564,7 +564,7 @@
     "description": "Displayed error name for debugging purposes. $1 is the error name"
   },
   "errorPageTitle": {
-    "message": "MetaMask encountered an error",
+    "message": "BlackTie encountered an error",
     "description": "Title of generic error page"
   },
   "errorPageMessage": {
@@ -696,7 +696,7 @@
     "message": "Connect a hardware wallet"
   },
   "hardwareWalletsMsg": {
-    "message": "Select a hardware wallet you'd like to use with MetaMask"
+    "message": "Select a hardware wallet you'd like to use with BlackTie"
   },
   "havingTroubleConnecting": {
     "message": "Having trouble connecting?"
@@ -728,7 +728,7 @@
     "message": "Import Account"
   },
   "importAccountMsg": {
-    "message": " Imported accounts will not be associated with your originally created MetaMask account seedphrase. Learn more about imported accounts "
+    "message": " Imported accounts will not be associated with your originally created BlackTie account seedphrase. Learn more about imported accounts "
   },
   "importAccountSeedPhrase": {
     "message": "Import an Account with Seed Phrase"
@@ -865,7 +865,7 @@
     "message": "Message"
   },
   "metaMaskConnectStatusParagraphOne": {
-    "message": "This is the new MetaMask Connect status indicator. From here you can easily see and manage sites you’ve connected to with your MetaMask wallet."
+    "message": "This is the new BlackTie Connect status indicator. From here you can easily see and manage sites you’ve connected to with your BlackTie wallet."
   },
   "metaMaskConnectStatusParagraphTwo": {
     "message": "Click the Connect status to see your connected sites and their permissions."
@@ -874,7 +874,7 @@
     "message": "Connecting you to Ethereum and the Decentralized Web."
   },
   "metamaskVersion": {
-    "message": "MetaMask Version"
+    "message": "BlackTie Version"
   },
   "missingYourTokens": {
     "message": "Don't see your tokens"
@@ -889,13 +889,13 @@
     "message": "My Wallet Accounts"
   },
   "myWalletAccountsDescription": {
-    "message": "All of your MetaMask created accounts will automatically be added to this section."
+    "message": "All of your BlackTie created accounts will automatically be added to this section."
   },
   "mustSelectOne": {
     "message": "Must select at least 1 token."
   },
   "needEtherInWallet": {
-    "message": "To interact with decentralized applications using MetaMask, you’ll need Ether in your wallet."
+    "message": "To interact with decentralized applications using BlackTie, you’ll need Ether in your wallet."
   },
   "needImportFile": {
     "message": "You must select a file to import.",
@@ -938,8 +938,8 @@
   "newNetwork": {
     "message": "New Network"
   },
-  "newToMetaMask": {
-    "message": "New to MetaMask?"
+  "newToBlackTie": {
+    "message": "New to BlackTie?"
   },
   "noAlreadyHaveSeed": {
     "message": "No, I already have a seed phrase"
@@ -948,7 +948,7 @@
     "message": "Protect Your Keys!"
   },
   "protectYourKeysMessage1": {
-    "message": "Be careful with your seed phrase — there have been reports of websites that attempt to imitate MetaMask. MetaMask will never ask for your seed phrase!"
+    "message": "Be careful with your seed phrase — there have been reports of websites that attempt to imitate BlackTie. BlackTie will never ask for your seed phrase!"
   },
   "protectYourKeysMessage2": {
     "message": "Keep your phrase safe. If you see something fishy, or you’re uncertain about a website, email support@metamask.io"
@@ -976,7 +976,7 @@
   },
   "nextNonceWarning": {
     "message": "Nonce is higher than suggested nonce of $1",
-    "description": "The next nonce according to MetaMask's internal logic"
+    "description": "The next nonce according to BlackTie's internal logic"
   },
   "noAddressForName": {
     "message": "No address has been set for this name."
@@ -1015,7 +1015,7 @@
     "message": "Participate in MetaMetrics"
   },
   "participateInMetaMetricsDescription": {
-    "message": "Participate in MetaMetrics to help us make MetaMask better"
+    "message": "Participate in MetaMetrics to help us make BlackTie better"
   },
   "password": {
     "message": "Password"
@@ -1271,7 +1271,7 @@
     "message": "Select an Account"
   },
   "selectAnAccountHelp": {
-    "message": "Select the account to view in MetaMask"
+    "message": "Select the account to view in BlackTie"
   },
   "selectAHigherGasFee": {
     "message": "Select a higher gas fee to accelerate the processing of your transaction.*"
@@ -1353,7 +1353,7 @@
     "message": "Switch Networks"
   },
   "stateLogFileName": {
-    "message": "MetaMask State Logs"
+    "message": "BlackTie State Logs"
   },
   "stateLogs": {
     "message": "State Logs"
@@ -1422,19 +1422,19 @@
     "message": "Sync with mobile"
   },
   "syncWithMobileDesc": {
-    "message": "You can sync your accounts and information with your mobile device. Open the MetaMask mobile app, go to \"Settings\" and tap on \"Sync from Browser Extension\""
+    "message": "You can sync your accounts and information with your mobile device. Open the BlackTie mobile app, go to \"Settings\" and tap on \"Sync from Browser Extension\""
   },
   "syncWithMobileDescNewUsers": {
-    "message": "If you just open the MetaMask Mobile app for the first time, just follow the steps in your phone."
+    "message": "If you just open the BlackTie Mobile app for the first time, just follow the steps in your phone."
   },
   "syncWithMobileScanThisCode": {
-    "message": "Scan this code with your MetaMask mobile app"
+    "message": "Scan this code with your BlackTie mobile app"
   },
   "syncWithMobileBeCareful": {
     "message": "Make sure nobody else is looking at your screen when you scan this code"
   },
   "syncWithMobileComplete": {
-    "message": "Your data has been synced successfully. Enjoy the MetaMask mobile app!"
+    "message": "Your data has been synced successfully. Enjoy the BlackTie mobile app!"
   },
   "terms": {
     "message": "Terms of Use"
@@ -1448,7 +1448,7 @@
   },
   "thisWillAllowExternalExtension": {
     "message": "This will allow an external extension with id $1 to:",
-    "description": "$1 is a string of random letters that are the id of another extension connecting to MetaMask"
+    "description": "$1 is a string of random letters that are the id of another extension connecting to BlackTie"
   },
   "thisWillCreate": {
     "message": "This will create a new wallet and seed phrase"
@@ -1540,7 +1540,7 @@
     "message": "Try again"
   },
   "typePassword": {
-    "message": "Type your MetaMask password"
+    "message": "Type your BlackTie password"
   },
   "unapproved": {
     "message": "Unapproved"
@@ -1627,7 +1627,7 @@
     "message": "Welcome Back!"
   },
   "welcome": {
-    "message": "Welcome to MetaMask"
+    "message": "Welcome to BlackTie"
   },
   "whatsThis": {
     "message": "What's this?"

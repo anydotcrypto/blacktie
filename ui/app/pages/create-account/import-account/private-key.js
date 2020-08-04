@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as actions from '../../../store/actions'
 import { DEFAULT_ROUTE } from '../../../helpers/constants/routes'
-import { getMetaMaskAccounts } from '../../../selectors'
+import { getBlackTieAccounts } from '../../../selectors'
 import Button from '../../../components/ui/button'
 
 class PrivateKeyImportView extends Component {
@@ -133,7 +133,7 @@ export default compose(
 function mapStateToProps (state) {
   return {
     error: state.appState.warning,
-    firstAddress: Object.keys(getMetaMaskAccounts(state))[0],
+    firstAddress: Object.keys(getBlackTieAccounts(state))[0],
   }
 }
 

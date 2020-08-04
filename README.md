@@ -1,16 +1,16 @@
-# MetaMask Browser Extension
+# BlackTie Browser Extension
 
-[![Build Status](https://circleci.com/gh/MetaMask/metamask-extension.svg?style=shield&circle-token=a1ddcf3cd38e29267f254c9c59d556d513e3a1fd)](https://circleci.com/gh/MetaMask/metamask-extension) [![Coverage Status](https://coveralls.io/repos/github/MetaMask/metamask-extension/badge.svg?branch=master)](https://coveralls.io/github/MetaMask/metamask-extension?branch=master)
+[![Build Status](https://circleci.com/gh/BlackTie/metamask-extension.svg?style=shield&circle-token=a1ddcf3cd38e29267f254c9c59d556d513e3a1fd)](https://circleci.com/gh/BlackTie/metamask-extension) [![Coverage Status](https://coveralls.io/repos/github/BlackTie/metamask-extension/badge.svg?branch=master)](https://coveralls.io/github/BlackTie/metamask-extension?branch=master)
 
-You can find the latest version of MetaMask on [our official website](https://metamask.io/). For help using MetaMask, visit our [User Support Site](https://metamask.zendesk.com/hc/en-us).
+You can find the latest version of BlackTie on [our official website](https://metamask.io/). For help using BlackTie, visit our [User Support Site](https://metamask.zendesk.com/hc/en-us).
 
-MetaMask supports Firefox, Google Chrome, and Chromium-based browsers. We recommend using the latest available browser version.
+BlackTie supports Firefox, Google Chrome, and Chromium-based browsers. We recommend using the latest available browser version.
 
 For up to the minute news, follow our [Twitter](https://twitter.com/metamask_io) or [Medium](https://medium.com/metamask) pages.
 
-To learn how to develop MetaMask-compatible applications, visit our [Developer Docs](https://metamask.github.io/metamask-docs/).
+To learn how to develop BlackTie-compatible applications, visit our [Developer Docs](https://metamask.github.io/metamask-docs/).
 
-To learn how to contribute to the MetaMask project itself, visit our [Internal Docs](https://github.com/MetaMask/metamask-extension/tree/develop/docs).
+To learn how to contribute to the BlackTie project itself, visit our [Internal Docs](https://github.com/BlackTie/metamask-extension/tree/develop/docs).
 
 ## Building locally
 
@@ -59,9 +59,9 @@ yarn dist
 
 - [How to add custom build to Chrome](./docs/add-to-chrome.md)
 - [How to add custom build to Firefox](./docs/add-to-firefox.md)
-- [How to add a new translation to MetaMask](./docs/translating-guide.md)
+- [How to add a new translation to BlackTie](./docs/translating-guide.md)
 - [Publishing Guide](./docs/publishing.md)
-- [How to port MetaMask to a new platform](./docs/porting_to_new_environment.md)
+- [How to port BlackTie to a new platform](./docs/porting_to_new_environment.md)
 - [How to use the TREZOR emulator](./docs/trezor-emulator.md)
 - [How to generate a visualization of this repository's development](./development/gource-viz.sh)
 

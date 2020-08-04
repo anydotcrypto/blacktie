@@ -10,7 +10,7 @@ const { Command } = require('selenium-webdriver/lib/command')
  * will be created as random directories inside this.
  * @type {string}
  */
-const TEMP_PROFILE_PATH_PREFIX = path.join(os.tmpdir(), 'MetaMask-Fx-Profile')
+const TEMP_PROFILE_PATH_PREFIX = path.join(os.tmpdir(), 'BlackTie-Fx-Profile')
 
 const GeckoDriverCommand = {
   INSTALL_ADDON: 'install addon',

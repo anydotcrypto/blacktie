@@ -18,7 +18,7 @@ export default class InfoTab extends PureComponent {
         <div className="info-tab__link-header">
           { t('links') }
         </div>
-        <div className="info-tab__link-item">
+        {/* <div className="info-tab__link-item">
           <a
             href="https://metamask.io/privacy.html"
             target="_blank"
@@ -84,7 +84,7 @@ export default class InfoTab extends PureComponent {
               { t('emailUs') }
             </span>
           </a>
-        </div>
+        </div> */}
       </div>
     )
   }
@@ -96,12 +96,12 @@ export default class InfoTab extends PureComponent {
       <div className="settings-page__body">
         <div className="settings-page__content-row">
           <div className="settings-page__content-item settings-page__content-item--without-height">
-            <div className="info-tab__logo-wrapper">
+            {/* <div className="info-tab__logo-wrapper">
               <img
                 src="images/info-logo.png"
                 className="info-tab__logo"
               />
-            </div>
+            </div> */}
             <div className="info-tab__item">
               <div className="info-tab__version-header">
                 { t('metamaskVersion') }

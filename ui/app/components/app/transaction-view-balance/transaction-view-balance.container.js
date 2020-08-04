@@ -7,7 +7,7 @@ import {
   getSelectedAddress,
   getNativeCurrency,
   getSelectedTokenAssetImage,
-  getMetaMaskAccounts,
+  getBlackTieAccounts,
   isBalanceCached,
   preferencesSelector,
   getIsMainnet,
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
   const isMainnet = getIsMainnet(state)
   const selectedAddress = getSelectedAddress(state)
   const { metamask: { network } } = state
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   const account = accounts[selectedAddress]
   const { balance } = account
 

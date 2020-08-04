@@ -7,19 +7,19 @@
 # ```
 # ## 6.6.2 Fri Jun 07 2019
 #
-# - [#6690](https://github.com/MetaMask/metamask-extension/pull/6690): Some words
-# - [#6700](https://github.com/MetaMask/metamask-extension/pull/6700): some more words
+# - [#6690](https://github.com/BlackTie/metamask-extension/pull/6690): Some words
+# - [#6700](https://github.com/BlackTie/metamask-extension/pull/6700): some more words
 #
 # ## 6.6.1 Thu Jun 06 2019
 #
-# - [#6691](https://github.com/MetaMask/metamask-extension/pull/6691): Revert other words
+# - [#6691](https://github.com/BlackTie/metamask-extension/pull/6691): Revert other words
 #
 # ## 6.6.0 Mon Jun 03 2019
 #
-# - [#6659](https://github.com/MetaMask/metamask-extension/pull/6659): foo
-# - [#6671](https://github.com/MetaMask/metamask-extension/pull/6671): bar
-# - [#6625](https://github.com/MetaMask/metamask-extension/pull/6625): baz
-# - [#6633](https://github.com/MetaMask/metamask-extension/pull/6633): Many many words
+# - [#6659](https://github.com/BlackTie/metamask-extension/pull/6659): foo
+# - [#6671](https://github.com/BlackTie/metamask-extension/pull/6671): bar
+# - [#6625](https://github.com/BlackTie/metamask-extension/pull/6625): baz
+# - [#6633](https://github.com/BlackTie/metamask-extension/pull/6633): Many many words
 #
 #
 # ```

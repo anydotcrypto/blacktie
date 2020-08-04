@@ -5,7 +5,7 @@ import {
   getAssetImages,
   conversionRateSelector,
   getCurrentCurrency,
-  getMetaMaskAccounts,
+  getBlackTieAccounts,
   getIsMainnet,
   preferencesSelector,
 } from '../../../selectors'
@@ -13,7 +13,7 @@ import {
 const mapStateToProps = (state) => {
   const { showFiatInTestnets } = preferencesSelector(state)
   const isMainnet = getIsMainnet(state)
-  const accounts = getMetaMaskAccounts(state)
+  const accounts = getBlackTieAccounts(state)
   const network = state.metamask.network
   const selectedAddress = state.metamask.selectedAddress || Object.keys(accounts)[0]
   const account = accounts[selectedAddress]

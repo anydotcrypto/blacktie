@@ -36,7 +36,7 @@ const ExtensionizerMock = {
   },
 }
 
-const MetaMaskController = proxyquire('../../../../app/scripts/metamask-controller', {
+const BlackTieController = proxyquire('../../../../app/scripts/metamask-controller', {
   './controllers/threebox': { default: ThreeBoxControllerMock },
   'extensionizer': ExtensionizerMock,
 }).default
@@ -52,7 +52,7 @@ const TEST_SEED_ALT = 'setup olympic issue mobile velvet surge alcohol burger ho
 const TEST_ADDRESS_ALT = '0xc42edfcc21ed14dda456aa0756c153f7985d8813'
 const CUSTOM_RPC_URL = 'http://localhost:8545'
 
-describe('MetaMaskController', function () {
+describe('BlackTieController', function () {
   let metamaskController
   const sandbox = sinon.createSandbox()
   const noop = () => {}
@@ -82,7 +82,7 @@ describe('MetaMaskController', function () {
       .get(/.*/)
       .reply(200, '{"JPY":12415.9}')
 
-    metamaskController = new MetaMaskController({
+    metamaskController = new BlackTieController({
       showUnapprovedTx: noop,
       showUnconfirmedMessage: noop,
       encryptor: {
@@ -554,14 +554,14 @@ describe('MetaMaskController', function () {
   })
 
   describe('#setCurrentCurrency', function () {
-    let defaultMetaMaskCurrency
+    let defaultBlackTieCurrency
 
     beforeEach(function () {
-      defaultMetaMaskCurrency = metamaskController.currencyRateController.state.currentCurrency
+      defaultBlackTieCurrency = metamaskController.currencyRateController.state.currentCurrency
     })
 
     it('defaults to usd', function () {
-      assert.equal(defaultMetaMaskCurrency, 'usd')
+      assert.equal(defaultBlackTieCurrency, 'usd')
     })
 
     it('sets currency to JPY', function () {
@@ -769,7 +769,7 @@ describe('MetaMaskController', function () {
         await metamaskController.newUnsignedPersonalMessage(msgParams)
         assert.fail('should have thrown')
       } catch (error) {
-        assert.equal(error.message, 'MetaMask Message Signature: from field is required.')
+        assert.equal(error.message, 'BlackTie Message Signature: from field is required.')
       }
     })
 

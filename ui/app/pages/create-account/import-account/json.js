@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../../store/actions'
 import FileInput from 'react-simple-file-input'
 import { DEFAULT_ROUTE } from '../../../helpers/constants/routes'
-import { getMetaMaskAccounts } from '../../../selectors'
+import { getBlackTieAccounts } from '../../../selectors'
 import Button from '../../../components/ui/button'
 
 const HELP_LINK = 'https://metamask.zendesk.com/hc/en-us/articles/360015489331-Importing-an-Account'
@@ -148,7 +148,7 @@ JsonImportSubview.propTypes = {
 const mapStateToProps = (state) => {
   return {
     error: state.appState.warning,
-    firstAddress: Object.keys(getMetaMaskAccounts(state))[0],
+    firstAddress: Object.keys(getBlackTieAccounts(state))[0],
   }
 }
 

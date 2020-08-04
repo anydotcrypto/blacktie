@@ -1,4 +1,4 @@
-# MetaMask Philosophy
+# BlackTie Philosophy
 
 ## Mission
 
