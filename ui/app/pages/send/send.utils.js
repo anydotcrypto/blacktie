@@ -59,7 +59,6 @@ function isBalanceSufficient ({
   isDerivedAddress,
 }) {
   const derivedGas = isDerivedAddress ? '0x0' : gasTotal
-
   const totalAmount = addCurrencies(amount, derivedGas, {
     aBase: 16,
     bBase: 16,
@@ -165,7 +164,7 @@ function getGasFeeErrorObject ({
   conversionRate,
   gasTotal,
   primaryCurrency,
-  isDerived,
+  isDerivedAddress,
 }) {
   let gasFeeError = null
   if (gasTotal && conversionRate) {
@@ -176,7 +175,7 @@ function getGasFeeErrorObject ({
       conversionRate,
       gasTotal,
       primaryCurrency,
-      isDerived,
+      isDerivedAddress,
     })
 
     if (insufficientFunds) {

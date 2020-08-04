@@ -84,6 +84,7 @@ export default class SendAmountRow extends Component {
         primaryCurrency,
         selectedToken,
         tokenBalance,
+        isDerivedAddress,
       })
     }
   }

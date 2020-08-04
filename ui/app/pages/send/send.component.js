@@ -352,7 +352,6 @@ export default class SendTransactionScreen extends Component {
 
   renderSendContent () {
     const { history, showHexData } = this.props
-
     return [
       <SendContent
         key="send-content"
