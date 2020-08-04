@@ -1,6 +1,6 @@
 # BlackTie Browser Extension
 
-WARNING: This is a PoC project, and is not production ready. It ships with no warranty at all, and users are responsible for any funds lost whilst using BlackTie.
+**WARNING: This is a PoC project, and is not production ready. It ships with no warranty at all, and users are responsible for any funds lost whilst using BlackTie.**
 
 BlackTie is a fork of the [Metamask](https://github.com/MetaMask/metamask-extension) - the wallet browser extension.
 
