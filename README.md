@@ -6,9 +6,9 @@ BlackTie is a fork of the [Metamask](https://github.com/MetaMask/metamask-extens
 
 The fork uses [any.sender](https://github.com/anydotcrypto/docs.any.sender) to send transactions instead of sending the directly to the chain. This means that the user reliquinshes control over setting the gas price, and instead directs any.sender to bump gas prices to find the best available within a reasonable time period.
 
-To install Blacktie do the following:
+To install Blacktie as a chrome extension do the following:
 
-1. Download the a zip from [here]()
+1. Download the a zip from [here](http://anydot.dev/blacktie/blacktie-chrome-7.7.0.zip)
 2. Unzip it to a local directory
 3. Go to chrome://extensions
 4. Toggle the Developer Mode in the top right hand corner
