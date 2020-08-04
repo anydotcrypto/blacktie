@@ -8,7 +8,7 @@ The fork uses [any.sender](https://github.com/anydotcrypto/docs.any.sender) to s
 
 To install Blacktie as a chrome extension do the following:
 
-1. Download the a zip from [here](http://anydot.dev/blacktie/blacktie-chrome-7.7.0.zip)
+1. Download the a zip from [here](http://www.anydot.dev/blacktie/blacktie-chrome-7.7.0.zip)
 2. Unzip it to a local directory
 3. Go to chrome://extensions
 4. Toggle the Developer Mode in the top right hand corner
