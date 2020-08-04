@@ -4,7 +4,7 @@ WARNING: This is a PoC project, and is not production ready. It ships with no wa
 
 BlackTie is a fork of the [Metamask](https://github.com/MetaMask/metamask-extension) - the wallet browser extension.
 
-The fork uses [any.sender](https://github.com/anydotcrypto/docs.any.sender) to send transactions instead of sending the directly to the chain. This means that the user reliquinshes control over setting the gas price, and instead the allows any.sender to bump gas prices to find the best available within a reasonable time period.
+The fork uses [any.sender](https://github.com/anydotcrypto/docs.any.sender) to send transactions instead of sending the directly to the chain. This means that the user reliquinshes control over setting the gas price, and instead directs any.sender to bump gas prices to find the best available within a reasonable time period.
 
 To install Blacktie do the following:
 
