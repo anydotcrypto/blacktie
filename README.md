@@ -1,6 +1,29 @@
 # BlackTie Browser Extension
 
-BlackTie supports Firefox, Google Chrome, and Chromium-based browsers. We recommend using the latest available browser version.
+WARNING: This is a PoC project, and is not production ready. It ships with no warranty at all, and users are responsible for any funds lost whilst using BlackTie.
+
+BlackTie is a fork of the [Metamask](https://github.com/MetaMask/metamask-extension) - the wallet browser extension.
+
+The fork uses [any.sender](https://github.com/anydotcrypto/docs.any.sender) to send transactions instead of sending the directly to the chain. This means that the user reliquinshes control over setting the gas price, and instead the allows any.sender to bump gas prices to find the best available within a reasonable time period.
+
+To install Blacktie do the following:
+
+1. Download the a zip from [here]()
+2. Unzip it to a local directory
+3. Go to chrome://extensions
+4. Toggle the Developer Mode in the top right hand corner
+5. Click Load Unpacked in the top left
+6. Select the unzipped folder
+7. Disable metamask - both Metamask and Blacktie should not be used at the same time as they both put an ethereum object on the page, which will confuse dapps.
+
+To use the any.sender functionality you'll need to do the following:
+
+1. Create a new account with "Create any.sender account"
+2. Go to Settings > Contacts > My Wallet accounts and select the newly created account
+3. Copy the "Ethereum Signing Authority" address
+4. Using a normal Metamask, or other wallet, you need to fund this signing key with any.sender, you can do this by going to this [topup page](https://www.anydot.dev/topup/)
+5. After 35 blocks check the balance again on the topup page.
+6. Now you're ready to go! Each time you send a transaction from your any.sender account the gas used will be deducted from that balance. Like in a car, remember to topup before you run too low!
 
 ## Building locally
 
