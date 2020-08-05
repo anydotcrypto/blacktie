@@ -6,6 +6,13 @@ BlackTie is a fork of the [Metamask](https://github.com/MetaMask/metamask-extens
 
 The fork uses [any.sender](https://github.com/anydotcrypto/docs.any.sender) to send transactions instead of sending the directly to the chain. This means that the user reliquinshes control over setting the gas price, and instead directs any.sender to bump gas prices to find the best available within a reasonable time period.
 
+### Some videos:
+
+- https://www.pscp.tv/w/1DXGyALlYReGM
+- https://www.pscp.tv/w/1ynJOqdVbqQKR
+
+### Installation:
+
 To install Blacktie as a chrome extension do the following:
 
 1. Download the a zip from [here](https://www.anydot.dev/blacktie/blacktie-chrome-7.7.0.zip)
@@ -16,6 +23,8 @@ To install Blacktie as a chrome extension do the following:
 6. Select the unzipped folder
 7. Disable metamask - both Metamask and Blacktie should not be used at the same time as they both put an ethereum object on the page, which will confuse dapps.
 
+### Usage and topping up
+
 To use the any.sender functionality you'll need to do the following:
 
 1. Create a new account with "Create any.sender account"
@@ -24,6 +33,15 @@ To use the any.sender functionality you'll need to do the following:
 4. Using a normal Metamask, or other wallet, you need to fund this signing key with any.sender, you can do this by going to this [topup page](https://www.anydot.dev/topup/)
 5. After 35 blocks check the balance again on the topup page.
 6. Now you're ready to go! Each time you send a transaction from your any.sender account the gas used will be deducted from that balance. Like in a car, remember to topup before you run too low!
+
+### Upgrading
+
+1. Ensure you have your seed phrase backed up
+2. Open the chrome extensions, and "Disable" Blacktie with the toggle. Dont remove it, just disable.
+3. Delete the blacktie zip, and the unzipped blacktie files from your file system
+4. Download a new blacktie from https://www.anydot.dev/blacktie/blacktie-chrome-7.7.0.zip
+5. Unzip to the same location as before
+6. Re-enable blacktie in the chrome extensions
 
 ## Building locally
 
